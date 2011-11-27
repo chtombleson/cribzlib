@@ -15,17 +15,91 @@
 *    You should have received a copy of the GNU General Public License
 *    along with CribzLib.  If not, see <http://www.gnu.org/licenses/>.
 */
+/**
+* @package      CribzLib
+* @subpackage   Cribz Form Fields
+* @author       Christopher Tombleson
+* @copyright    Copyright 2011 onwards
+*/
 class CribzFormField {
+
+    /**
+    * Name
+    *
+    * @var string
+    */
     private $name;
+
+    /**
+    * Label
+    *
+    * @var string
+    */
     private $label;
+
+    /**
+    * Class
+    *
+    * @var string
+    */
     private $class;
+
+    /**
+    * Regex
+    *
+    * @var string
+    */
     private $regex;
+
+    /**
+    * Options
+    *
+    * @var array
+    */
     private $options;
+
+    /**
+    * Required
+    *
+    * @var bool
+    */
     private $required;
+
+    /**
+    * Max Length
+    *
+    * @var int
+    */
     private $maxlength;
+
+    /**
+    * Min Length
+    *
+    * @var int
+    */
     private $minlength;
+
+    /**
+    * Value
+    *
+    * @var mixed
+    */
     private $value = null;
 
+    /**
+    * Construct
+    * Create new form field.
+    *
+    * @param string $type       Input type (text, email, password, textarea, select, checkbox, hidden).
+    * @param string $name       Element name.
+    * @param bool   $required   Is element required.
+    * @param string $label      Label for element(Optional).
+    * @param int    $maxlength  Maxium length of input(Optional).
+    * @param int    $minlength  Minium length of input(Optional).
+    * @param string $class      Add class to element(Optional).
+    * @param string $regex      Regular Expression used to validate input(Optional).
+    * @param array  $options    Array of options for select inputs(Optional).
+    */
     function __construct($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/', $options = array()) {
         $this->name = $name;
         $this->label = empty($label) ? $name : $label;
@@ -37,13 +111,33 @@ class CribzFormField {
         $this->options = $options;
     }
 
+    /**
+    * Build
+    * Build the form field
+    */
     function build() {}
+
+    /**
+    * Validate
+    *
+    * @param array $data    Data from submitted form.
+    */
     function validate($data) {}
+
+    /**
+    * Set Value
+    *
+    * @param mixed $value   Value to set.
+    */
     function setValue($value) {}
 }
 
 class CribzTextField extends CribzFormField {
 
+    /**
+    * Build
+    * Build Text input field.
+    */
     function build() {
         $field = '<input type="text" name="' . $this->name . '" ';
 
@@ -63,6 +157,14 @@ class CribzTextField extends CribzFormField {
         return array('field' => $field, 'label' => $this->label);
     }
 
+    /**
+    * Validate
+    * Validate input from text field.
+    *
+    * @param array $data    Data from submitted form.
+    *
+    * @return false on invalid, true on valid.
+    */
     function validate($data) {
         if ($this->required) {
             if (!empty($data)) {
@@ -103,16 +205,31 @@ class CribzTextField extends CribzFormField {
         }
     }
 
+    /**
+    * Set Value
+    * Set Value of text field
+    *
+    * @param mixed $value   Value to set.
+    */
     function setValue($value) {
         $this->value = $value;
     }
 }
 
 class CribzEmailField extends CribzTextField {
+    /**
+    * Regex
+    *
+    * @var string
+    */
     private $regex = '/([A-Za-z0-9\S]+@[A-Za-z0-9]+\.[A-Za-z]+(\.[A-Za-z])?/';
 }
 
 class CribzPasswordField extends CribzFormField{
+    /**
+    * Build
+    * Build password input field.
+    */
     function build() {
         $field = '<input type="password" name="' . $this->name . '" ';
 
@@ -128,6 +245,14 @@ class CribzPasswordField extends CribzFormField{
         return array('field' => $field, 'label' => $label);
     }
 
+    /**
+    * Validate
+    * Validate input from password field.
+    *
+    * @param array $data    Data from submitted form.
+    *
+    * @return false on invalid, true on valid.
+    */
     function validate($data) {
         if ($this->required) {
             if (!empty($data)) {
@@ -168,13 +293,34 @@ class CribzPasswordField extends CribzFormField{
         }
     }
 
+    /**
+    * Set Value
+    * Set Value of input field
+    *
+    * @param mixed $value   Value to set.
+    */
     function setValue($value) {}
 }
 
 class CribzTextAreaField extends CribzFormField {
+    /**
+    * Rows
+    *
+    * @var int
+    */
     private $rows = 10;
+
+    /**
+    * Cols
+    *
+    * @var int
+    */
     private $cols = 60;
 
+    /**
+    * Build
+    * Build textarea input field.
+    */
     function build() {
         $field = '<textarea name="' . $this->name . '"';
 
@@ -198,6 +344,14 @@ class CribzTextAreaField extends CribzFormField {
         return array('field' => $field, 'label' => $this->label);
     }
 
+    /**
+    * Validate
+    * Validate input from textarea field.
+    *
+    * @param array $data    Data from submitted form.
+    *
+    * @return false on invalid, true on valid.
+    */
     function vaildate($data) {
         if ($this->required) {
             if (!empty($data)) {
@@ -238,10 +392,23 @@ class CribzTextAreaField extends CribzFormField {
         }
     }
 
+    /**
+    * Set Value
+    * Set Value of textarea.
+    *
+    * @param mixed $value   Value to set.
+    */
     function setValue($value) {
         $this->value = $value;
     }
 
+    /**
+    * Set Size
+    * Set Size of textarea
+    *
+    * @param int $rows      Number of rows.
+    * @param int $cols      Number of columns.
+    */
     function setSize($rows, $cols) {
         $this->rows = $rows;
         $this->cols = $cols;
@@ -249,6 +416,10 @@ class CribzTextAreaField extends CribzFormField {
 }
 
 class CribzSelectField extends CribzFormField {
+    /**
+    * Build
+    * Build Select input field.
+    */
     function build() {
         $field = '<select name="' . $this->name . '"';
 
@@ -279,6 +450,14 @@ class CribzSelectField extends CribzFormField {
         return array('field' => $field, 'label' => $this->label);
     }
 
+    /**
+    * Validate
+    * Validate input from select field.
+    *
+    * @param array $data    Data from submitted form.
+    *
+    * @return false on invalid, true on valid.
+    */
     function validate($data) {
         if ($this->required) {
             if (!empty($data)) {
@@ -295,12 +474,22 @@ class CribzSelectField extends CribzFormField {
         }
     }
 
+    /**
+    * Set Value
+    * Set value of select field.
+    *
+    * @param mixed $value   Value to set.
+    */
     function setValue($value) {
         $this->value = $value;
     }
 }
 
 class CribzCheckBoxField extends CribzFormField {
+    /**
+    * Build
+    * Build checkbox input field.
+    */
     function build() {
         $field = '<input type="checkbox" name="' . $this->name . '" ';
 
@@ -313,16 +502,34 @@ class CribzCheckBoxField extends CribzFormField {
         return array('field' => $field, 'label' => $label);
     }
 
+    /**
+    * Validate
+    * Validate input from checkbox field.
+    *
+    * @param array $data    Data from submitted form.
+    *
+    * @return false on invalid, true on valid.
+    */
     function validate($data) {
         return true;
     }
 
+    /**
+    * Set Value
+    * Set value of checkbox input.
+    *
+    * @param mixed $value   Value to set.
+    */
     function setValue($value) {
         $this->value = $value;
     }
 }
 
 class CribzHiddenField extends CribzFormField {
+    /**
+    * Build
+    * Build hidden input field.
+    */
     function build() {
         $field = '<input type="hidden" name="' . $this->name . '" ';
 
@@ -334,6 +541,14 @@ class CribzHiddenField extends CribzFormField {
         return array('field' => $field);
     }
 
+    /**
+    * Validate
+    * Validate input from hidden field.
+    *
+    * @param array $data    Data from submitted form.
+    *
+    * @return false on invalid, true on valid.
+    */
     function validate($data) {
         if ($this->required) {
             if (!empty($data)) {
@@ -374,6 +589,12 @@ class CribzHiddenField extends CribzFormField {
         }
     }
 
+    /**
+    * Set Value
+    * Set Value of hidden input field.
+    *
+    * @param mixed $value   Value to set.
+    */
     function setValue($value) {
         $this->value = $value;
     }

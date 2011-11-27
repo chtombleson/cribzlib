@@ -15,7 +15,22 @@
 *    You should have received a copy of the GNU General Public License
 *    along with CribzLib.  If not, see <http://www.gnu.org/licenses/>.
 */
+/**
+* @package      CribzLib
+* @subpackage   Cribz Sessions
+* @author       Christopher Tombleson
+* @copyright    Copyright 2011 onwards
+*/
 class CribzSessions {
+    /**
+    * Set
+    * Set session.
+    *
+    * @param string $name   Name for session.
+    * @param mixed  $value  Value of session.
+    *
+    * @return true
+    */
     function set($name, $value) {
         @session_start();
         $_SESSION[$name] = $value;
@@ -23,6 +38,14 @@ class CribzSessions {
         return true;
     }
 
+    /**
+    * Get
+    * Get Session.
+    *
+    * @param string $name   Name of session.
+    *
+    * @return session data
+    */
     function get($name) {
         @session_start();
         $info = $_SESSION[$name];
@@ -30,6 +53,14 @@ class CribzSessions {
         return $info;
     }
 
+    /**
+    * Remove
+    * Remove a session.
+    *
+    * @param string $name   Name of session to remove.
+    *
+    * @return true
+    */
     function remove($name) {
         @session_start();
         unset($_SESSION[$name]);

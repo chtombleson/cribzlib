@@ -15,6 +15,12 @@
 *    You should have received a copy of the GNU General Public License
 *    along with CribzLib.  If not, see <http://www.gnu.org/licenses/>.
 */
+/**
+* @package      CribzLib
+* @subpackage   Cribz Ajax
+* @author       Christopher Tombleson
+* @copyright    Copyright 2011 onwards
+*/
 class CribzAjax {
 
     /**
