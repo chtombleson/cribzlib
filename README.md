@@ -54,7 +54,6 @@ Template File(foreach.tpl):
 PHP:
 `<?php
     $template = new CribzTemplate('foreach.tpl');
-
     $data = array();
     $data['student'][0] = new stdClass();
     $data['student'][0]->name = 'Jim Bob';
@@ -62,7 +61,6 @@ PHP:
     $data['student'][1] = new stdClass();
     $data['student'][1]->name = 'Joe Blogs';
     $data['student'][1]->grade = '95/100';
-
     $template->output($data);
 ?>`
 
