@@ -26,33 +26,40 @@ Template File(test.tpl):
 
 
 PHP:
-`<?php
-    $template = new CribzTemplate('test.tpl');\n
-    $data = array('example' => 1);\n
-    $template->output($data);\n
-?>`
+`
+<?php
+    $template = new CribzTemplate('test.tpl');
+    $data = array('example' => 1);
+    $template->output($data);
+?>
+`
 
 HTML Output:
 `<p>Template Engine Example 1<p>`
 
 #### If statments
 Template File:
-`{if $hello}
+`
+{if $hello}
     <p>Hello</p>
  {else}
     <p>No Hello</p>
- {/if}`
+ {/if}
+ `
 
 ### Foreach
 Template File(foreach.tpl):
-`<ul>
+`
+<ul>
 {foreach $student as $person}
     <li>{$person.name} has grade of {$person.grade}</li>
 {/foreach}
-</ul>`
+</ul>
+`
 
 PHP:
-`<?php
+`
+<?php
     $template = new CribzTemplate('foreach.tpl');
     $data = array();
     $data['student'][0] = new stdClass();
@@ -62,10 +69,13 @@ PHP:
     $data['student'][1]->name = 'Joe Blogs';
     $data['student'][1]->grade = '95/100';
     $template->output($data);
-?>`
+?>
+`
 
 HTML Output:
-`<ul>
+`
+<ul>
     <li>Jim Bob has a grade of 90/100</li>
     <li>Joe Blogs has a grade of 95/100</li>
-</ul>`
+</ul>
+`
