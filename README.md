@@ -19,7 +19,7 @@ Classes Included:
 
 Examples
 --------
-### Template Engine Example 
+### Template Engine Example
 #### Basics
 Template File(test.tpl):
 `<p>Template Engine Example {$example}</p>`
@@ -69,3 +69,6 @@ HTML Output:
     <li>Jim Bob has a grade of 90/100</li>
     <li>Joe Blogs has a grade of 95/100</li>
 </ul>`
+
+Also see the template directory in the examples folder for
+a better example of how to use the template engine.

@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Cribz Lib Example</title>
+</head>
+<body>
+    <p>Welcome to: Cribz Lib Example</p>
+    
+        <ul>
+                    <li>
+                <h4>Test</h4>
+                <p>The template engine work booya.</p>
+            </li>
+                    <li>
+                <h4>Test 2</h4>
+                <p>It still works hell yeah.</p>
+            </li>
+        
+        </ul>
+    
+</body>
+</html>

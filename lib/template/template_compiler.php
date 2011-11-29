@@ -39,7 +39,7 @@ class CribzTemplateCompiler {
     /**
     * Construct
     *
-    * @param string $template   Template file to compile.
+    * @param string $template   Path to template file to compile.
     * @param string $cache      Path to cache directory.
     */
     function __construct($template, $cache) {
@@ -94,7 +94,7 @@ class CribzTemplateCompiler {
                             $foreach_new = $matches[4][$i];
 
                             foreach ($vars[1] as $var) {
-                                $foreach_new = str_replace('$'.$matches[3][$i].'.'.$var, $info->$var, $foreach_new);
+                                $foreach_new = str_replace('{$'.$matches[3][$i].'.'.$var.'}', $info->$var, $foreach_new);
                             }
                             $foreach .= trim($foreach_new, "\n");
                         }
@@ -150,7 +150,7 @@ class CribzTemplateCompiler {
     */
     private function replace($tpl, $data) {
         $regex = '#(\{\$([A-Za-z0-9_]+)\})#';
-        
+
         if (!empty($data)) {
             foreach ($data as $name => $value) {
                 if (preg_match_all($regex, $tpl, $matches)) {

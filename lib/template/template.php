@@ -40,7 +40,7 @@ class CribzTemplate {
     /**
     * Construct
     *
-    * @param string $template   Template file to compile.
+    * @param string $template   Path to template file to compile.
     * @param string $cache      Path to cache directory.
     */
     function __construct($template, $cache = '/tmp/cribzcache/') {
