@@ -27,9 +27,9 @@ Template File(test.tpl):
 
 PHP:
 `<?php
-    $template = new CribzTemplate('test.tpl');
-    $data = array('example' => 1);
-    $template->output($data);
+    $template = new CribzTemplate('test.tpl');\n
+    $data = array('example' => 1);\n
+    $template->output($data);\n
 ?>`
 
 HTML Output:
