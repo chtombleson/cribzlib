@@ -14,6 +14,8 @@ Classes Included:
 *   Forms
 *   Session Utils
 *   Template Engine
+*   Exceptions
+*   Html Filters
 *   More to come
 
 
