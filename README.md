@@ -16,6 +16,7 @@ Classes Included:
 *   Template Engine
 *   Exceptions
 *   Html Filters
+*   Email Class
 *   More to come
 
 
