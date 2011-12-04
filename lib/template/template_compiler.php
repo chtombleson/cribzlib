@@ -52,10 +52,11 @@ class CribzTemplateCompiler {
     * Parse the template file and replace the place holder and compile template.
     *
     * @param array $data    Array of data that is used to replace place holders in the template.
+    * @param bool  $include If true the the template is being included into another template.
     *
     * @return string path to compiled template, or false if cache directory is writeable.
     */
-    function parse($data) {
+    function parse($data, $include = false) {
         if (!file_exists($this->cache)) {
             if (!$this->create_cache_dir($this->cache)) {
                 return false;
@@ -66,9 +67,37 @@ class CribzTemplateCompiler {
         $tpl = $this->replaceforeach($tpl, $data);
         $tpl = $this->replaceif($tpl, $data);
         $tpl = $this->replace($tpl, $data);
+        $tpl = $this->replaceInclude($tpl, $data);
         $tpl_path = $this->cache.basename($this->template).'.'.mt_rand(0, 9999);
-        file_put_contents($tpl_path, $tpl);
-        return $tpl_path;
+
+        if ($include) {
+            return $tpl;
+        } else {
+            file_put_contents($tpl_path, $tpl);
+            return $tpl_path;
+        }
+    }
+
+    /**
+    * Replace Include
+    * Compiles included templates into a template.
+    *
+    * @param string $tpl    Template file.
+    * @param array  $data   Data to be use to replace place holders.
+    *
+    * @return string template file.
+    */
+    private function replaceInclude($tpl, $data) {
+        $regex = '#(\{include="(.+)"\})#';
+
+        if (preg_match_all($regex, $tpl, $matches)) {
+            foreach ($matches[2] as $key => $include) {
+                $template = new CribzTemplateCompiler($include, $this->cache);
+                $tpl_str = $template->parse($data, true);
+                $tpl = str_replace($matches[0][$key], $tpl_str, $tpl);
+            }
+        }
+        return $tpl;
     }
 
     /**
