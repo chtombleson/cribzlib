@@ -1,15 +1,17 @@
 <?php
 class CribzLib {
     private $modules = array(
-        'Ajax' => 'ajax/ajax.php',
-        'Cookie' => 'cookie/cookies.php',
+        'Ajax' => 'ajax/ajax.php'),
+        'Cookie' => 'cookie/cookies.php'),
         'Database' => 'database/database.php',
         'Email' => 'email/email.php',
         'Form' => array('forms/formfields.php','forms/form.php'),
         'HtmlFilter' => 'htmlfilter/htmlfilter.php',
         'I18N' => 'i18n/i18n.php',
         'Session' => 'session/sessions.php',
-        'Template' => array('template/template_compiler.php','template/template.php')
+        'Template' => array('template/template_compiler.php','template/template.php'),
+        'Page' => 'page/page.php',
+        'Tidy' => 'tidy/tidy.php'
     );
 
     function loadModule($name) {

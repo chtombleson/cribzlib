@@ -4,6 +4,13 @@ Written By: Christopher Tombleson
 
 GPL V3
 
+Requirements
+------------
+*   PHP 5.3+
+*   Tidy PHP extension installed
+    [tidy on sourceforge](http://tidy.sourceforge.net/ "Tidy")
+
+
 PHP 5 Libary
 ------------
 Classes Included:
@@ -17,6 +24,8 @@ Classes Included:
 *   Exceptions
 *   Html Filters
 *   Email Class
+*   Page Class
+*   Tidy Class
 *   More to come
 
 
