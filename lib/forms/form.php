@@ -177,7 +177,7 @@ class CribzForm {
         $formbody .= "\t</li>\n";
 
         foreach ($this->elements as $element) {
-            $html = $element->render();
+            $html = $element->build();
             $formbody .= "\t<li>\n";
             
             if (isset($html['label'])) {
@@ -190,7 +190,7 @@ class CribzForm {
 
         $formbody .= "\t<li>\n";
         $formbody .= "\t\t<input type=\"submit\" name=\"submit\" value=\"Submit\" />\n";
-        $fomrbody .= "\t</li>\n";
+        $formbody .= "\t</li>\n";
         $formbody .= "</ul>\n";
         $formbtm = "</form>\n";
 

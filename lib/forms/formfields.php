@@ -130,6 +130,21 @@ class CribzFormField {
     * @param mixed $value   Value to set.
     */
     function setValue($value) {}
+
+    /**¶
+    * Get
+    * Get a class variable by name.¶
+    *
+    * @param string $name   Name of variable to get.¶
+    *
+    * @return value of class variable or null if not found.¶
+    */
+    function get($name) {
+        if (isset($this->$name)) {
+            return $this->name;
+        }
+        return null;
+    }
 }
 
 class CribzTextField extends CribzFormField {
@@ -139,22 +154,28 @@ class CribzTextField extends CribzFormField {
     * Build Text input field.
     */
     function build() {
-        $field = '<input type="text" name="' . $this->name . '" ';
+        $name = $this->get('name');
+        $class = $this->get('class');
+        $value = $this->get('value');
+        $required = $this->get('required');
+        $label = $this->get('label');
 
-        if (!empty($this->class)) {
-            $field .= 'class="' . $this->class .'" ';
+        $field = '<input type="text" name="' . $name . '" ';
+
+        if (!empty($class)) {
+            $field .= 'class="' . $class .'" ';
         }
 
-        if (!empty($this->value)) {
-            $field .= 'value="' . $this->value .' " ';
+        if (!empty($value)) {
+            $field .= 'value="' . $value .' " ';
         }
 
-        if ($this->required) {
+        if ($required) {
             $field .= 'required ';
         }
 
         $field .= '/>';
-        return array('field' => $field, 'label' => $this->label);
+        return array('field' => $field, 'label' => $label);
     }
 
     /**
@@ -165,40 +186,45 @@ class CribzTextField extends CribzFormField {
     *
     * @return false on invalid, true on valid.
     */
-    function validate($data) {
-        if ($this->required) {
+    function vaildate($data) {
+        $required = $this->get('required');
+        $minlength = $this->get('minlength');
+        $maxlength = $this->get('maxlength');
+        $regex = $this->get('regex');
+
+        if ($required) {
             if (!empty($data)) {
-                if (!empty($this->minlength)) {
-                    if (strlen($data) < $this->minlength) {
+                if (!empty($minlength)) {
+                    if (strlen($data) < $minlength) {
                         return false;
                     }
                 }
 
-                if (!empty($this->maxlength)) {
-                    if (strlen($data) > $this->maxlength) {
+                if (!empty($maxlength)) {
+                    if (strlen($data) > $maxlength) {
                         return false;
                     }
                 }
 
-                if (preg_match($this->regex, $data)) {
+                if (preg_match($regex, $data)) {
                     return true;
                 }
             }
             return false;
         } else {
-            if (!empty($this->minlength)) {
-                if (strlen($data) < $this->minlength) {
+            if (!empty($minlength)) {
+                if (strlen($data) < $minlength) {
                     return false;
                 }
             }
 
-            if (!empty($this->maxlength)) {
-                if (strlen($data) > $this->maxlength) {
+            if (!empty($maxlength)) {
+                if (strlen($data) > $maxlength) {
                     return false;
                 }
             }
 
-            if (preg_match($this->regex, $data)) {
+            if (preg_match($regex, $data)) {
                 return true;
             }
             return false;
@@ -231,16 +257,22 @@ class CribzPasswordField extends CribzFormField{
     * Build password input field.
     */
     function build() {
-        $field = '<input type="password" name="' . $this->name . '" ';
+        $name = $this->get('name');
+        $class = $this->get('class');
+        $value = $this->get('value');
+        $required = $this->get('required');
+        $label = $this->get('label');
 
-        if (!empty($this->class)) {
-            $field .= 'class="' . $this->class .'" ';
+        $field = '<input type="password" name="' . $name . '" ';
+
+        if (!empty($class)) {
+            $field .= 'class="' . $class .'" ';
         }
 
-        if ($this->required) {
+        if ($required) {
             $field .= 'required ';
         }
-        $field = '/>';
+        $field .= '/>';
 
         return array('field' => $field, 'label' => $label);
     }
@@ -253,40 +285,45 @@ class CribzPasswordField extends CribzFormField{
     *
     * @return false on invalid, true on valid.
     */
-    function validate($data) {
-        if ($this->required) {
+    function vaildate($data) {
+        $required = $this->get('required');
+        $minlength = $this->get('minlength');
+        $maxlength = $this->get('maxlength');
+        $regex = $this->get('regex');
+
+        if ($required) {
             if (!empty($data)) {
-                if (!empty($this->minlength)) {
-                    if (strlen($data) < $this->minlength) {
+                if (!empty($minlength)) {
+                    if (strlen($data) < $minlength) {
                         return false;
                     }
                 }
 
-                if (!empty($this->maxlength)) {
-                    if (strlen($data) > $this->maxlength) {
+                if (!empty($maxlength)) {
+                    if (strlen($data) > $maxlength) {
                         return false;
                     }
                 }
 
-                if (preg_match($this->regex, $data)) {
+                if (preg_match($regex, $data)) {
                     return true;
                 }
             }
             return false;
         } else {
-            if (!empty($this->minlength)) {
-                if (strlen($data) < $this->minlength) {
+            if (!empty($minlength)) {
+                if (strlen($data) < $minlength) {
                     return false;
                 }
             }
 
-            if (!empty($this->maxlength)) {
-                if (strlen($data) > $this->maxlength) {
+            if (!empty($maxlength)) {
+                if (strlen($data) > $maxlength) {
                     return false;
                 }
             }
 
-            if (preg_match($this->regex, $data)) {
+            if (preg_match($regex, $data)) {
                 return true;
             }
             return false;
@@ -322,26 +359,32 @@ class CribzTextAreaField extends CribzFormField {
     * Build textarea input field.
     */
     function build() {
-        $field = '<textarea name="' . $this->name . '"';
+        $name = $this->get('name');
+        $class = $this->get('class');
+        $value = $this->get('value');
+        $required = $this->get('required');
+        $label = $this->get('label');
 
-        if (!empty($this->class)) {
-            $field .= ' class="' . $this->class . '"';
+        $field = '<textarea name="' . $name . '"';
+
+        if (!empty($class)) {
+            $field .= ' class="' . $class . '"';
         }
 
         $field .= ' rows="' . $this->rows .'" cols="' . $this->cols . '"';
 
-        if ($this->required) {
+        if ($required) {
             $field .= ' required';
         }
 
         $field .= '>';
 
-        if (!empty($this->value)) {
-            $field .= $this->value;
+        if (!empty($value)) {
+            $field .= $value;
         }
 
         $field .= '</textarea>';
-        return array('field' => $field, 'label' => $this->label);
+        return array('field' => $field, 'label' => $label);
     }
 
     /**
@@ -353,39 +396,44 @@ class CribzTextAreaField extends CribzFormField {
     * @return false on invalid, true on valid.
     */
     function vaildate($data) {
-        if ($this->required) {
+        $required = $this->get('required');
+        $minlength = $this->get('minlength');
+        $maxlength = $this->get('maxlength');
+        $regex = $this->get('regex');
+
+        if ($required) {
             if (!empty($data)) {
-                if (!empty($this->minlength)) {
-                    if (strlen($data) < $this->minlength) {
+                if (!empty($minlength)) {
+                    if (strlen($data) < $minlength) {
                         return false;
                     }
                 }
 
-                if (!empty($this->maxlength)) {
-                    if (strlen($data) > $this->maxlength) {
+                if (!empty($maxlength)) {
+                    if (strlen($data) > $maxlength) {
                         return false;
                     }
                 }
 
-                if (preg_match($this->regex, $data)) {
+                if (preg_match($regex, $data)) {
                     return true;
                 }
             }
             return false;
         } else {
-            if (!empty($this->minlength)) {
-                if (strlen($data) < $this->minlength) {
+            if (!empty($minlength)) {
+                if (strlen($data) < $minlength) {
                     return false;
                 }
             }
 
-            if (!empty($this->maxlength)) {
-                if (strlen($data) > $this->maxlength) {
+            if (!empty($maxlength)) {
+                if (strlen($data) > $maxlength) {
                     return false;
                 }
             }
 
-            if (preg_match($this->regex, $data)) {
+            if (preg_match($regex, $data)) {
                 return true;
             }
             return false;
@@ -421,33 +469,40 @@ class CribzSelectField extends CribzFormField {
     * Build Select input field.
     */
     function build() {
-        $field = '<select name="' . $this->name . '"';
+        $name = $this->get('name');
+        $class = $this->get('class');
+        $value = $this->get('value');
+        $required = $this->get('required');
+        $label = $this->get('label');
+        $options = $this->get('options');
 
-        if (!empty($this->class)) {
-            $field .= ' class="' . $this->class . '"';
+        $field = '<select name="' . $name . '"';
+
+        if (!empty($class)) {
+            $field .= ' class="' . $class . '"';
         }
 
-        if ($this->required) {
+        if ($required) {
             $field .= ' required';
         }
 
         $field .= '>';
 
-        if (!empty($this->options)) {
-            foreach ($this->options as $name => $value) {
-                $field .= '<option value="' . $value . '"';
+        if (!empty($options)) {
+            foreach ($options as $key => $val) {
+                $field .= '<option value="' . $val . '"';
 
-                if (!empty($this->value) && ($this->value == $value)) {
+                if (!empty($value) && ($value == $val)) {
                     $field .= ' selected';
                 }
                 $field .= '>';
-                $field .= $name;
+                $field .= $key;
                 $field .= '</option>';
             }
         }
         $field .= '</select>';
 
-        return array('field' => $field, 'label' => $this->label);
+        return array('field' => $field, 'label' => $label);
     }
 
     /**
@@ -459,15 +514,18 @@ class CribzSelectField extends CribzFormField {
     * @return false on invalid, true on valid.
     */
     function validate($data) {
-        if ($this->required) {
+        $required = $this->get('required');
+        $options = $this->get('options');
+
+        if ($required) {
             if (!empty($data)) {
-                if (in_array($data, $this->options)) {
+                if (in_array($data, $options)) {
                     return true;
                 }
             }
             return false;
         } else {
-            if (in_array($data, $this->options)) {
+            if (in_array($data, $options)) {
                 return true;
             }
             return false;
@@ -491,13 +549,19 @@ class CribzCheckBoxField extends CribzFormField {
     * Build checkbox input field.
     */
     function build() {
-        $field = '<input type="checkbox" name="' . $this->name . '" ';
+        $name = $this->get('name');
+        $class = $this->get('class');
+        $value = $this->get('value');
+        $required = $this->get('required');
+        $label = $this->get('label');
 
-        if (isset($this->value)) {
-            $field .= 'value="' . $this->value . '" ';
+        $field = '<input type="checkbox" name="' . $name . '" ';
+
+        if (isset($value)) {
+            $field .= 'value="' . $value . '" ';
         }
 
-        $field = '/>';
+        $field .= '/>';
 
         return array('field' => $field, 'label' => $label);
     }
@@ -531,10 +595,13 @@ class CribzHiddenField extends CribzFormField {
     * Build hidden input field.
     */
     function build() {
-        $field = '<input type="hidden" name="' . $this->name . '" ';
+        $name = $this->get('name');
+        $value = $this->get('value');
 
-        if (isset($this->value)) {
-            $field .= 'value="' . $this->value .' " ';
+        $field = '<input type="hidden" name="' . $name . '" ';
+
+        if (isset($value)) {
+            $field .= 'value="' . $value .' " ';
         }
         $field .= '/>';
 
@@ -550,39 +617,44 @@ class CribzHiddenField extends CribzFormField {
     * @return false on invalid, true on valid.
     */
     function validate($data) {
-        if ($this->required) {
+        $required = $this->get('required');
+        $minlength = $this->get('minlength');
+        $maxlength = $this->get('maxlength');
+        $regex = $this->get('regex');
+
+        if ($required) {
             if (!empty($data)) {
-                if (!empty($this->minlength)) {
-                    if (strlen($data) < $this->minlength) {
+                if (!empty($minlength)) {
+                    if (strlen($data) < $minlength) {
                         return false;
                     }
                 }
 
-                if (!empty($this->maxlength)) {
-                    if (strlen($data) > $this->maxlength) {
+                if (!empty($maxlength)) {
+                    if (strlen($data) > $maxlength) {
                         return false;
                     }
                 }
 
-                if (preg_match($this->regex, $data)) {
+                if (preg_match($regex, $data)) {
                     return true;
                 }
             }
             return false;
         } else {
-            if (!empty($this->minlength)) {
-                if (strlen($data) < $this->minlength) {
+            if (!empty($minlength)) {
+                if (strlen($data) < $minlength) {
                     return false;
                 }
             }
 
-            if (!empty($this->maxlength)) {
-                if (strlen($data) > $this->maxlength) {
+            if (!empty($maxlength)) {
+                if (strlen($data) > $maxlength) {
                     return false;
                 }
             }
 
-            if (preg_match($this->regex, $data)) {
+            if (preg_match($regex, $data)) {
                 return true;
             }
             return false;
