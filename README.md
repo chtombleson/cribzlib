@@ -8,7 +8,7 @@ Requirements
 ------------
 *   PHP 5.3+
 *   Tidy PHP extension installed([tidy on sourceforge](http://tidy.sourceforge.net/ "Tidy"))
-
+*   Pspell PHP extension ([pspell php docs](http://php.net/manual/en/pspell.requirements.php "Pspell"))
 
 PHP 5 Libary
 ------------
@@ -25,6 +25,7 @@ Classes Included:
 *   Email Class
 *   Page Class
 *   Tidy Class
+*   Spellchecker
 *   More to come
 
 
