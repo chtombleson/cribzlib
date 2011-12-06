@@ -8,9 +8,10 @@ class CribzLib {
         'Form' => array('forms/formfields.php','forms/form.php'),
         'HtmlFilter' => 'htmlfilter/htmlfilter.php',
         'I18N' => 'i18n/i18n.php',
-        'Session' => 'session/sessions.php',
-        'Template' => array('template/template_compiler.php','template/template.php'),
         'Page' => 'page/page.php',
+        'Session' => 'session/sessions.php',
+        'Spellchecker' => array('spellchecker/spellchecker.php', 'spellchecker/spellchecker_langs.php', 'spellchecker/spellchecker_country.php'),
+        'Template' => array('template/template_compiler.php','template/template.php'),
         'Tidy' => 'tidy/tidy.php'
     );
 
