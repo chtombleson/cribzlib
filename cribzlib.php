@@ -3,11 +3,13 @@ class CribzLib {
     private $modules = array(
         'Ajax' => 'ajax/ajax.php'),
         'Cookie' => 'cookie/cookies.php'),
+        'CountryCodes' => 'misc/countries.php',
         'Database' => 'database/database.php',
         'Email' => 'email/email.php',
         'Form' => array('forms/formfields.php','forms/form.php'),
         'HtmlFilter' => 'htmlfilter/htmlfilter.php',
         'I18N' => 'i18n/i18n.php',
+        'LanguageCodes' => 'misc/langs.php',
         'Page' => 'page/page.php',
         'Session' => 'session/sessions.php',
         'Spellchecker' => array('spellchecker/spellchecker.php', 'misc/langs.php', 'misc/countries.php'),
