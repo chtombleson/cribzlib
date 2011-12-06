@@ -72,11 +72,9 @@ class CribzSpellchecker {
     * @return true if valid and set or false on error.
     */
     function setLang($lang) {
-        require_once('spellchecker_langs.php');
-        require_once('spellchecker_country.php');
-        
+        global $langcodes, $countrycodes;
         $langcodes = array_keys($langcodes);
-        $countrycodes = array_keys($countries);
+        $countrycodes = array_keys($countrycodes);
 
         if (strpos('-', $lang) !== false) {
             $langpart = explode('-', $lang);

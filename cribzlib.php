@@ -10,7 +10,7 @@ class CribzLib {
         'I18N' => 'i18n/i18n.php',
         'Page' => 'page/page.php',
         'Session' => 'session/sessions.php',
-        'Spellchecker' => array('spellchecker/spellchecker.php', 'spellchecker/spellchecker_langs.php', 'spellchecker/spellchecker_country.php'),
+        'Spellchecker' => array('spellchecker/spellchecker.php', 'misc/langs.php', 'misc/countries.php'),
         'Template' => array('template/template_compiler.php','template/template.php'),
         'Tidy' => 'tidy/tidy.php'
     );
