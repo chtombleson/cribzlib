@@ -132,6 +132,8 @@ class CribzDatabase {
     /**
     * Connect
     * Connect to the database
+    *
+    * @return false on error.
     */
     function connect() {
         try {
@@ -146,6 +148,7 @@ class CribzDatabase {
 
         } catch (PDOException $e) {
             $this->errors['PDO_Connect_Error'] = $e->getMessage();
+            return false;
         }
     }
 
