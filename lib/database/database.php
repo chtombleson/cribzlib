@@ -138,14 +138,13 @@ class CribzDatabase {
     function connect() {
         try {
             $this->dsn = $this->driver . ':' . 'host=' . $this->host . ';' .
-                         'dbname=' . $this->name . ';';
+                        'dbname=' . $this->name;
 
             if (!empty($this->port)) {
-                $this->dsn .= 'port=' . $this->port;
+                $this->dsn .= ';port=' . $this->port;
             }
 
-            $this->database = new PDO($dsn, $this->user, $this->pass);
-
+            $this->database = new PDO($this->dsn, $this->user, $this->pass);
         } catch (PDOException $e) {
             $this->errors['PDO_Connect_Error'] = $e->getMessage();
             return false;
@@ -194,12 +193,12 @@ class CribzDatabase {
     */
     function execute_sql($sql, $params = array()) {
         $this->queries[] = $sql;
-        $this->query_params = $params;
+        $this->query_params[] = $params;
 
-        $this->statments[] = $this->database->prepare($sql);
+        $this->statements[] = $this->database->prepare($sql);
 
         if ($this->statements[count($this->statements) - 1]->execute($params) === false) {
-            $this->errors['PDO_Statment_Execute_Error'][count($this->statments) - 1] = 'Query Could Not Be Executed';
+            $this->errors['PDO_Statment_Execute_Error'][count($this->statements) - 1] = 'Query Could Not Be Executed';
             return false;
         }
         return true;
@@ -446,9 +445,12 @@ class CribzDatabase {
         }
 
         $sql = file_get_contents($file);
+        $commands = explode(';', $sql);
 
-        if (!$this->execute_sql($sql)) {
-            return false;
+        foreach ($commands as $command) {
+            if (!$this->execute_sql($command)) {
+                return false;
+            }
         }
 
         return true;
