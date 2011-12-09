@@ -254,7 +254,7 @@ class CribzDatabase {
     * @return record
     */
     function fetch($fetch = PDO::FETCH_OBJ) {
-        return $this->statements[count($this->statments) - 1]->fetch($fetch);
+        return $this->statements[count($this->statements) - 1]->fetch($fetch);
     }
 
     /**
@@ -266,7 +266,7 @@ class CribzDatabase {
     * @return array of records
     */
     function fetchAll($fetch = PDO::FETCH_OBJ) {
-        return $this->statements[count($this->statments) - 1]->fetchAll($fetch);
+        return $this->statements[count($this->statements) - 1]->fetchAll($fetch);
     }
 
     /**
@@ -307,7 +307,11 @@ class CribzDatabase {
     * @return false on error
     */
     function update($table, $record) {
-        if (!isset($record->id) || !isset($record['id'])) {
+        if (!isset($record->id)) {
+            return false;
+        }
+
+        if (is_array($record) && !isset($record['id'])) {
             return false;
         }
 
@@ -323,7 +327,7 @@ class CribzDatabase {
 
         $sql = trim($sql, ', ');
         $sql .= ' WHERE id=?';
-        $params[] = isset($record['id']) ? $record['id'] : $record->id;
+        $params[] = (is_array($record) && isset($record['id'])) ? $record['id'] : $record->id;
 
         if (!$this->execute_sql($sql, $params)) {
             return false;
