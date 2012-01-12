@@ -1,5 +1,9 @@
 <?php
-require_once(dirname(__FILE__).'/../../lib/template/template.php');
+require_once(dirname(__FILE__).'/../../cribzlib.php');
+$cribzlib = new CribzLib();
+
+// Load the Template module
+$cribzlib->loadModule('Template');
 
 // Creating new instance of template class
 // First Parameter is path to template file to compile.
