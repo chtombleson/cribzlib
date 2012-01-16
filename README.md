@@ -34,7 +34,7 @@ Examples
 ### Template Engine Example
 #### Basics
 Template File(test.tpl):
-`<p>Template Engine Example {$example}</p>`
+`<p>Template Engine Example %%$example%%</p>`
 
 
 PHP:
@@ -58,9 +58,9 @@ Template File:
 ### Foreach
 Template File(foreach.tpl):
 `<ul>
-{foreach $student as $person}
-    <li>{$person.name} has grade of {$person.grade}</li>
-{/foreach}
+(foreach $student as $person)
+    <li>&&$person.name&& has grade of &&$person.grade&&</li>
+(/foreach)
 </ul>`
 
 PHP:

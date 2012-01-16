@@ -13,10 +13,10 @@ $cribz_template = new CribzTemplate(dirname(__FILE__).'/template.tpl', dirname(_
 // Time to define the data to be inputed into the template
 $data = array();
 
-// Define sitename to replace tag {$sitename} in the template.
+// Define sitename to replace tag %%$sitename%% in the template.
 $data['sitename'] = 'Cribz Lib Example';
 
-// Define some news for the {foreach $new as $newsitem} loop
+// Define some news for the (foreach $new as $newsitem) loop
 $data['news'][0] = new stdClass();
 $data['news'][0]->name = 'Test';
 $data['news'][0]->description = 'The template engine work booya.';

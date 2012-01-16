@@ -1,17 +1,17 @@
 <html>
 <head>
-    <title>{$sitename}</title>
+    <title>%%$sitename%%</title>
 </head>
 <body>
-    <p>Welcome to: {$sitename}</p>
+    <p>Welcome to: %%$sitename%%</p>
     {if $news}
         <ul>
-        {foreach $news as $newsitem}
+        (foreach $news as $newsitem)
             <li>
-                <h4>{$newsitem.name}</h4>
-                <p>{$newsitem.description}</p>
+                <h4>&&$newsitem.name&&</h4>
+                <p>&&$newsitem.description&&</p>
             </li>
-        {/foreach}
+        (/foreach)
         </ul>
     {else}
         <p>No News Today</p>

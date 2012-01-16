@@ -64,8 +64,8 @@ class CribzTemplateCompiler {
         }
 
         $tpl = file_get_contents($this->template);
-        $tpl = $this->replaceforeach($tpl, $data);
         $tpl = $this->replaceif($tpl, $data);
+        $tpl = $this->replaceforeach($tpl, $data);
         $tpl = $this->replace($tpl, $data);
         $tpl = $this->replaceInclude($tpl, $data);
         $tpl_path = $this->cache.basename($this->template).'.'.mt_rand(0, 9999);
@@ -88,7 +88,7 @@ class CribzTemplateCompiler {
     * @return string template file.
     */
     private function replaceInclude($tpl, $data) {
-        $regex = '#(\{include="(.+)"\})#';
+        $regex = '#(\{include="([^"]+)"\})#';
 
         if (preg_match_all($regex, $tpl, $matches)) {
             foreach ($matches[2] as $key => $include) {
@@ -111,23 +111,30 @@ class CribzTemplateCompiler {
     * @return string template file.
     */
     private function replaceforeach($tpl, $data) {
-        $regex = '#(\{foreach \$([A-Za-z0-9_]+) as \$([A-Za-z0-9_]+)\}(.*)\{\/foreach\})#s';
-
+        $regex = '#\(foreach \$([A-Za-z0-9_]+) as \$([A-Za-z0-9_]+)\)([^\(]+)\(\/foreach\)#s';
         if (preg_match_all($regex, $tpl, $matches)) {
             for ($i=0; $i < count($matches[0]); $i++) {
                 $foreach = '';
-
-                if (isset($data[$matches[2][$i]]) && !empty($data[$matches[2][$i]])) {
-                    if (preg_match_all('#\$'.$matches[3][$i].'\.([A-Za-z0-9_]+)#s', $matches[4][$i], $vars)) {
-                        foreach ($data[$matches[2][$i]] as $info) {
-                            $foreach_new = $matches[4][$i];
-
+                if (isset($data[$matches[1][$i]]) && !empty($data[$matches[1][$i]])) {
+                    if (preg_match_all('#&&\$'.$matches[2][$i].'\.([A-Za-z0-9_]+)&&#', $matches[3][$i], $vars)) {
+                        foreach ($data[$matches[1][$i]] as $info) {
+                            $foreach_new = $matches[3][$i];
                             foreach ($vars[1] as $var) {
-                                $foreach_new = str_replace('{$'.$matches[3][$i].'.'.$var.'}', $info->$var, $foreach_new);
+                                $foreach_new = str_replace('&&$'.$matches[2][$i].'.'.$var.'&&', $info->$var, $foreach_new);
                             }
                             $foreach .= trim($foreach_new, "\n");
                         }
                     }
+
+                    if (preg_match('#&&\$'.$matches[2][$i].'&&#s', $matches[3][$i])) {
+                        foreach ($data[$matches[1][$i]] as $info) {
+                            $foreach_new = $matches[3][$i];
+                            $foreach_new = str_replace('&&$'.$matches[2][$i].'&&', $info, $foreach_new);
+                            $foreach .= trim($foreach_new, "\n");
+                        }
+                    }
+                    $tpl = str_replace($matches[0][$i], $foreach, $tpl);
+                } else {
                     $tpl = str_replace($matches[0][$i], $foreach, $tpl);
                 }
             }
@@ -145,23 +152,14 @@ class CribzTemplateCompiler {
     * @return string template file.
     */
     private function replaceif($tpl, $data) {
-        $regex = '#(\{if \$([A-Za-z0-9_]+)\}(.*)\{\/if\})#s';
-
+        $regex = '#{if \$([A-Za-z0-9_]+)}([^{]+)({else}([^{]+))?{\/if}#';
         if (preg_match_all($regex, $tpl, $matches)) {
-            for ($i=0; $i < count($matches[0]); $i++) {
-                if (isset($data[$matches[2][$i]]) && !empty($data[$matches[2][$i]])) {
-                    if (preg_match('#(\{else\}(.*))#s', $matches[3][$i], $else_match)) {
-                        $tpl = str_replace($else_match[0], '', $tpl);
-                    }
-
-                    $tpl = str_replace("{if \$".$matches[2][$i]."}", '', $tpl);
-                    $tpl = str_replace("{/if}", '', $tpl);
+            $matchcount = count($matches[0]);
+            for ($i=0; $i < $matchcount; $i++) {
+                if (isset($data[$matches[1][$i]]) && !empty($data[$matches[1][$i]])) {
+                    $tpl = str_replace($matches[0][$i], $matches[2][$i], $tpl);
                 } else {
-                    if (preg_match('#((.*)\{else\}(.*))#s', $matches[3][$i], $else_match)) {
-                        $tpl = str_replace($else_match[0], $else_match[3], $tpl);
-                    }
-                    $tpl = str_replace("{if \$".$matches[2][$i]."}", '', $tpl);
-                    $tpl = str_replace("{/if}", '', $tpl);
+                    $tpl = str_replace($matches[0][$i], $matches[4][$i], $tpl);
                 }
             }
         }
@@ -178,14 +176,13 @@ class CribzTemplateCompiler {
     * @return string template file.
     */
     private function replace($tpl, $data) {
-        $regex = '#(\{\$([A-Za-z0-9_]+)\})#';
-
+        $regex = '#%%\$([A-Za-z0-9_]+)%%#';
         if (!empty($data)) {
             foreach ($data as $name => $value) {
                 if (preg_match_all($regex, $tpl, $matches)) {
-                    foreach ($matches[2] as $match) {
+                    foreach ($matches[1] as $match) {
                         if ($match == $name) {
-                            $tpl = preg_replace('#(\{\$('.$name.')\})#', $value, $tpl);
+                            $tpl = preg_replace('#%%\$('.$name.')%%#', $value, $tpl);
                         }
                     }
                 }
