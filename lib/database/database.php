@@ -227,7 +227,7 @@ class CribzDatabase {
             $sql .= $fields;
         }
 
-        $sql .= 'FROM ' . $table;
+        $sql .= ' FROM ' . $table;
 
         if (!empty($where)) {
             $sql .= ' WHERE ';
