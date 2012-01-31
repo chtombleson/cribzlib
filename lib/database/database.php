@@ -101,6 +101,13 @@ class CribzDatabase {
     private $port;
 
     /**
+    * Database Driver Options
+    *
+    * @var array
+    */
+    private $options;
+
+    /**
     * Database Connection String
     *
     * @var string
@@ -116,8 +123,9 @@ class CribzDatabase {
     * @param string $user       Database User
     * @param string $pass       Database Pass
     * @param int    $port       Database Port (Optional)
+    * @param array  $options    Database Driver Options (Optional)
     */
-    function __construct($driver, $host, $name, $user, $pass, $port = null) {
+    function __construct($driver, $host, $name, $user, $pass, $port = null, $options = array()) {
         $this->setDriver($driver);
         $this->setHost($host);
         $this->setName($name);
@@ -126,6 +134,10 @@ class CribzDatabase {
 
         if (!empty($port)) {
             $this->setPort($port);
+        }
+
+        if (!empty($options)) {
+            $this->setOptions($options);
         }
     }
 
@@ -137,18 +149,39 @@ class CribzDatabase {
     */
     function connect() {
         try {
-            $this->dsn = $this->driver . ':' . 'host=' . $this->host . ';' .
-                        'dbname=' . $this->name;
+            if ($this->driver == 'sqlite') {
+                $this->dsn = $this->driver . ':' . $this->name;
+                $this->database = new PDO($this->dsn);
 
-            if (!empty($this->port)) {
-                $this->dsn .= ';port=' . $this->port;
+            } else {
+                $this->dsn = $this->driver . ':' . 'host=' . $this->host . ';' . 'dbname=' . $this->name;
+
+                if (!empty($this->port)) {
+                    $this->dsn .= ';port=' . $this->port;
+                }
+
+                if (!empty($this->options)) {
+                    $this->database = new PDO($this->dsn, $this->user, $this->pass, $this->options);
+                } else {
+                    $this->database = new PDO($this->dsn, $this->user, $this->pass);
+                }
             }
-
-            $this->database = new PDO($this->dsn, $this->user, $this->pass);
         } catch (PDOException $e) {
             $this->errors['PDO_Connect_Error'] = $e->getMessage();
             return false;
         }
+    }
+
+    /**
+    * Set Attribute
+    *
+    * @param int $attribute PDO Attribute Option
+    * @param mixed $value   Value to set attribute to
+    *
+    * @return true on success or fail on failure.
+    */
+    function setAttribute($attribute, $value) {
+        return $this->database->setAttribute($attribute, $value);
     }
 
     /**
@@ -486,6 +519,10 @@ class CribzDatabase {
 
     private function setPass($pass) {
         $this->pass = $pass;
+    }
+
+    private function setOptions($options) {
+        $this->options = $options;
     }
 }
 ?>
