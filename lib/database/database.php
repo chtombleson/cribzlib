@@ -450,7 +450,7 @@ class CribzDatabase {
     * Create Table
     *
     * @param string $name       Name of new table
-    * @param array  $tabledef   Array of column => column definition
+    * @param array  $tabledef   Array of column name => column definition
     *
     * @return false on error
     */
