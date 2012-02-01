@@ -10,6 +10,7 @@ class CribzLib {
         'HtmlFilter' => array('htmlfilter/htmlfilter.php'),
         'I18N' => array('i18n/i18n.php'),
         'LanguageCodes' => array('misc/langs.php'),
+        'Memcached' => array('memcached/memcached.php'),
         'Page' => array('page/page.php'),
         'Session' => array('session/sessions.php'),
         'Spellchecker' => array('spellchecker/spellchecker.php', 'misc/langs.php', 'misc/countries.php'),
