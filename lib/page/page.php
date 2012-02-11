@@ -21,7 +21,7 @@
 * @author       Christopher Tombleson
 * @copyright    Copyright 2011 onwards
 */
-require_once('../../cribzlib.php');
+require_once(dirname(__FILE__).'/../../cribzlib.php');
 class CribzPage {
     /**
     * Cribz Lib

@@ -21,6 +21,7 @@
 * @author       Christopher Tombleson
 * @copyright    Copyright 2011 onwards
 */
+require_once(dirname(__FILE__).'/../../cribzlib.php');
 class CribzSpellchecker {
     /**
     * Lang

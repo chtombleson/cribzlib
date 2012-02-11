@@ -21,6 +21,7 @@
 * @author       Christopher Tombleson
 * @copyright    Copyright 2011 onwards
 */
+require_once(dirname(__FILE__).'/../../cribzlib.php');
 require_once(dirname(__FILE__).'/template_compiler.php');
 class CribzTemplate {
     /**
@@ -38,14 +39,23 @@ class CribzTemplate {
     private $cache;
 
     /**
+    * Memcache
+    *
+    * @var bool
+    */
+    private $memcache;
+
+    /**
     * Construct
     *
     * @param string $template   Path to template file to compile.
+    * @param array  $memcache   Memcache server details for storing compiled templates.
     * @param string $cache      Path to cache directory.
     */
-    function __construct($template, $cache = '/tmp/cribzcache/') {
+    function __construct($template, $memcache = array(), $cache = '/tmp/cribzcache/') {
         $this->template = $template;
         $this->cache = $cache;
+        $this->memcache = $memcache;
     }
 
     /**
@@ -55,9 +65,20 @@ class CribzTemplate {
     * @param array $data    Array of data to be passed to the compiler.
     */
     function output($data = array()) {
-        $compiler = new CribzTemplateCompiler($this->template, $this->cache);
+        $compiler = new CribzTemplateCompiler($this->template, $this->memcache, $this->cache);
         $template_path = $compiler->parse($data);
-        echo file_get_contents($template_path);
+
+        if (!empty($this->memcache)) {
+            $cribzlib = new CribzLib();
+            $cribzlib->loadModule('Memcached');
+
+            $memcache = new CribzMemcached();
+            $memcache->addServer($this->memcache['host'], $this->memcache['port'], $this->memcache['weight']);
+
+            echo $memcache->get($template_path);
+        } else {
+            echo file_get_contents($template_path);
+        }
     }
 }
 ?>

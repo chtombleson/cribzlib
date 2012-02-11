@@ -37,14 +37,23 @@ class CribzTemplateCompiler {
     private $template;
 
     /**
+    * Memcache
+    *
+    * @var bool
+    */
+    private $memcache;
+
+    /**
     * Construct
     *
     * @param string $template   Path to template file to compile.
+    * @param array  $memcache   Memcache server details.
     * @param string $cache      Path to cache directory.
     */
-    function __construct($template, $cache) {
+    function __construct($template, $memcache, $cache) {
         $this->template = $template;
         $this->cache = $cache;
+        $this->memcache = $memcache;
     }
 
     /**
@@ -68,13 +77,25 @@ class CribzTemplateCompiler {
         $tpl = $this->replaceforeach($tpl, $data);
         $tpl = $this->replace($tpl, $data);
         $tpl = $this->replaceInclude($tpl, $data);
-        $tpl_path = $this->cache.basename($this->template).'.'.mt_rand(0, 9999);
+        $tpl_filename = basename($this->template).'.'.mt_rand(0, 9999);
+        $tpl_path = $this->cache.$tpl_filename;
 
         if ($include) {
             return $tpl;
         } else {
-            file_put_contents($tpl_path, $tpl);
-            return $tpl_path;
+            if (!empty($this->memcache)) {
+                $cribzlib = new CribzLib();
+                $cribzlib->loadModule('Memcached');
+
+                $memcache = new CribzMemcached();
+                $memcache->addServer($this->memcache['host'], $this->memcache['port'], $this->memcache['weight']);
+
+                $memcache->add($tpl_filename, $tpl, 10);
+                return $tpl_filename;
+            } else {
+                file_put_contents($tpl_path, $tpl);
+                return $tpl_path;
+            }
         }
     }
 
