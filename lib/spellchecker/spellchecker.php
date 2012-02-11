@@ -43,6 +43,10 @@ class CribzSpellchecker {
     * @param int    $mode       Mode to be passed to pspell(Optional).
     */
     function __construct($lang, $mode = PSPELL_NORMAL) {
+        $cribzlib = new CribzLib();
+        $cribzlib->loadModule('LanguageCodes');
+        $cribzlib->loadModule('CountryCodes');
+
         $this->setMode($mode);
         $this->setLang($lang);
     }
