@@ -113,7 +113,7 @@ class CribzTemplateCompiler {
 
         if (preg_match_all($regex, $tpl, $matches)) {
             foreach ($matches[2] as $key => $include) {
-                $template = new CribzTemplateCompiler($include, $this->cache);
+                $template = new CribzTemplateCompiler($include, $this->memcache, $this->cache);
                 $tpl_str = $template->parse($data, true);
                 $tpl = str_replace($matches[0][$key], $tpl_str, $tpl);
             }
