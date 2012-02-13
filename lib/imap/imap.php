@@ -83,13 +83,6 @@ class CribzImap {
     }
 
     /**
-    * Destruct
-    */
-    function __destruct() {
-        $this->close();
-    }
-
-    /**
     * Connect
     * Open a Imap stream
     *
@@ -141,7 +134,7 @@ class CribzImap {
 
         $list = imap_list($this->imap, $server, "*");
 
-        if (is_array($list)) {]
+        if (is_array($list)) {
             return $list;
         }
 
