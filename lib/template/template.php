@@ -73,7 +73,13 @@ class CribzTemplate {
             $cribzlib->loadModule('Memcached');
 
             $memcache = new CribzMemcached();
-            $memcache->addServer($this->memcache['host'], $this->memcache['port'], $this->memcache['weight']);
+            foreach ($this->memcache as $memcache_server) {
+                if (is_array($memcache_server)) {
+                    $memcache->addServer($memcache_server['host'], $memcache_server['port'], $memcache_server['weight']);
+                } else {
+                    $memcache->addServer($this->memcache['host'], $this->memcache['port'], $this->memcache['weight']);
+                }
+            }
 
             echo $memcache->get($template_path);
         } else {
