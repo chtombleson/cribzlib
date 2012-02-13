@@ -9,6 +9,7 @@ class CribzLib {
         'Form' => array('forms/formfields.php','forms/form.php'),
         'HtmlFilter' => array('htmlfilter/htmlfilter.php'),
         'I18N' => array('i18n/i18n.php'),
+        'Imap' => array('imap/imap.php'),
         'LanguageCodes' => array('misc/langs.php'),
         'Memcached' => array('memcached/memcached.php'),
         'Page' => array('page/page.php'),
