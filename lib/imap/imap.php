@@ -194,5 +194,21 @@ class CribzImap {
 
         return $body;
     }
+
+    /**
+    * Set flag
+    * Set a flag on a message
+    *
+    * @param int    $msgid      Message to flag
+    * @param string $flag       Flags to add to message
+    *
+    * @return true on success or false on failure
+    */
+    function set_flag($msgid, $flag) {
+        if (imap_setflag_full($this->imap, imap_uid($this->imap, $msgid), $flag, ST_UID)) {
+            return true;
+        }
+        return false;
+    }
 }
 ?>
