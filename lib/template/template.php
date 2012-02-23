@@ -41,7 +41,7 @@ class CribzTemplate {
     /**
     * Memcache
     *
-    * @var bool
+    * @var CribzMemcache Object
     */
     private $memcache;
 
@@ -49,10 +49,10 @@ class CribzTemplate {
     * Construct
     *
     * @param string $template   Path to template file to compile.
-    * @param array  $memcache   Memcache server details for storing compiled templates.
+    * @param object $memcache   CribzMemcache object.
     * @param string $cache      Path to cache directory.
     */
-    function __construct($template, $memcache = array(), $cache = '/tmp/cribzcache/') {
+    function __construct($template, $memcache = null, $cache = '/tmp/cribzcache/') {
         $this->template = $template;
         $this->cache = $cache;
         $this->memcache = $memcache;
@@ -69,19 +69,7 @@ class CribzTemplate {
         $template_path = $compiler->parse($data);
 
         if (!empty($this->memcache)) {
-            $cribzlib = new CribzLib();
-            $cribzlib->loadModule('Memcached');
-
-            $memcache = new CribzMemcached();
-            foreach ($this->memcache as $memcache_server) {
-                if (is_array($memcache_server)) {
-                    $memcache->addServer($memcache_server['host'], $memcache_server['port'], $memcache_server['weight']);
-                } else {
-                    $memcache->addServer($this->memcache['host'], $this->memcache['port'], $this->memcache['weight']);
-                }
-            }
-
-            echo $memcache->get($template_path);
+            echo $this->memcache->get($template_path);
         } else {
             echo file_get_contents($template_path);
         }

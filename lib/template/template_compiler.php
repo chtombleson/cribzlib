@@ -39,7 +39,7 @@ class CribzTemplateCompiler {
     /**
     * Memcache
     *
-    * @var bool
+    * @var CribzMemcache Object
     */
     private $memcache;
 
@@ -47,7 +47,7 @@ class CribzTemplateCompiler {
     * Construct
     *
     * @param string $template   Path to template file to compile.
-    * @param array  $memcache   Memcache server details.
+    * @param object $memcache   CribzMemcache Object.
     * @param string $cache      Path to cache directory.
     */
     function __construct($template, $memcache, $cache) {
@@ -84,19 +84,7 @@ class CribzTemplateCompiler {
             return $tpl;
         } else {
             if (!empty($this->memcache)) {
-                $cribzlib = new CribzLib();
-                $cribzlib->loadModule('Memcached');
-
-                $memcache = new CribzMemcached();
-                foreach ($this->memcache as $memcache_server) {
-                    if (is_array($memcache_server)) {
-                        $memcache->addServer($memcache_server['host'], $memcache_server['port'], $memcache_server['weight']);
-                    } else {
-                        $memcache->addServer($this->memcache['host'], $this->memcache['port'], $this->memcache['weight']);
-                    }
-                }
-
-                $memcache->add($tpl_filename, $tpl, 10);
+                $this->memcache->add($tpl_filename, $tpl, 10);
                 return $tpl_filename;
             } else {
                 file_put_contents($tpl_path, $tpl);
