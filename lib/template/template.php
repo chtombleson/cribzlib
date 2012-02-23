@@ -69,9 +69,10 @@ class CribzTemplate {
         $template_path = $compiler->parse($data);
 
         if (!empty($this->memcache)) {
-            echo $this->memcache->get($template_path);
+            $tpl = $this->memcache->get($template_path);
+            @eval(' ?>'.$tpl.'<?php ');
         } else {
-            echo file_get_contents($template_path);
+            include($template_path);
         }
     }
 }

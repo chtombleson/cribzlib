@@ -66,30 +66,56 @@ class CribzTemplateCompiler {
     * @return string path to compiled template, or false if cache directory is writeable.
     */
     function parse($data, $include = false) {
-        if (!file_exists($this->cache)) {
-            if (!$this->create_cache_dir($this->cache)) {
-                return false;
+        if (empty($this->memcache)) {
+            if (!file_exists($this->cache)) {
+                if (!$this->create_cache_dir($this->cache)) {
+                    return false;
+                }
             }
         }
 
-        $tpl = file_get_contents($this->template);
-        $tpl = $this->replaceif($tpl, $data);
-        $tpl = $this->replaceforeach($tpl, $data);
-        $tpl = $this->replace($tpl, $data);
-        $tpl = $this->replaceInclude($tpl, $data);
-        $tpl_filename = basename($this->template).'.'.mt_rand(0, 9999);
+        $tpl_filename = basename($this->template).'.php';
         $tpl_path = $this->cache.$tpl_filename;
 
-        if ($include) {
-            return $tpl;
-        } else {
-            if (!empty($this->memcache)) {
-                $this->memcache->add($tpl_filename, $tpl, 10);
+        if (!empty($this->memcache)) {
+            $mem_file = $this->memcache->get($tpl_filename);
+            if (empty($mem_file)) {
+                $tpl = file_get_contents($this->template);
+                $tpl = $this->replaceif($tpl, $data);
+                $tpl = $this->replaceforeach($tpl, $data);
+                $tpl = $this->replace($tpl, $data);
+                $tpl = $this->replaceInclude($tpl, $data);
+
+                if ($include) {
+                    return $tpl;
+                } else {
+                    $this->memcache->add($tpl_filename, $tpl, 3600);
+                    return $tpl_filename;
+                }
+            } else {
                 return $tpl_filename;
+            }
+        }
+
+        if (!file_exists($tpl_path)) {
+            $tpl = file_get_contents($this->template);
+            $tpl = $this->replaceif($tpl, $data);
+            $tpl = $this->replaceforeach($tpl, $data);
+            $tpl = $this->replace($tpl, $data);
+            $tpl = $this->replaceInclude($tpl, $data);
+
+            if ($include) {
+                return $tpl;
             } else {
                 file_put_contents($tpl_path, $tpl);
                 return $tpl_path;
             }
+        } else {
+            if (fileatime($tpl_path) < (time() - 3600)) {
+                unlink($tpl_path)
+                $this->parse($data);
+            }
+            return $tpl_path;
         }
     }
 
@@ -132,21 +158,23 @@ class CribzTemplateCompiler {
                 $foreach = '';
                 if (isset($data[$matches[1][$i]]) && !empty($data[$matches[1][$i]])) {
                     if (preg_match_all('#&&\$'.$matches[2][$i].'\.([A-Za-z0-9_]+)&&#', $matches[3][$i], $vars)) {
-                        foreach ($data[$matches[1][$i]] as $info) {
-                            $foreach_new = $matches[3][$i];
-                            foreach ($vars[1] as $var) {
-                                $foreach_new = str_replace('&&$'.$matches[2][$i].'.'.$var.'&&', $info->$var, $foreach_new);
-                            }
-                            $foreach .= trim($foreach_new, "\n");
+                        $foreach .= '<?php foreach($data['.$matches[1][$i].'] as $info): ?>';
+                        $foreach_new = $matches[3][$i];
+                        foreach ($vars[1] as $var) {
+                            $replace = '<?php echo $info->'.$var.'; ?>';
+                            $foreach_new = str_replace('&&$'.$matches[2][$i].'.'.$var.'&&', $replace, $foreach_new);
                         }
+                        $foreach .= $foreach_new;
+                        $foreach .= '<?php endforeach; ?>';
                     }
 
                     if (preg_match('#&&\$'.$matches[2][$i].'&&#s', $matches[3][$i])) {
-                        foreach ($data[$matches[1][$i]] as $info) {
-                            $foreach_new = $matches[3][$i];
-                            $foreach_new = str_replace('&&$'.$matches[2][$i].'&&', $info, $foreach_new);
-                            $foreach .= trim($foreach_new, "\n");
-                        }
+                        $foreach .= '<?php foreach($data['.$matches[1][$i].'] as $info): ?>';
+                        $foreach_new = $matches[3][$i];
+                        $replace = '<?php echo $info; ?>';
+                        $foreach_new = str_replace('&&$'.$matches[2][$i].'&&', $replace, $foreach_new);
+                        $foreach .= $foreach_new;
+                        $foreach .= '<?php endforeach; ?>';
                     }
                     $tpl = str_replace($matches[0][$i], $foreach, $tpl);
                 } else {
@@ -172,7 +200,18 @@ class CribzTemplateCompiler {
             $matchcount = count($matches[0]);
             for ($i=0; $i < $matchcount; $i++) {
                 if (isset($data[$matches[1][$i]]) && !empty($data[$matches[1][$i]])) {
-                    $tpl = str_replace($matches[0][$i], $matches[2][$i], $tpl);
+                    $replace = '<?php if (isset($data['.$matches[1][$i].']) && !empty($data['.$matches[1][$i].'])): ?>';
+
+                    if (preg_match('#{else}([^{]+)#', $matches[2][$i], $match)) {
+                        $replace .= '<?php else: ?>';
+                        $replace .= $match[1];
+                        $replace .= '<?php endif; ?>';
+                    } else {
+                        $replace .= $matches[2][$i];
+                        $replace .= '<?php endif; ?>';
+                    }
+
+                    $tpl = str_replace($matches[0][$i], $replace, $tpl);
                 } else {
                     $tpl = str_replace($matches[0][$i], $matches[4][$i], $tpl);
                 }
@@ -193,12 +232,10 @@ class CribzTemplateCompiler {
     private function replace($tpl, $data) {
         $regex = '#%%\$([A-Za-z0-9_]+)%%#';
         if (!empty($data)) {
-            foreach ($data as $name => $value) {
-                if (preg_match_all($regex, $tpl, $matches)) {
-                    foreach ($matches[1] as $match) {
-                        if ($match == $name) {
-                            $tpl = preg_replace('#%%\$('.$name.')%%#', $value, $tpl);
-                        }
+            if (preg_match_all($regex, $tpl, $matches)) {
+                foreach ($matches[1] as $match) {
+                    if (in_array($match, array_keys($data))) {
+                        $tpl = preg_replace('#%%\$('.$match.')%%#', '<?php echo $data['.$match.']; ?>', $tpl);
                     }
                 }
             }
