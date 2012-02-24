@@ -185,6 +185,78 @@ class CribzDatabase {
     }
 
     /**
+    * Get Attribute
+    * Get the value of an attribute
+    *
+    * @param int $attribute PDO Attribute Option
+    *
+    * @return value of attribute or false.
+    */
+    function getAttribute($attribute) {
+        return $this->database->getAttribute($attribute);
+    }
+
+    /**
+    * Begin Transaction
+    * Start a database transaction.
+    *
+    * @return true on success or false on failure.
+    */
+    function beginTransaction() {
+        return $this->database->beginTransaction();
+    }
+
+    /**
+    * Commit
+    * Commit a change to the database.
+    *
+    * @return true on success or false on failure.
+    */
+    function commit() {
+        return $this->database->commit();
+    }
+
+    /**
+    * Roll Back
+    * Roll back a database change.
+    *
+    * @return true on success or false on failure.
+    */
+    function rollBack() {
+        return $this->database->rollBack();
+    }
+
+    /**
+    * Last Insert Id
+    * Get the id for the last insert statement.
+    *
+    * @param string $name   Name of id or sequence.(optional)
+    *
+    * @return int of last id or false.
+    */
+    function lastInsertId($name = null) {
+        return $this->database->lastInsertId($name);
+    }
+
+    /**
+    * DB Error Code
+    * Get DB Error code
+    * @return db error code array.
+    */
+    function db_errorCode() {
+        return $this->database->errorCode();
+    }
+
+    /**
+    * DB Error Info
+    * Get DB Error info
+    * @return db error info array.
+    */
+    function db_errorInfo() {
+        return $this->database->errorInfo();
+    }
+
+    /**
     * Debug
     * Get a list of all errors
     *
@@ -235,6 +307,24 @@ class CribzDatabase {
             return false;
         }
         return true;
+    }
+
+    /**
+    * Last Statment Error Code
+    * Get the error code for the last statement.
+    * @return error code array for last statement.
+    */
+    function lastStatementErrorCode() {
+        return $this->statements[count($this->statements) - 1]->errorCode();
+    }
+
+    /**
+    * Last Statment Error Info
+    * Get the error info for the last statement.
+    * @return error info array for last statement.
+    */
+    function lastStatementErrorInfo() {
+        return $this->statements[count($this->statements) - 1]->errorInfo();
     }
 
     /**
