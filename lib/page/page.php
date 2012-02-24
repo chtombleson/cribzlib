@@ -52,15 +52,24 @@ class CribzPage {
     private $data;
 
     /**
+    * Memcache
+    *
+    * @var CribzMemcached Object
+    */
+    private $memcache;
+
+    /**
     * Construct
     * Create new page
     *
     * @param array  $templates       Array of templates, name => path to template file.(Optional)
     * @param array  $data            Array of data for template, name => value.(Optional)
+    * @param object $memcache        CribzMemcache Object.(Optional)
     * @param string $cache           Path to cache directory.(Optional)
     */
-    function __construct($templates = array(), $data = array(), $cache = '/tmp/cribzcache/') {
+    function __construct($templates = array(), $data = array(), $memcache = null, $cache = '/tmp/cribzcache/') {
         $this->cribzlib = new CribzLib();
+        $this->memcache = $memcache;
         $this->cache = $cache;
         $this->templates = $templates;
         $this->data = $data;
@@ -133,7 +142,7 @@ class CribzPage {
         $this->cribzlib->loadModule('Template');
         $templates = array();
         foreach ($this->templates as $name => $tpl) {
-            $templates[$name] = new CribzTemplate($tpl, $this->cache);
+            $templates[$name] = new CribzTemplate($tpl, $this->memcache, $this->cache);
         }
         return $templates;
     }
