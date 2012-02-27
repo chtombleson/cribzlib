@@ -120,6 +120,28 @@ class CribzForm {
     }
 
     /**
+    * Submitted
+    * Has to form been submitted.
+    *
+    * @return true if the form has been submitted or false.
+    */
+    function submitted() {
+        if ($post) {
+            if (isset($_POST['submit']) && !empty($_POST['submit'])) {
+                unset($_POST['submit']);
+                return true;
+            }
+            return false;
+        } else {
+            if (isset($_GET['submit']) && !empty($_GET['submit'])) {
+                unset($_GET['submit']);
+                return true;
+            }
+            return false;
+        }
+    }
+
+    /**
     * Validate
     * Validate form.
     *
