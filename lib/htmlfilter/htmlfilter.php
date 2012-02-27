@@ -23,22 +23,6 @@
 */
 class CribzHtmlFilter {
     /**
-    * Html
-    *
-    * @var string
-    */
-    private $html;
-
-    /**
-    * Construct
-    *
-    * @param string $html HTML to parse though filter.
-    */
-    function __construct($html) {
-        $this->html = $html;
-    }
-
-    /**
     * Filter
     * Uses preg_replace() to filter and replace values.
     *
@@ -47,8 +31,56 @@ class CribzHtmlFilter {
     *
     * @return filtered html.
     */
-    function filter($regex, $replace) {
-        return preg_replace($regex, $replace, $this->html);
+    function filter($html, $regex, $replace) {
+        return preg_replace($regex, $replace, $html);
+    }
+
+    /**
+    * Match
+    * Match a regular expression and the get first match.
+    *
+    * @param string $html       Data to match against.
+    * @param string $regex      Regex to match.
+    * @param bool   $match      Return the matches array.(Optional)
+    *
+    * @return match array or true on success or false on failure.
+    */
+    function match($html, $regex, $match = true) {
+        if (!$match) {
+            if (preg_match($regex, $html)) {
+                return true;
+            }
+            return false;
+        }
+
+        if (preg_match($regex, $html, $matches)) {
+            return $matches;
+        }
+        return false;
+    }
+
+    /**
+    * Match All
+    * Match a regular expression and get all matches.
+    *
+    * @param string $html       Data to match against.
+    * @param string $regex      Regex to match.
+    * @param bool   $match      Return the matches array.(Optional)
+    *
+    * @return match array or true on success or false on failure.
+    */
+    function match_all($html, $regex, $match = true) {
+        if (!$match) {
+            if (preg_match_all($regex, $html)) {
+                return true;
+            }
+            return false;
+        }
+
+        if (preg_match_all($regex, $html, $matches)) {
+            return $matches;
+        }
+        return false;
     }
 }
 ?>
