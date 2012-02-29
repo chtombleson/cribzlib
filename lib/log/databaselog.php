@@ -67,6 +67,7 @@ class CribzDatabaseLog {
     * @return true on success or false on failure.
     */
     function init() {
+        $this->database->connect();
         $driver = $this->database->getAttribute(PDO::ATTR_DRIVER_NAME);
 
         if ($driver == 'pgsql') {
