@@ -98,7 +98,7 @@ class CribzDatabaseLog {
             $logmsg = "[".date($this->dateformat, time())."]";
             $logmsg .= $log;
 
-            if ($this->database->insert($this->logtable, (object) array('message' => $logmsg, 'timecreated' => time))) {
+            if ($this->database->insert($this->logtable, (object) array('message' => $logmsg, 'timecreated' => time()))) {
                 return true;
             }
             return false;
@@ -117,7 +117,7 @@ class CribzDatabaseLog {
                       WHERE Table_Name = ?
                       AND schema_name = ?";
 
-        if ($this->database->execute_sql($sql, array($this->logtable, 'public'))) {
+        if ($this->database->execute_sql($exist_sql, array($this->logtable, 'public'))) {
             $result = $this->database->fetch();
 
             if (empty($result)) {
