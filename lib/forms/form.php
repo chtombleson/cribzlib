@@ -126,7 +126,7 @@ class CribzForm {
     * @return true if the form has been submitted or false.
     */
     function submitted() {
-        if ($post) {
+        if ($this->post) {
             if (isset($_POST['submit']) && !empty($_POST['submit'])) {
                 unset($_POST['submit']);
                 return true;

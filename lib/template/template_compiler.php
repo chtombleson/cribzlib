@@ -74,7 +74,7 @@ class CribzTemplateCompiler {
             }
         }
 
-        $tpl_filename = basename($this->template).'.php';
+        $tpl_filename = basename($this->template).mt_rand(0, 9999).'.php';
         $tpl_path = $this->cache.$tpl_filename;
 
         if (!empty($this->memcache)) {
@@ -97,24 +97,16 @@ class CribzTemplateCompiler {
             }
         }
 
-        if (!file_exists($tpl_path)) {
-            $tpl = file_get_contents($this->template);
-            $tpl = $this->replaceif($tpl, $data);
-            $tpl = $this->replaceforeach($tpl, $data);
-            $tpl = $this->replace($tpl, $data);
-            $tpl = $this->replaceInclude($tpl, $data);
+        $tpl = file_get_contents($this->template);
+        $tpl = $this->replaceif($tpl, $data);
+        $tpl = $this->replaceforeach($tpl, $data);
+        $tpl = $this->replace($tpl, $data);
+        $tpl = $this->replaceInclude($tpl, $data);
 
-            if ($include) {
-                return $tpl;
-            } else {
-                file_put_contents($tpl_path, $tpl);
-                return $tpl_path;
-            }
+        if ($include) {
+            return $tpl;
         } else {
-            if (fileatime($tpl_path) < (time() - 3600)) {
-                unlink($tpl_path)
-                $this->parse($data);
-            }
+            file_put_contents($tpl_path, $tpl);
             return $tpl_path;
         }
     }
@@ -129,7 +121,7 @@ class CribzTemplateCompiler {
     * @return string template file.
     */
     private function replaceInclude($tpl, $data) {
-        $regex = '#(\{include="([^"]+)"\})#';
+        $regex = '#(\[include="([^"]+)"\])#';
 
         if (preg_match_all($regex, $tpl, $matches)) {
             foreach ($matches[2] as $key => $include) {
