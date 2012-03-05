@@ -88,8 +88,8 @@ class CribzCache {
     * @return true on success or false on failure
     */
     function add($name, $content) {
-        if (file_put_contents($this->cachedir.md5($name), $content)) {
-            return true;
+        if (file_put_contents($this->cachedir.md5($name).'.cache', $content)) {
+            return $this->cachedir.md5($name).'.cache';
         }
         return false;
     }
@@ -103,8 +103,8 @@ class CribzCache {
     * @return true on success or false on failure
     */
     function remove($name) {
-        if (file_exists($this->cachedir.md5($name))) {
-            unlink($this->cachedir.md5($name));
+        if (file_exists($this->cachedir.md5($name).'.cache')) {
+            unlink($this->cachedir.md5($name).'.cache');
             return true;
         }
         return false;
@@ -119,7 +119,7 @@ class CribzCache {
     * @return true
     */
     function purge($all = false) {
-        $files = glob($this->cachedir.'.*');
+        $files = glob($this->cachedir.'.*\.cache');
 
         if ($all) {
             foreach ($files as $file) {
@@ -147,8 +147,8 @@ class CribzCache {
     * @return path to cached file on success or false on failure
     */
     function is_cached($name) {
-        if (file_exists($this->cachedir.md5($name))) {
-            return $this->cachedir.md5($name);
+        if (file_exists($this->cachedir.md5($name).'.cache')) {
+            return $this->cachedir.md5($name).'.cache';
         }
         return false;
     }

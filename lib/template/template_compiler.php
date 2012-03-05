@@ -30,6 +30,13 @@ class CribzTemplateCompiler {
     private $cache;
 
     /**
+    * Cache Path
+    *
+    * @var string
+    */
+    private $cachepath;
+
+    /**
     * Template
     *
     * @var string
@@ -48,11 +55,13 @@ class CribzTemplateCompiler {
     *
     * @param string $template   Path to template file to compile.
     * @param object $memcache   CribzMemcache Object.
-    * @param string $cache      Path to cache directory.
+    * @param string $cache      Name for cache item.
+    * @param string $cachepath  Path to cache directory.
     */
-    function __construct($template, $memcache, $cache) {
+    function __construct($template, $memcache, $cache, $cachepath) {
         $this->template = $template;
         $this->cache = $cache;
+        $this->cachepath = $cachepath;
         $this->memcache = $memcache;
     }
 
@@ -66,16 +75,7 @@ class CribzTemplateCompiler {
     * @return string path to compiled template, or false if cache directory is writeable.
     */
     function parse($data, $include = false) {
-        if (empty($this->memcache)) {
-            if (!file_exists($this->cache)) {
-                if (!$this->create_cache_dir($this->cache)) {
-                    return false;
-                }
-            }
-        }
-
         $tpl_filename = basename($this->template).mt_rand(0, 9999).'.php';
-        $tpl_path = $this->cache.$tpl_filename;
 
         if (!empty($this->memcache)) {
             $mem_file = $this->memcache->get($tpl_filename);
@@ -106,8 +106,19 @@ class CribzTemplateCompiler {
         if ($include) {
             return $tpl;
         } else {
-            file_put_contents($tpl_path, $tpl);
-            return $tpl_path;
+            $cribzlib = new CribzLib();
+            $cribzlib->loadModule('Cache');
+            $cache = new CribzCache($this->cachepath);
+            $cache->init();
+
+            $cache_path = $cache->is_cached($this->cache);
+
+            if ($cache_path === false) {
+                $path = $cache->add($this->cache, $tpl);
+                return $path;
+            } else {
+                return $cache_path;
+            }
         }
     }
 

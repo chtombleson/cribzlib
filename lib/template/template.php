@@ -21,8 +21,6 @@
 * @author       Christopher Tombleson
 * @copyright    Copyright 2011 onwards
 */
-require_once(dirname(__FILE__).'/../../cribzlib.php');
-require_once(dirname(__FILE__).'/template_compiler.php');
 class CribzTemplate {
     /**
     * Template
@@ -39,6 +37,13 @@ class CribzTemplate {
     private $cache;
 
     /**
+    * Cache Path
+    *
+    * @var string
+    */
+    private $cachepath;
+
+    /**
     * Memcache
     *
     * @var CribzMemcache Object
@@ -50,11 +55,13 @@ class CribzTemplate {
     *
     * @param string $template   Path to template file to compile.
     * @param object $memcache   CribzMemcache object.
-    * @param string $cache      Path to cache directory.
+    * @param string $cache      Name for cache item.
+    * @param string $cachepath  Path to cache directory.
     */
-    function __construct($template, $memcache = null, $cache = '/tmp/cribzcache/') {
+    function __construct($template, $memcache = null, $cache = '', $cachepath = '/tmp/cribzcache/') {
         $this->template = $template;
         $this->cache = $cache;
+        $this->cachepath = $cachepath;
         $this->memcache = $memcache;
     }
 
@@ -65,7 +72,7 @@ class CribzTemplate {
     * @param array $data    Array of data to be passed to the compiler.
     */
     function output($data = array()) {
-        $compiler = new CribzTemplateCompiler($this->template, $this->memcache, $this->cache);
+        $compiler = new CribzTemplateCompiler($this->template, $this->memcache, $this->cache, $this->cachepath);
         $template_path = $compiler->parse($data);
 
         if (!empty($this->memcache)) {

@@ -2,6 +2,7 @@
 class CribzLib {
     private $modules = array(
         'Ajax' => array('ajax/ajax.php'),
+        'Cache' => array('cache/cache.php'),
         'Cookie' => array('cookie/cookies.php'),
         'CountryCodes' => array('misc/countries.php'),
         'Database' => array('database/database.php'),
