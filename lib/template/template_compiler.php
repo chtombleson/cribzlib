@@ -132,13 +132,22 @@ class CribzTemplateCompiler {
     * @return string template file.
     */
     private function replaceInclude($tpl, $data) {
-        $regex = '#(\[include="([^"]+)"\])#';
+        $regex = '#(\[include="(\$([^\$]+))?([^"]+)"\])#';
 
         if (preg_match_all($regex, $tpl, $matches)) {
-            foreach ($matches[2] as $key => $include) {
-                $template = new CribzTemplateCompiler($include, $this->memcache, $this->cache);
-                $tpl_str = $template->parse($data, true);
-                $tpl = str_replace($matches[0][$key], $tpl_str, $tpl);
+            foreach ($matches[3] as $var) {
+                foreach ($matches[4] as $key => $include) {
+                    $include = ltrim($include, '$');
+
+                    if (isset($data[$var]) && !empty($data[$var])) {
+                        $template = new CribzTemplateCompiler($data[$var].$include, $this->memcache, $this->cache, $this->cachepath);
+                    } else {
+                        $template = new CribzTemplateCompiler($include, $this->memcache, $this->cache, $this->cachepath);
+                    }
+
+                    $tpl_str = $template->parse($data, true);
+                    $tpl = str_replace($matches[0][$key], $tpl_str, $tpl);
+                }
             }
         }
         return $tpl;
