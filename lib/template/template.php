@@ -61,7 +61,7 @@ class CribzTemplate {
     function __construct($template, $memcache = null, $cache = '', $cachepath = '/tmp/cribzcache/') {
         $this->template = $template;
         $this->cache = $cache;
-        $this->cachepath = $cachepath;
+        $this->cachepath = rtrim($cachepath, '/').'/';
         $this->memcache = $memcache;
     }
 

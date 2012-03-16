@@ -21,7 +21,6 @@
 * @author       Christopher Tombleson
 * @copyright    Copyright 2011 onwards
 */
-require_once(dirname(__FILE__).'/../../cribzlib.php');
 class CribzPage {
     /**
     * Cribz Lib
@@ -36,6 +35,13 @@ class CribzPage {
     * @var string
     */
     private $cache;
+
+    /**
+    * Cahe Path
+    *
+    * @var string
+    */
+    private $cachepath;
 
     /**
     * Templates
@@ -67,10 +73,11 @@ class CribzPage {
     * @param object $memcache        CribzMemcache Object.(Optional)
     * @param string $cache           Path to cache directory.(Optional)
     */
-    function __construct($templates = array(), $data = array(), $memcache = null, $cache = '/tmp/cribzcache/') {
+    function __construct($templates = array(), $data = array(), $memcache = null, $cache = '', $cachepath = '/tmp/cribzcache/') {
         $this->cribzlib = new CribzLib();
         $this->memcache = $memcache;
         $this->cache = $cache;
+        $this->cachepath = rtrim($cachepath, '/').'/';
         $this->templates = $templates;
         $this->data = $data;
     }
@@ -113,21 +120,14 @@ class CribzPage {
     * Render
     * Render the page.
     *
-    * @param array $tidyconfig      Array of tidy config options.(Optional)
-    *
     * @return false on error.
     */
-    function render($tidyconfig = array()) {
-        $this->cribzlib->loadModule('Tidy');
+    function render() {
         $cribz_templates = $this->instTemplates();
         if (!empty($cribz_templates)) {
-            ob_start();
             foreach ($cribz_templates as $template) {
                 $template->output($this->data);
             }
-            $output = ob_get_clean();
-            $tidy = new CribzPressTidy();
-            echo $tidy->clean_output($html, $tidyconfig);
         }
         return false;
     }
@@ -142,7 +142,7 @@ class CribzPage {
         $this->cribzlib->loadModule('Template');
         $templates = array();
         foreach ($this->templates as $name => $tpl) {
-            $templates[$name] = new CribzTemplate($tpl, $this->memcache, $this->cache);
+            $templates[$name] = new CribzTemplate($tpl, $this->memcache, $this->cache, $this->cachepath);
         }
         return $templates;
     }
