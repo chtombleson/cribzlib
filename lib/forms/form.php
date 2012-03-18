@@ -162,6 +162,10 @@ class CribzForm {
             unset($data['token']);
 
             foreach ($data as $name => $value) {
+                $data[$name] = $this->sanitize($value);
+            }
+
+            foreach ($data as $name => $value) {
                 if (!$this->elements[$name]->validate($value)) {
                     $error[$name] = 'Invalid Input';
                 }
@@ -174,6 +178,51 @@ class CribzForm {
         } else {
             return array('Token' => 'Invalid Token Used');
         }
+    }
+
+    /**
+    * Sanitize
+    * Sanitize input to prevent unwanted input.
+    *
+    * @param string $data   Data to be sanitized
+    *
+    * @return sanitized data.
+    */
+    function sanitize($data) {
+        $tags = array(
+            'script' => '#<script([^>]+)?>(.+)<\/script>#',
+            'style' => '#<style([^>]+)?>([^<]+)<\/style>#',
+            'a' => '#<a([^>]+)>([^<]+)</a>#',
+            'object' => '#<object([^>]+)?>([^<]+)<\/object>#',
+            'embed' => '#<embed([^>]+)?>([^<]+)<\/embed>#',
+            'iframe' => '#<iframe([^>]+)?>([^<]+)<\/iframe>#',
+            'img' => '#<img([^>]+)>#',
+            'noscript' => '#<noscript([^>]+)?>([^<]+)<\/noscript>#'
+        );
+
+        if (preg_match($tags['script'], $data, $matches)) {
+            $data = preg_replace($tags['script'], '', $data);
+        }
+
+        if (preg_match($tags['style'], $data)) {
+            $data = preg_replace($tags['style'], '', $data);
+        }
+
+        if (preg_match($tags['noscript'], $data)) {
+            $data = preg_replace($tags['noscript'], '', $data);
+        }
+
+        if (preg_match($tags['a'], $data)) {
+            $regex = '#<a\s*?href="([^"]+)"([^>]+)?>([^<]+)<\/a>#';
+            $data = preg_replace($regex, '<a href="\1">\3</a>', $data);
+        }
+
+        if (preg_match($tags['img'], $data)) {
+            $regex = '#<img\s*?src="([^"]+)"([^>]+)?>#';
+            $data = preg_replace($regex, '<img src="\1" />', $data);
+        }
+
+        return $data;
     }
 
     /**
