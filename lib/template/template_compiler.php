@@ -54,11 +54,11 @@ class CribzTemplateCompiler {
     * Construct
     *
     * @param string $template   Path to template file to compile.
-    * @param object $memcache   CribzMemcache Object.
     * @param string $cache      Name for cache item.
+    * @param object $memcache   CribzMemcache Object.
     * @param string $cachepath  Path to cache directory.
     */
-    function __construct($template, $memcache, $cache, $cachepath) {
+    function __construct($template, $cache, $memcache, $cachepath) {
         $this->template = $template;
         $this->cache = $cache;
         $this->cachepath = $cachepath;
@@ -140,9 +140,9 @@ class CribzTemplateCompiler {
                     $include = ltrim($include, '$');
 
                     if (isset($data[$var]) && !empty($data[$var])) {
-                        $template = new CribzTemplateCompiler($data[$var].$include, $this->memcache, $this->cache, $this->cachepath);
+                        $template = new CribzTemplateCompiler($data[$var].$include, $this->cache, $this->memcache, $this->cachepath);
                     } else {
-                        $template = new CribzTemplateCompiler($include, $this->memcache, $this->cache, $this->cachepath);
+                        $template = new CribzTemplateCompiler($include, $this->cache, $this->memcache, $this->cachepath);
                     }
 
                     $tpl_str = $template->parse($data, true);

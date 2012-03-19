@@ -70,10 +70,11 @@ class CribzPage {
     *
     * @param array  $templates       Array of templates, name => path to template file.(Optional)
     * @param array  $data            Array of data for template, name => value.(Optional)
+    * @param string $cache           Name to use when stored in cache.
     * @param object $memcache        CribzMemcache Object.(Optional)
-    * @param string $cache           Path to cache directory.(Optional)
+    * @param string $cachepath       Path to cache directory.(Optional)
     */
-    function __construct($templates = array(), $data = array(), $memcache = null, $cache = '', $cachepath = '/tmp/cribzcache/') {
+    function __construct($templates = array(), $data = array(), $cache = '', $memcache = null, $cachepath = '/tmp/cribzcache/') {
         $this->cribzlib = new CribzLib();
         $this->memcache = $memcache;
         $this->cache = $cache;
