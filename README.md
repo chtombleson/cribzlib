@@ -34,3 +34,9 @@ Classes Included:
 *   Tidy Class
 *   Spellchecker
 *   More to come
+
+Support
+------------
+There is documentation on the wiki @ github.
+
+IRC: #cribznetwork on Freenode
