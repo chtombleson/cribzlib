@@ -7,8 +7,11 @@ $cribzlib->loadModule('Template');
 
 // Creating new instance of template class
 // First Parameter is path to template file to compile.
-// Second Parameter is path to cache directory to store compiled templates(optional, default is /tmp/cribzcache/).
-$cribz_template = new CribzTemplate(dirname(__FILE__).'/template.tpl', dirname(__FILE__).'/cache/');
+// Second Parameter name for cache item.
+// Third Parameter Cribz Memcache Object(optional).
+// Fourth Parameter is path to cache directory to store compiled templates(optional, default is /tmp/cribzcache/).
+$cribz_template = new CribzTemplate(dirname(__FILE__).'/template.tpl', 'example', null, dirname(__FILE__).'/cache/');
+
 
 // Time to define the data to be inputed into the template
 $data = array();
