@@ -38,5 +38,6 @@ Classes Included:
 Support
 ------------
 There is documentation on the wiki @ github.
+Also documentation is also available @ [Cribz Network Wiki] (http://wiki.cribznetwork.com "Cribz Network Wiki")
 
 IRC: #cribznetwork on Freenode
