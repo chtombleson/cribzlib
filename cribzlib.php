@@ -1,5 +1,33 @@
 <?php
+/*
+*   This file is part of CribzLib.
+*
+*    CribzLib is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    CribzLib is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with CribzLib.  If not, see <http://www.gnu.org/licenses/>.
+*/
+/**
+* @package      CribzLib
+* @subpackage   CribzLib
+* @author       Christopher Tombleson
+* @copyright    Copyright 2011 onwards
+*/
+require_once(dirname(__FILE__).'/lib/exception/exception.php');
 class CribzLib {
+    /**
+    * Modules
+    *
+    * @var array
+    */
     private $modules = array(
         'Ajax' => array('ajax/ajax.php'),
         'Cache' => array('cache/cache.php'),
@@ -20,9 +48,17 @@ class CribzLib {
         'Session' => array('session/sessions.php'),
         'Spellchecker' => array('spellchecker/spellchecker.php', 'misc/langs.php', 'misc/countries.php'),
         'Template' => array('template/template_compiler.php','template/template.php'),
-        'Tidy' => array('tidy/tidy.php')
+        'Tidy' => array('tidy/tidy.php'),
+        'XmlrpcServer' => array('xmlrpc/server.php'),
+        'XmlrpcClient' => array('xmlrpc/client.php')
     );
 
+    /**
+    * Load Module
+    * Load a module/class
+    *
+    * @param string $name   Name of module
+    */
     function loadModule($name) {
         $modules = array_keys($this->modules);
         if (in_array($name, $modules)) {
@@ -31,7 +67,7 @@ class CribzLib {
             }
             return true;
         } else {
-            return false;
+            throw new CribzException('Module with the name: '.$name.' does not exist.');
         }
     }
 }
