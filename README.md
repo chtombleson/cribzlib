@@ -33,6 +33,7 @@ Classes Included:
 *   Page Class
 *   Tidy Class
 *   Spellchecker
+*   XMLRPC Server/Client
 *   More to come
 
 Support
