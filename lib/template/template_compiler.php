@@ -44,25 +44,16 @@ class CribzTemplateCompiler {
     private $template;
 
     /**
-    * Memcache
-    *
-    * @var CribzMemcache Object
-    */
-    private $memcache;
-
-    /**
     * Construct
     *
     * @param string $template   Path to template file to compile.
     * @param string $cache      Name for cache item.
-    * @param object $memcache   CribzMemcache Object.
     * @param string $cachepath  Path to cache directory.
     */
-    function __construct($template, $cache, $memcache, $cachepath) {
+    function __construct($template, $cache, $cachepath) {
         $this->template = $template;
         $this->cache = $cache;
         $this->cachepath = $cachepath;
-        $this->memcache = $memcache;
     }
 
     /**
@@ -75,28 +66,6 @@ class CribzTemplateCompiler {
     * @return string path to compiled template, or false if cache directory is writeable.
     */
     function parse($data, $include = false) {
-        $tpl_filename = basename($this->template).mt_rand(0, 9999).'.php';
-
-        if (!empty($this->memcache)) {
-            $mem_file = $this->memcache->get($tpl_filename);
-            if (empty($mem_file)) {
-                $tpl = file_get_contents($this->template);
-                $tpl = $this->replaceif($tpl, $data);
-                $tpl = $this->replaceforeach($tpl, $data);
-                $tpl = $this->replace($tpl, $data);
-                $tpl = $this->replaceInclude($tpl, $data);
-
-                if ($include) {
-                    return $tpl;
-                } else {
-                    $this->memcache->add($tpl_filename, $tpl, 3600);
-                    return $tpl_filename;
-                }
-            } else {
-                return $tpl_filename;
-            }
-        }
-
         $tpl = file_get_contents($this->template);
         $tpl = $this->replaceif($tpl, $data);
         $tpl = $this->replaceforeach($tpl, $data);
@@ -140,9 +109,9 @@ class CribzTemplateCompiler {
                     $include = ltrim($include, '$');
 
                     if (isset($data[$var]) && !empty($data[$var])) {
-                        $template = new CribzTemplateCompiler($data[$var].$include, $this->cache, $this->memcache, $this->cachepath);
+                        $template = new CribzTemplateCompiler($data[$var].$include, $this->cache, $this->cachepath);
                     } else {
-                        $template = new CribzTemplateCompiler($include, $this->cache, $this->memcache, $this->cachepath);
+                        $template = new CribzTemplateCompiler($include, $this->cache, $this->cachepath);
                     }
 
                     $tpl_str = $template->parse($data, true);
