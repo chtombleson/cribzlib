@@ -30,6 +30,7 @@ class CribzLib {
     */
     private $modules = array(
         'Ajax' => array('ajax/ajax.php'),
+        'Atom' => array('feeds/atom.php'),
         'Cache' => array('cache/cache.php'),
         'Cookie' => array('cookie/cookies.php'),
         'CountryCodes' => array('misc/countries.php'),
@@ -45,6 +46,7 @@ class CribzLib {
         'Log' => array('log/log.php'),
         'Memcached' => array('memcached/memcached.php'),
         'Page' => array('page/page.php'),
+        'Rss' => array('feeds/rss.php'),
         'Session' => array('session/sessions.php'),
         'Spellchecker' => array('spellchecker/spellchecker.php', 'misc/langs.php', 'misc/countries.php'),
         'Template' => array('template/template_compiler.php','template/template.php'),
