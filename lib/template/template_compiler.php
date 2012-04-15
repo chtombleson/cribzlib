@@ -180,22 +180,18 @@ class CribzTemplateCompiler {
         if (preg_match_all($regex, $tpl, $matches)) {
             $matchcount = count($matches[0]);
             for ($i=0; $i < $matchcount; $i++) {
-                if (isset($data[$matches[1][$i]]) && !empty($data[$matches[1][$i]])) {
-                    $replace = '<?php if (isset($data['.$matches[1][$i].']) && !empty($data['.$matches[1][$i].'])): ?>';
+                $replace = '<?php if (isset($data[\''.$matches[1][$i].'\']) && !empty($data[\''.$matches[1][$i].'\'])): ?>';
 
-                    if (preg_match('#{else}([^{]+)#', $matches[2][$i], $match)) {
-                        $replace .= '<?php else: ?>';
-                        $replace .= $match[1];
-                        $replace .= '<?php endif; ?>';
-                    } else {
-                        $replace .= $matches[2][$i];
-                        $replace .= '<?php endif; ?>';
-                    }
-
-                    $tpl = str_replace($matches[0][$i], $replace, $tpl);
+                if (preg_match('#{else}([^{]+)#', $matches[2][$i], $match)) {
+                    $replace .= '<?php else: ?>';
+                    $replace .= $match[1];
+                    $replace .= '<?php endif; ?>';
                 } else {
-                    $tpl = str_replace($matches[0][$i], $matches[4][$i], $tpl);
+                    $replace .= $matches[2][$i];
+                    $replace .= '<?php endif; ?>';
                 }
+
+                $tpl = str_replace($matches[0][$i], $replace, $tpl);
             }
         }
         return $tpl;
