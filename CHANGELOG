@@ -1,0 +1,7 @@
+2012-04-12  Version 1.0
+    Inital Stable Release
+
+2012-04-20  Version 1.0.1
+    Removed Memcache Support from template engine.
+    Fixed XSS Problem in Form Class.
+    Added Support for creating Atom and Rss Feeds.
