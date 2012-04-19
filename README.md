@@ -16,6 +16,7 @@ PHP 5 Libary
 Classes Included:
 
 *   Ajax Utils
+*   Atom Feeds
 *   Cache
 *   Cookie Utils
 *   Database (PDO Based)
@@ -32,6 +33,7 @@ Classes Included:
 *   Email Class
 *   Page Class
 *   Tidy Class
+*   Rss Feeds
 *   Spellchecker
 *   XMLRPC Server/Client
 *   More to come
