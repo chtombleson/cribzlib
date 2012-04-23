@@ -18,7 +18,7 @@
 /**
 * @package      CribzLib
 * @author       Christopher Tombleson
-* @copyright    Copyright 2011 onwards
+* @copyright    Copyright 2012 onwards
 */
 $langcodes = array(
     'aa' => 'Afar',

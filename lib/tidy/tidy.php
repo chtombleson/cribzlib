@@ -19,7 +19,7 @@
 * @package      CribzLib
 * @subpackage   Cribz Tidy
 * @author       Christopher Tombleson
-* @copyright    Copyright 2011 onwards
+* @copyright    Copyright 2012 onwards
 */
 class CribzTidy {
     /**

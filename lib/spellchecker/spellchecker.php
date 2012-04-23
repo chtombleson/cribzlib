@@ -19,7 +19,7 @@
 * @package      CribzLib
 * @subpackage   Cribz Spellchecker
 * @author       Christopher Tombleson
-* @copyright    Copyright 2011 onwards
+* @copyright    Copyright 2012 onwards
 */
 require_once(dirname(__FILE__).'/../../cribzlib.php');
 class CribzSpellchecker {

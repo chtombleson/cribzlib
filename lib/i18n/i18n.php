@@ -19,7 +19,7 @@
 * @package      CribzLib
 * @subpackage   Cribz I18n
 * @author       Christopher Tombleson
-* @copyright    Copyright 2011 onwards
+* @copyright    Copyright 2012 onwards
 */
 class CribzI18n {
     /**
@@ -82,6 +82,5 @@ class CribzI18n {
             $this->langdef = $i18n;
         }
     }
-
 }
 ?>
