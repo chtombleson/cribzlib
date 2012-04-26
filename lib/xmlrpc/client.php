@@ -132,7 +132,7 @@ class CribzXmlrpcClient {
     */
     function execute($method, $parameters = null) {
         if (!function_exists('curl_init')) {
-            throw new CribzXmlrpcException('You must have either Curl enabled or be able to use file_get_contents.');
+            throw new CribzXmlrpcException('You must have either Curl enabled.');
         }
 
         $xml = $this->createRequest($method, $parameters);

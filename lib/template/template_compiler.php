@@ -44,16 +44,24 @@ class CribzTemplateCompiler {
     private $template;
 
     /**
+    * Development
+    *
+    * @var bool
+    */
+    private $development;
+
+    /**
     * Construct
     *
     * @param string $template   Path to template file to compile.
     * @param string $cache      Name for cache item.
     * @param string $cachepath  Path to cache directory.
     */
-    function __construct($template, $cache, $cachepath) {
+    function __construct($template, $cache, $cachepath, $development) {
         $this->template = $template;
         $this->cache = $cache;
         $this->cachepath = $cachepath;
+        $this->development = $development;
     }
 
     /**
@@ -79,6 +87,10 @@ class CribzTemplateCompiler {
             $cribzlib->loadModule('Cache');
             $cache = new CribzCache($this->cachepath);
             $cache->init();
+
+            if ($this->development) {
+                $cache->remove($this->cache);
+            }
 
             $cache_path = $cache->is_cached($this->cache);
 

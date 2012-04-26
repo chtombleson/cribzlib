@@ -44,16 +44,25 @@ class CribzTemplate {
     private $cachepath;
 
     /**
+    * Development
+    *
+    * @var bool
+    */
+    private $development;
+
+    /**
     * Construct
     *
-    * @param string $template   Path to template file to compile.
-    * @param string $cache      Name for cache item.
-    * @param string $cachepath  Path to cache directory.(Optional)
+    * @param string $template       Path to template file to compile.
+    * @param string $cache          Name for cache item.
+    * @param string $cachepath      Path to cache directory.(Optional)
+    * @param bool   $development    Development Mode.(Optional)
     */
-    function __construct($template, $cache = '', $cachepath = '/tmp/cribzcache/') {
+    function __construct($template, $cache = '', $cachepath = '/tmp/cribzcache/', $development = false) {
         $this->template = $template;
         $this->cache = $cache;
         $this->cachepath = rtrim($cachepath, '/').'/';
+        $this->development = $development;
     }
 
     /**
@@ -63,7 +72,7 @@ class CribzTemplate {
     * @param array $data    Array of data to be passed to the compiler.
     */
     function output($data = array()) {
-        $compiler = new CribzTemplateCompiler($this->template, $this->cache, $this->cachepath);
+        $compiler = new CribzTemplateCompiler($this->template, $this->cache, $this->cachepath, $this->development);
         $template_path = $compiler->parse($data);
         include($template_path);
     }
