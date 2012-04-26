@@ -181,6 +181,14 @@ class CribzXmlrpcClient {
             CURLOPT_SSL_VERIFYPEER => false
         );
 
+        $port = explode(':', $this->server);
+
+        if (!empty($ports[2])) {
+            $options[CURLOPT_URL] = $port[0].':'.$port[1];
+            $options[CURLOPT_PORT] = $port[2];
+        }
+
+
         $headers = array();
         $headers[] = 'Content-type: text/xml';
         $headers[] = 'Content-length: ' . strlen($xml) . "\r\n";
