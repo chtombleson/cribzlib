@@ -131,17 +131,13 @@ class CribzXmlrpcClient {
     * @return decoded response.
     */
     function execute($method, $parameters = null) {
-        if (!function_exists('curl_init') && !function_exists('file_get_contents')) {
+        if (!function_exists('curl_init')) {
             throw new CribzXmlrpcException('You must have either Curl enabled or be able to use file_get_contents.');
         }
 
         $xml = $this->createRequest($method, $parameters);
 
-        if (function_exists('curl_init')) {
-            $response = $this->execute_curl($xml);
-        } else {
-            $response = $this->execute_file($xml);
-        }
+        $response = $this->execute_curl($xml);
 
         $xml = simplexml_load_string($response, null, LIBXML_NOCDATA);
 
@@ -213,34 +209,6 @@ class CribzXmlrpcClient {
 
         if ($headers['http_code'] != 200) {
             throw new CribzXmlrpcException('Invalid header, status code returned: '.$headers['http_code']);
-        }
-
-        return $response;
-    }
-
-    /**
-    * Execute File
-    * Execute XMLRPC requesting using file_get_contents function.
-    *
-    * @param string $xml    XML to send to the XMLRPC Server.
-    *
-    * @return string encoded response.
-    */
-    private function execute_file($xml) {
-        $options = array(
-           'http' => array(
-                'method' => 'POST',
-                'headers' => "Content-type: text/xml\r\n" .
-                             "Content-length: " . strlen($xml) . "\r\n" .
-                             $xml . "\r\n",
-           )
-        );
-
-        $context = stream_context_create($options);
-        $response = file_get_contents($this->server, false, $context);
-
-        if ($response === false) {
-            throw new CribzXmlrpcExecption('Unable to make request to xmlrpc server @ '.$this->server);
         }
 
         return $response;
