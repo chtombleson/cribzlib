@@ -101,9 +101,9 @@ class CribzXmlrpcClient {
     */
     function xml_value($param, $decode = false) {
         if ($decode) {
-            return xml_decode_value($param);
+            return $this->xml_decode_value($param);
         }
-        return xml_encode_value($param);
+        return $this->xml_encode_value($param);
     }
 
     /**
