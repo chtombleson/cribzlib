@@ -5,3 +5,7 @@
     Removed Memcache Support from template engine.
     Fixed XSS Problem in Form Class.
     Added Support for creating Atom and Rss Feeds.
+
+2012-04-27  Version 1.0.2
+    Fixed multiple issues in XMLRPC Client class.
+    Added developmet mode to template engine.
