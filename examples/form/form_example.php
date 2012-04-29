@@ -33,8 +33,7 @@ $form->addElement('select', 'gender', true, 'Gender &nbsp', null, null, '', '/.*
 echo $form->render();
 
 // Handle the form
-if (isset($_POST['submit'])) {
-    unset($_POST['submit']);
+if ($form->submitted()) {
 
     // Validate the input from the form
     $valid = $form->validate($_POST);
