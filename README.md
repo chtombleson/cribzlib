@@ -26,6 +26,8 @@ Classes Included:
 *   Imap Utils
 *   Logging
 *   Memcached
+*   Requests
+*   Rss Feeds
 *   Session Utils
 *   Template Engine
 *   Exceptions
