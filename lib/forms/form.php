@@ -72,28 +72,142 @@ class CribzForm {
     function addElement($type, $name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/', $options = array()) {
         switch ($type) {
             case 'text' :
-                $this->elements[$name] = new CribzTextField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
+                $this->addTextBox($name, $required, $label, $maxlength, $minlength, $class, $regex);
                 break;
             case 'email' :
-                $this->elements[$name] = new CribzEmailField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
+                $this->addEmail($name, $required, $label, $maxlength, $minlength, $class);
                 break;
             case 'password' :
-                $this->elements[$name] = new CribzPasswordField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
+                $this->addPassword($name, $required, $label, $maxlength, $minlength, $class, $regex);
                 break;
             case 'textarea' :
-                $this->elements[$name] = new CribzTextAreaField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
+                $this->addTextArea($name, $required, $label, $maxlength, $minlength, $class, $regex);
                 break;
             case 'select' :
-                $this->elements[$name] = new CribzSelectField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
+                $this->addSelect($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
                 break;
             case 'checkbox' :
-                $this->elements[$name] = new CribzCheckBoxField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
+                $this->addCheckBox($name, $required, $label, $maxlength, $minlength, $class, $regex);
                 break;
             case 'hidden' :
-                $this->elements[$name] = new CribzHiddenField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
+                $this->addHidden($name, $required, $label, $maxlength, $minlength, $class, $regex);
                 break;
         }
     }
+
+    /**
+    * Add Text Box
+    * Add text box element to the form.
+    *
+    * @param string $name       Element name.
+    * @param bool   $required   Is element required.
+    * @param string $label      Label for element(Optional).
+    * @param int    $maxlength  Maxium length of input(Optional).
+    * @param int    $minlength  Minium length of input(Optional).
+    * @param string $class      Add class to element(Optional).
+    * @param string $regex      Regular Expression used to validate input(Optional).
+    */
+    function addTextBox($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        $this->elements[$name] = new CribzTextField($name, $require, $label, $maxlength, $minlength, $class, $regex, null);
+    }
+
+    /**
+    * Add Email
+    * Add email element to the form.
+    *
+    * @param string $name       Element name.
+    * @param bool   $required   Is element required.
+    * @param string $label      Label for element(Optional).
+    * @param int    $maxlength  Maxium length of input(Optional).
+    * @param int    $minlength  Minium length of input(Optional).
+    * @param string $class      Add class to element(Optional).
+    */
+    function addEmail($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class ='') {
+        $this->elements[$name] = new CribzEmailField($name, $required, $label, $maxlength, $minlength, $class, null, null);
+    }
+
+    /**
+    * Add Password
+    * Add password element to the form.
+    *
+    * @param string $name       Element name.
+    * @param bool   $required   Is element required.
+    * @param string $label      Label for element(Optional).
+    * @param int    $maxlength  Maxium length of input(Optional).
+    * @param int    $minlength  Minium length of input(Optional).
+    * @param string $class      Add class to element(Optional).
+    * @param string $regex      Regular Expression used to validate input(Optional).
+    */
+    function addPassword($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        $this->elements[$name] = new CribzPasswordField($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
+    }
+
+    /**
+    * Add Text Area
+    * Add text area element to the form.
+    *
+    * @param string $name       Element name.
+    * @param bool   $required   Is element required.
+    * @param string $label      Label for element(Optional).
+    * @param int    $maxlength  Maxium length of input(Optional).
+    * @param int    $minlength  Minium length of input(Optional).
+    * @param string $class      Add class to element(Optional).
+    * @param string $regex      Regular Expression used to validate input(Optional).
+    */
+    function addTextArea($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        $this->elements[$name] = new CribzTextArea($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
+    }
+
+    /**
+    * Add Select
+    * Add select element to the form.
+    *
+    * @param string $type       Input type (text, email, password, textarea, select, checkbox, hidden).
+    * @param string $name       Element name.
+    * @param bool   $required   Is element required.
+    * @param string $label      Label for element(Optional).
+    * @param int    $maxlength  Maxium length of input(Optional).
+    * @param int    $minlength  Minium length of input(Optional).
+    * @param string $class      Add class to element(Optional).
+    * @param string $regex      Regular Expression used to validate input(Optional).
+    * @param array  $options    Array of options for select inputs(Optional).
+    */
+    function addSelect($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/', $options=array()) {
+        $this->elements[$name] = new CribzSelectField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
+    }
+
+    /**
+    * Add Check Box
+    * Add check box element to the form.
+    *
+    * @param string $name       Element name.
+    * @param bool   $required   Is element required.
+    * @param string $label      Label for element(Optional).
+    * @param int    $maxlength  Maxium length of input(Optional).
+    * @param int    $minlength  Minium length of input(Optional).
+    * @param string $class      Add class to element(Optional).
+    * @param string $regex      Regular Expression used to validate input(Optional).
+    */
+    function addCheckBox($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        $this->elements[$name] = new CribzCheckBoxField($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
+    }
+
+    /**
+    * Add Hidden
+    * Add hidden element to the form.
+    *
+    * @param string $name       Element name.
+    * @param bool   $required   Is element required.
+    * @param string $label      Label for element(Optional).
+    * @param int    $maxlength  Maxium length of input(Optional).
+    * @param int    $minlength  Minium length of input(Optional).
+    * @param string $class      Add class to element(Optional).
+    * @param string $regex      Regular Expression used to validate input(Optional).
+    */
+    function addHidden($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        $this->elements[$name] = new CribzHiddenField($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
+    }
+
 
     /**
     * Set Default

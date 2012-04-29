@@ -129,6 +129,10 @@ class CribzRequest {
             case 'double':
                 return (double) $data;
                 break;
+
+            case 'file':
+                return $data;
+                break;
         }
     }
 
