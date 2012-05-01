@@ -261,14 +261,18 @@ class CribzForm {
     * @return true if the form has been submitted or false.
     */
     function submitted() {
-        $cribzlib = new CribzLib();
-        $cribzlib->loadModule('Request');
-        $request = new CribzRequest();
-
-        if (empty($request->required_param('submit', 'int'))) {
-            return false;
+        if ($this->post) {
+            if (isset($_POST['submit']) && !empty($_POST['submit'])) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return true;
+            if (isset($_GET['submit']) && !empty($_GET['submit'])) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

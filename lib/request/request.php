@@ -93,11 +93,11 @@ class CribzRequest {
         }
 
         if ($this->get_param($name) !== false) {
-            return $this->check_type($this->get_param($name));
+            return $this->check_type($type, $this->get_param($name));
         }
 
         if ($this->post_param($name) !== false) {
-            return $this->check_type($this->post_params($name));
+            return $this->check_type($type, $this->post_param($name));
         }
     }
 

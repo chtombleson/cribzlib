@@ -29,14 +29,11 @@ $form->addElement('text', 'firstname', true, 'First Name &nbsp');
 // Parameter 9 is an array of options, normally this is Optional but is required for a select(Dropdown) input.
 $form->addElement('select', 'gender', true, 'Gender &nbsp', null, null, '', '/.*/', array('female' => 'female', 'male' => 'male'));
 
-// Display the form
-echo $form->render();
-
 // Handle the form
 if ($form->submitted()) {
 
     // Validate the input from the form
-    $valid = $form->validate($_POST);
+    $valid = $form->validate();
 
     if ($valid === true) {
         echo "<br />";
@@ -46,4 +43,7 @@ if ($form->submitted()) {
         echo "Input not valid!!!!<br />";
     }
 }
+
+// Display Form
+echo $form->render();
 ?>
