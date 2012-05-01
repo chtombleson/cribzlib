@@ -108,6 +108,9 @@ class CribzForm {
     * @param string $regex      Regular Expression used to validate input(Optional).
     */
     function addTextBox($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        if (isset($this->elements[$name])) {
+            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+        }
         $this->elements[$name] = new CribzTextField($name, $require, $label, $maxlength, $minlength, $class, $regex, null);
     }
 
@@ -123,6 +126,9 @@ class CribzForm {
     * @param string $class      Add class to element(Optional).
     */
     function addEmail($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class ='') {
+        if (isset($this->elements[$name])) {
+            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+        }
         $this->elements[$name] = new CribzEmailField($name, $required, $label, $maxlength, $minlength, $class, null, null);
     }
 
@@ -139,6 +145,9 @@ class CribzForm {
     * @param string $regex      Regular Expression used to validate input(Optional).
     */
     function addPassword($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        if (isset($this->elements[$name])) {
+            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+        }
         $this->elements[$name] = new CribzPasswordField($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
     }
 
@@ -155,6 +164,9 @@ class CribzForm {
     * @param string $regex      Regular Expression used to validate input(Optional).
     */
     function addTextArea($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        if (isset($this->elements[$name])) {
+            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+        }
         $this->elements[$name] = new CribzTextArea($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
     }
 
@@ -173,6 +185,9 @@ class CribzForm {
     * @param array  $options    Array of options for select inputs(Optional).
     */
     function addSelect($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/', $options=array()) {
+        if (isset($this->elements[$name])) {
+            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+        }
         $this->elements[$name] = new CribzSelectField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
     }
 
@@ -189,6 +204,9 @@ class CribzForm {
     * @param string $regex      Regular Expression used to validate input(Optional).
     */
     function addCheckBox($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        if (isset($this->elements[$name])) {
+            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+        }
         $this->elements[$name] = new CribzCheckBoxField($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
     }
 
@@ -205,6 +223,9 @@ class CribzForm {
     * @param string $regex      Regular Expression used to validate input(Optional).
     */
     function addHidden($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
+        if (isset($this->elements[$name])) {
+            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+        }
         $this->elements[$name] = new CribzHiddenField($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
     }
 
@@ -240,18 +261,14 @@ class CribzForm {
     * @return true if the form has been submitted or false.
     */
     function submitted() {
-        if ($this->post) {
-            if (isset($_POST['submit']) && !empty($_POST['submit'])) {
-                unset($_POST['submit']);
-                return true;
-            }
+        $cribzlib = new CribzLib();
+        $cribzlib->loadModule('Request');
+        $request = new CribzRequest();
+
+        if (empty($request->required_param('submit', 'int'))) {
             return false;
         } else {
-            if (isset($_GET['submit']) && !empty($_GET['submit'])) {
-                unset($_GET['submit']);
-                return true;
-            }
-            return false;
+            return true;
         }
     }
 
@@ -259,24 +276,29 @@ class CribzForm {
     * Validate
     * Validate form.
     *
-    * @param array $data        Data from  submitted form.
-    *
     * @return true on success, array on error.
     */
-    function validate($data) {
-        $error = array();
-        if (isset($data['token'])) {
-            session_start();
-            $token = $_SESSION['form_token'];
-            session_write_close();
+    function validate() {
+        $cribzlib = new Cribzlib();
+        $cribzlib->loadModule('Request');
+        $cribzlib->loadModule('Session');
+        $request = new CribzRequest();
+        $session = new CribzSessions();
 
-            if ($data['token'] != $token) {
+        $error = array();
+        $token_form = $request->required_param('token', 'string');
+
+        if (!empty($token_form)) {
+            $token_sesion = $session->get('form_token');
+
+            if ($token_form != $token_session) {
                 return array('Token' => 'Invalid Token Used');
             }
-            unset($data['token']);
 
-            foreach ($data as $name => $value) {
-                $data[$name] = $this->sanitize($value);
+            $data = array();
+
+            foreach (array_keys($this->elements) as $element) {
+                $data[$element] = $request->required_param($element, 'string');
             }
 
             foreach ($data as $name => $value) {
@@ -364,11 +386,14 @@ class CribzForm {
             $token .= array_rand($tokz);
         }
 
-        session_start();
-        $_SESSION['form_token'] = $token;
-        session_write_close();
+        $cribzlib = new CribzLib();
+        $cribzlib->loadModule('Session');
+        $session = new CribzSessions();
+        $session->set('form_token', $token);
 
         return $token;
     }
 }
+
+class CribzFormException extends CribzException {}
 ?>
