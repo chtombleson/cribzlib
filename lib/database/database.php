@@ -583,6 +583,94 @@ class CribzDatabase {
         return true;
     }
 
+    /**
+    * Check Table Exists
+    * Check if a table exists in the database.
+    *
+    * @param string $table  Table name to check.
+    * @return true if table exists, false if table doesn't exists and null on error.
+    */
+    function check_table_exists($table) {
+        switch ($this->driver) {
+            case 'pgsql':
+                return $this->pgsql_check_table_exists($table);
+                break;
+
+            case 'mysql':
+                return $this->mysql_check_table_exists($table);
+                break;
+
+            case 'sqlite':
+                return $this->sqlite_check_table_exists($table);
+                break;
+        }
+    }
+
+    /**
+    * PGSQL Check Table Exists
+    * Check if a table exists in the postgres database.
+    *
+    * @param string $table  Table name to check.
+    * @return true if table exists, false if table doesn't exists and null on error.
+    */
+    private function pgsql_check_table_exists($table) {
+        $sql = "SELECT * FROM information_schema.tables WHERE table_name=?"
+        if ($this->execute_sql($sql, array($table))) {
+            $result = $this->fetch();
+
+            if (!empty($result)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return null;
+    }
+
+    /**
+    * Mysql Check Table Exists
+    * Check if a table exists in the Mysql database.
+    *
+    * @param string $table  Table name to check.
+    * @return true if table exists, false if table doesn't exists and null on error.
+    */
+    private function mysql_check_table_exists($table) {
+        $sql = "SELECT * FROM information_schema.tables WHERE table_schema = ? AND table_name = ?";
+
+        if ($this->execute($sql, array($this->name, $table))) {
+            $result = $this->fetch()
+
+            if (!empty($result)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return null;
+    }
+
+    /**
+    * SQLite Check Table Exists
+    * Check if a table exists in the SQLite database.
+    *
+    * @param string $table  Table name to check.
+    * @return true if table exists, false if table doesn't exists and null on error.
+    */
+    private function sqlite_check_table_exists($table) {
+        $sql = "SELECT name FROM sqlite_master WHERE type=? AND name=?";
+
+        if ($this->execute_sql($sql, array('table', $table))) {
+            $result = $this->fetch();
+
+            if (!empty($result)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return null;
+    }
+
     /*
     * Setter functions
     */

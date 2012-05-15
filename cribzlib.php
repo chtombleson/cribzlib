@@ -45,6 +45,7 @@ class CribzLib {
         'LanguageCodes' => array('misc/langs.php'),
         'Log' => array('log/log.php'),
         'Memcached' => array('memcached/memcached.php'),
+        'MVC' => array('mvc/model.php', 'mvc/view.php', 'mvc/controller.php'),
         'Page' => array('page/page.php'),
         'Request' => array('request/request.php'),
         'Rss' => array('feeds/rss.php'),
