@@ -13,7 +13,7 @@ class CribzController {
         }
 
         if (function_exists($function)) {
-            $this->bound[$sction] = $function;
+            $this->bound[$action] = $function;
             return true;
         } else {
             throw new CribzControllerException("The function does not exist, {$function}.", 2);

@@ -1,10 +1,10 @@
 <?php
 class CribzModel {
     private $Data = array();
-    private $Tabledefinition = array();
     private $Intrans = true;
     private $Database;
     public $Table;
+    public $Tabledefinition = array();
     public $Pk;
 
     function __construct($database) {
@@ -32,6 +32,7 @@ class CribzModel {
 
     function load_data($id) {
         if ($this->Database->select($this->Table, array('id' => $id))) {
+            $this->Data[$this->Pk] = $id;
             $result = $this->Database->fetch();
 
             if (!empty($result)) {
@@ -57,12 +58,13 @@ class CribzModel {
     private function set_data($name, $value) {
         if (!$this->Intrans) {
             $this->Database->beginTransaction();
+            $this->Intrans = true;
         }
 
         $this->Data[$name] = $value;
 
         if (isset($this->Data[$this->Pk])) {
-            $update = $this->Database->update_record($this->Table, (object) $this->Data);
+            $update = $this->Database->update($this->Table, (object) $this->Data);
 
             if (!$update) {
                 throw new CribzModelException("Unable to update record in database.", 5);
@@ -73,10 +75,17 @@ class CribzModel {
     private function create_record() {
         if (!$this->Intrans) {
             $this->Database->beginTransaction();
+            $this->Intrans = true;
         }
 
         if ($this->Database->insert($this->Table, (object) $this->Data)) {
-            $this->Data[$this->pk] = $this->Database->lastInsertId();
+            $driver = $this->Database->getAttribute(PDO::ATTR_DRIVER_NAME);
+
+            if ($driver == 'pgsql') {
+                $this->Data[$this->Pk] = $this->Database->lastInsertId($this->Table.'_id_seq');
+            } else {
+                $this->Data[$this->Pk] = $this->Database->lastInsertId();
+            }
         } else {
             throw new CribzModelException("Unable to create new record in database.", 6);
         }
