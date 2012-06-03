@@ -614,7 +614,7 @@ class CribzDatabase {
     * @return true if table exists, false if table doesn't exists and null on error.
     */
     private function pgsql_check_table_exists($table) {
-        $sql = "SELECT * FROM information_schema.tables WHERE table_name=?"
+        $sql = "SELECT * FROM information_schema.tables WHERE table_name=?";
         if ($this->execute_sql($sql, array($table))) {
             $result = $this->fetch();
 
@@ -638,7 +638,7 @@ class CribzDatabase {
         $sql = "SELECT * FROM information_schema.tables WHERE table_schema = ? AND table_name = ?";
 
         if ($this->execute($sql, array($this->name, $table))) {
-            $result = $this->fetch()
+            $result = $this->fetch();
 
             if (!empty($result)) {
                 return true;
