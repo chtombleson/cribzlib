@@ -188,6 +188,16 @@ class CribzTwig {
 
         $this->twig->display($template, $data);
     }
+
+    /**
+    * Get Twig
+    * Return the Twig Object.
+    *
+    * @return object Instance of Twig.
+    */
+    function get_twig() {
+        return $this->twig;
+    }
 }
 class CribzTwigException extends CribzException {}
 ?>
