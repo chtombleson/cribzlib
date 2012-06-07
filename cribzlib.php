@@ -53,6 +53,7 @@ class CribzLib {
         'Spellchecker' => array('spellchecker/spellchecker.php', 'misc/langs.php', 'misc/countries.php'),
         'Template' => array('template/template_compiler.php','template/template.php'),
         'Tidy' => array('tidy/tidy.php'),
+        'Twig' => array('twig/twig.php'),
         'XmlrpcServer' => array('xmlrpc/server.php'),
         'XmlrpcClient' => array('xmlrpc/client.php')
     );
