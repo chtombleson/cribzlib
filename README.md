@@ -26,6 +26,7 @@ Classes Included:
 *   Imap Utils
 *   Logging
 *   Memcached
+*   MVC
 *   Requests
 *   Rss Feeds
 *   Session Utils
@@ -35,6 +36,7 @@ Classes Included:
 *   Email Class
 *   Page Class
 *   Tidy Class
+*   Twig
 *   Rss Feeds
 *   Spellchecker
 *   XMLRPC Server/Client

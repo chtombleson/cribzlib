@@ -12,3 +12,6 @@
 
 2012-06-03  Version 1.0.3
     Added MVC classes.
+
+2012-06-09  Version 1.0.4
+    Added Twig wrapper class.
