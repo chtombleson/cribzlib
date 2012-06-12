@@ -222,7 +222,7 @@ class CribzEmailField extends CribzTextField {
     *
     * @var string
     */
-    public $regex = '/([A-Za-z0-9\S]+@[A-Za-z0-9]+\.[A-Za-z]+(\.[A-Za-z])?/';
+    public $regex = '/([A-Za-z0-9\S]+@[A-Za-z0-9]+\.[A-Za-z]+(\.[A-Za-z]+)?)/';
 }
 
 class CribzPasswordField extends CribzFormField{

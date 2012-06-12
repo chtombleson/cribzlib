@@ -49,13 +49,15 @@ class CribzLib {
         'Page' => array('page/page.php'),
         'Request' => array('request/request.php'),
         'Rss' => array('feeds/rss.php'),
+        'SafeIFrame' => array('safeiframe/safeiframe.php'),
         'Session' => array('session/sessions.php'),
         'Spellchecker' => array('spellchecker/spellchecker.php', 'misc/langs.php', 'misc/countries.php'),
         'Template' => array('template/template_compiler.php','template/template.php'),
         'Tidy' => array('tidy/tidy.php'),
         'Twig' => array('twig/twig.php'),
         'XmlrpcServer' => array('xmlrpc/server.php'),
-        'XmlrpcClient' => array('xmlrpc/client.php')
+        'XmlrpcClient' => array('xmlrpc/client.php'),
+        'Xss' => array('xss/xss.php')
     );
 
     /**

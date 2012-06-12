@@ -109,7 +109,7 @@ class CribzForm {
     */
     function addTextBox($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
         if (isset($this->elements[$name])) {
-            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+            throw new CribzFormException('Form element with name: '.$name.' already exists.', 0);
         }
         $this->elements[$name] = new CribzTextField($name, $require, $label, $maxlength, $minlength, $class, $regex, null);
     }
@@ -127,7 +127,7 @@ class CribzForm {
     */
     function addEmail($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class ='') {
         if (isset($this->elements[$name])) {
-            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+            throw new CribzFormException('Form element with name: '.$name.' already exists.', 0);
         }
         $this->elements[$name] = new CribzEmailField($name, $required, $label, $maxlength, $minlength, $class, null, null);
     }
@@ -146,7 +146,7 @@ class CribzForm {
     */
     function addPassword($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
         if (isset($this->elements[$name])) {
-            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+            throw new CribzFormException('Form element with name: '.$name.' already exists.', 0);
         }
         $this->elements[$name] = new CribzPasswordField($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
     }
@@ -165,7 +165,7 @@ class CribzForm {
     */
     function addTextArea($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
         if (isset($this->elements[$name])) {
-            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+            throw new CribzFormException('Form element with name: '.$name.' already exists.', 0);
         }
         $this->elements[$name] = new CribzTextArea($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
     }
@@ -186,7 +186,7 @@ class CribzForm {
     */
     function addSelect($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/', $options=array()) {
         if (isset($this->elements[$name])) {
-            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+            throw new CribzFormException('Form element with name: '.$name.' already exists.', 0);
         }
         $this->elements[$name] = new CribzSelectField($name, $required, $label, $maxlength, $minlength, $class, $regex, $options);
     }
@@ -205,7 +205,7 @@ class CribzForm {
     */
     function addCheckBox($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
         if (isset($this->elements[$name])) {
-            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+            throw new CribzFormException('Form element with name: '.$name.' already exists.', 0);
         }
         $this->elements[$name] = new CribzCheckBoxField($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
     }
@@ -224,7 +224,7 @@ class CribzForm {
     */
     function addHidden($name, $required = true, $label = '', $maxlength = null, $minlength = null, $class = '', $regex = '/.*/') {
         if (isset($this->elements[$name])) {
-            throw new CribzFormException('Form element with name: '.$name.' already exists.');
+            throw new CribzFormException('Form element with name: '.$name.' already exists.', 0);
         }
         $this->elements[$name] = new CribzHiddenField($name, $required, $label, $maxlength, $minlength, $class, $regex, null);
     }
