@@ -15,3 +15,9 @@
 
 2012-06-09  Version 1.0.4
     Added Twig wrapper class.
+
+2012-06-14  Version 1.0.5
+    Added Safe IFrames class.
+    Added Xss class.
+    Added order by, limit and offset to CribzDatabase::Select().
+    Added more characters to CribzForm::genToken() function for generating randon token.
