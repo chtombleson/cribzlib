@@ -303,7 +303,8 @@ class CribzDatabase {
         $this->statements[] = $this->database->prepare($sql);
 
         if ($this->statements[count($this->statements) - 1]->execute($params) === false) {
-            $this->errors['PDO_Statment_Execute_Error'][count($this->statements) - 1] = 'Query Could Not Be Executed';
+            $errormsg = $this->lastStatementErrorInfo();
+            $this->errors['PDO_Statment_Execute_Error'][count($this->statements) - 1] = $errormsg[2];
             return false;
         }
         return true;
@@ -333,10 +334,13 @@ class CribzDatabase {
     * @param string $table  Table to query
     * @param array  $where  Array of field => value for where clause (Optional)
     * @param mixed  $fields Array or string of fields to select (Optional)
+    * @param array  $order  Array of field => order by for order clause (Optional)
+    * @param int    $limit  Limit for results (Optional)
+    * @param int    $offset Offset for records (Optional)
     *
     * @return false on error
     */
-    function select($table, $where = null, $fields = '*') {
+    function select($table, $where = array(), $fields = '*', $order = array(), $limit = null, $offset = null) {
         $sql = 'SELECT ';
         $params = array();
 
@@ -359,6 +363,26 @@ class CribzDatabase {
                 $params[] = $value;
             }
             $sql = trim($sql, ' AND ');
+        }
+
+        if (!empty($order)) {
+            $sql .= ' ORDER BY ';
+            foreach ($order as $field => $value) {
+                if (strtoupper($value) == 'ASC' || strtoupper($value) == 'DESC') {
+                    $sql .= $field . ' ' . strtoupper($value) .', ';
+                }
+            }
+            $sql = trim($sql, ', ');
+        }
+
+        if (!empty($limit)) {
+            $limit = (int) $limit;
+            $sql .= empty($limit) ? '' : ' LIMIT ' . $limit;
+        }
+
+        if (!empty($offset)) {
+            $offset = (int) $offset;
+            $sql .= empty($offset) ? '' : ' OFFSET ' . $offset;
         }
 
         if (!$this->execute_sql($sql, $params)) {
@@ -676,6 +700,9 @@ class CribzDatabase {
     */
 
     private function setDriver($driver) {
+        if ($driver != 'mysql' || $driver != 'sqlite' || $driver != 'pgsql') {
+            throw new CribzDatabaseException("Unsupported database driver used. Please use a supported driver (mysql, pgsql, sqlite)", 0);
+        }
         $this->driver = $driver;
     }
 
@@ -684,7 +711,7 @@ class CribzDatabase {
     }
 
     private function setPort($port) {
-        $this->port = $port;
+        $this->port = (int) $port;
     }
 
     private function setName($name) {
@@ -703,4 +730,5 @@ class CribzDatabase {
         $this->options = $options;
     }
 }
+class CribzDatabaseException extends CribzException {}
 ?>
