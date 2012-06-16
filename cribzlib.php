@@ -77,5 +77,31 @@ class CribzLib {
             throw new CribzException('Module with the name: '.$name.' does not exist.');
         }
     }
+
+    /**
+    * Module Exists
+    * Check to see if a module exists
+    *
+    * @param string $name   Name of module
+    */
+    function moduleExists($name) {
+        $module = array_keys($this->modules);
+
+        if (in_array($name, $modules)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+    * Get Modules
+    * Get a list of available modules
+    *
+    * @return array of modules
+    */
+    function getModules() {
+        return array_keys($this->modules);
+    }
 }
 ?>
