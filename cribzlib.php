@@ -37,6 +37,7 @@ class CribzLib {
         'Database' => array('database/database.php'),
         'DatabaseLog' => array('log/databaselog.php'),
         'Email' => array('email/email.php'),
+        'EventQueue' => array('eventqueue/eventqueue.php'),
         'Filesystem' => array('filesystem/filesystem.php'),
         'Form' => array('forms/formfields.php','forms/form.php'),
         'HtmlFilter' => array('htmlfilter/htmlfilter.php'),
