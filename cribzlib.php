@@ -104,5 +104,16 @@ class CribzLib {
     function getModules() {
         return array_keys($this->modules);
     }
+
+    /**
+    * Get Version
+    * Get version information
+    *
+    * @return stdClass with version info
+    */
+    function getVersion() {
+        require_once(dirname(__FILE__).'/version.php');
+        return $version;
+    }
 }
 ?>
