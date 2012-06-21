@@ -18,28 +18,29 @@ Classes Included:
 *   Ajax Utils
 *   Atom Feeds
 *   Cache
+*   Command line script Utils
 *   Cookie Utils
 *   Database (PDO Based)
-*   Email Utils
+*   Email
+*   Event Queue
+*   Exceptions
 *   Filesystem Utils
 *   Forms
-*   Imap Utils
+*   Imap
 *   Logging
 *   Memcached
 *   MVC
+*   Page
 *   Requests
 *   Rss Feeds
+*   Safe IFrames
 *   Session Utils
+*   Spellchecker
 *   Template Engine
-*   Exceptions
-*   Html Filters
-*   Email Class
-*   Page Class
 *   Tidy Class
 *   Twig
-*   Rss Feeds
-*   Spellchecker
 *   XMLRPC Server/Client
+*   XSS
 *   More to come
 
 Support
