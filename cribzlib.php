@@ -32,6 +32,7 @@ class CribzLib {
         'Ajax' => array('ajax/ajax.php'),
         'Atom' => array('feeds/atom.php'),
         'Cache' => array('cache/cache.php'),
+        'Cli' => array('cli/cli.php'),
         'Cookie' => array('cookie/cookies.php'),
         'CountryCodes' => array('misc/countries.php'),
         'Database' => array('database/database.php'),
