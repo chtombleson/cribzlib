@@ -43,6 +43,13 @@ Classes Included:
 *   XSS
 *   More to come
 
+App.php
+------------
+app.php can be used to the basic folder structure and base for your application.
+It will create a config file and setup the cribzlib code base.
+
+After you have run the script start building your application.
+
 Support
 ------------
 There is documentation on the wiki @ github.
