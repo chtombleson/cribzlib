@@ -21,3 +21,15 @@
     Added Xss class.
     Added order by, limit and offset to CribzDatabase::Select().
     Added more characters to CribzForm::genToken() function for generating randon token.
+
+2012-06-27  Version 1.1.0
+    First Stable 1.1 Release.
+    Added Command Line Util Class.
+    Added EventQueue Class.
+    Added Version info, version.php.
+    Added getVersion(), getModules() & moduleExists() functions to CribzLib, cribzlib.php.
+    Modified CribzForm::gen_token().
+    Modified CribzDatabase::select() now takes arguments for order by, limit & offset.
+    Modified CribzDatabase::debug() now gives decent debug information in a formatted output.
+    Modified CribzDatabase::connect() now checks that the database driver is valid.
+    Removed CribzHTMLFilter, not used and can be replaced by CribzXSS or CribzSafeIFrame.
