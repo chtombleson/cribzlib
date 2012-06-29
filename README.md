@@ -54,6 +54,8 @@ Support
 ------------
 There is documentation on the wiki @ github.
 
+Documention for 1.0 Stable releases is @ [Cribz Network Wiki] (http://wiki.cribznetwork.com/index.php/Cribz_Lib/1.0/ "Cribz Network Wiki")
+
 Also documentation is also available @ [Cribz Network Wiki] (http://wiki.cribznetwork.com "Cribz Network Wiki")
 
 IRC: #cribznetwork on Freenode
