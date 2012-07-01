@@ -89,7 +89,11 @@ class CribzModel {
     * @param mixed  $value  Value of Var.
     */
     function __set($name, $value) {
-        self::set_data($name, $value);
+        if (isset($this->$name)) {
+            $this->$name = $value;
+        } else {
+            self::set_data($name, $value);
+        }
     }
 
     /**
