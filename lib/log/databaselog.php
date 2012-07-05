@@ -21,6 +21,8 @@
 * @author       Christopher Tombleson
 * @copyright    Copyright 2012 onwards
 */
+require_once(dirname(dirname(__FILE__)).'/mvc/model.php');
+
 class CribzDatabaseLog {
     /**
     * Date format
@@ -61,31 +63,6 @@ class CribzDatabaseLog {
     }
 
     /**
-    * Init
-    * Initalize the log file. Create it if it does not exist.
-    *
-    * @return true on success or false on failure.
-    */
-    function init() {
-        $this->database->connect();
-        $driver = $this->database->getAttribute(PDO::ATTR_DRIVER_NAME);
-
-        if ($driver == 'pgsql') {
-            if ($this->create_pgsql_logtable()) {
-                return true;
-            }
-            return false;
-        } else if ($driver == 'mysql' || $driver == 'sqlite') {
-            if ($this->create_mysql_logtable()) {
-                return true;
-            }
-            return false;
-        } else {
-            return false;
-        }
-    }
-
-    /**
     * Write Log
     * Add a line to the log file.
     *
@@ -98,74 +75,27 @@ class CribzDatabaseLog {
             $logmsg = "[".date($this->dateformat, time())."]";
             $logmsg .= $log;
 
-            if ($this->database->insert($this->logtable, (object) array('message' => $logmsg, 'timecreated' => time()))) {
-                return true;
-            }
-            return false;
-        }
-    }
-
-    /**
-    * Create PGSQL Log Table
-    * Create log table for postgresql database
-    *
-    * @return true on success or false on failure.
-    */
-    private function create_pgsql_logtable() {
-        $exist_sql = "SELECT table_name, table_type
-                      FROM information_schema.tables
-                      WHERE Table_Name = ?
-                      AND schema_name = ?";
-
-        if ($this->database->execute_sql($exist_sql, array($this->logtable, 'public'))) {
-            $result = $this->database->fetch();
-
-            if (empty($result)) {
-                if (!$this->database->execute_sql("CREATE SEQUENCE ".$this->logtable."_id_seq")) {
-                    return false;
-                }
-
-                $table_sql = "CREATE TABLE ".$this->logtable."(
-                                id int not null default nextval('cribzlog_id_seq') primary key,
-                                message text not null,
-                                timecreated int not null default 0
-                              )";
-
-                if ($this->database->execute_sql($table_sql)) {
-                    return true;
-                }
-                return false;
-            }
+            $model = new CribzLogModel($this->database, $this->logtable);
+            $model->message = $logmsg;
+            $model->timecreated = time();
+            $model->commit();
             return true;
         }
     }
+}
 
-    /**
-    * Create MYSQL Log Table
-    * Create log table for mysql database
-    *
-    * @return true on success or false on failure.
-    */
-    private function create_mysql_logtable() {
-        $exist_sql = "SHOW TABLES LIKE ?";
+class CribzLogModel extends CribzModel {
+    public $Table;
+    public $Pk = 'id';
+    public $Tabledefinition = array(
+        'id' => 'int not null primary key',
+        'message' => 'text not null',
+        'timecreated' => 'int not null default 0',
+    );
 
-        if ($this->database->execute_sql($exist_sql, array($this->logtable))) {
-            $result = $this->database->fetch();
-
-            if (empty($result)) {
-                $table_sql = "CREATE TABLE ".$this->logtable."(
-                                id int not null autoincrement primary key,
-                                message text not null,
-                                timecreated int not null default 0
-                              )";
-
-                if ($this->database->execute_sql($table_sql)) {
-                    return true;
-                }
-                return false;
-            }
-            return true;
-        }
+    function __construct($database, $table) {
+        $this->Table = $table;
+        parent::__construct($database);
     }
 }
 ?>
