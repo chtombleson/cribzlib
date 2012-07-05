@@ -222,6 +222,8 @@ class CribzModel {
                 } else {
                     throw new CribzModelException("Unable to create sequence.", 8);
                 }
+            } else {
+                $this->Tabledefinition[$this->Pk] = "int not null autoincrement primary key";
             }
 
             $result = $this->Database->create_table($this->Table, $this->Tabledefinition);
