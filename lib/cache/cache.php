@@ -44,6 +44,13 @@ class CribzCache {
     private $maxsize;
 
     /**
+    * Cache
+    *
+    * @var array
+    */
+    private $cache = array();
+
+    /**
     * Construct
     * Create a new instance of cribz cache.
     *
@@ -55,13 +62,13 @@ class CribzCache {
         $this->cachedir = rtrim($cachedir, "/").'/';
         $this->length = $length;
         $this->maxsize = $maxsize;
+        $this->init();
     }
 
     /**
     * Init
     * Intailize the cache.
     *
-    * @return true
     */
     function init() {
         if (!file_exists($this->cachedir)) {
@@ -69,13 +76,11 @@ class CribzCache {
         }
 
         $size = disk_total_space($this->cachedir);
-        $size = $size / 1024;
+        $size = $size * 1024;
 
         if ($size > $this->maxsize) {
             $this->purge(true);
         }
-
-        return true;
     }
 
     /**
@@ -88,10 +93,43 @@ class CribzCache {
     * @return true on success or false on failure
     */
     function add($name, $content) {
-        if (file_put_contents($this->cachedir.md5($name).'.cache', $content)) {
-            return $this->cachedir.md5($name).'.cache';
+        $namehash = md5($name);
+        $contenthash = md5($content);
+        $path = $this->cachedir.$namehash.'.cache';
+
+        if (!isset($this->cache[$namehash])) {
+            $this->cache[$namehash] = (object) array(
+                'name' => $name,
+                'contenthash' => $contenthash,
+                'path' => $path,
+                'timecreated' => time(),
+                'timemodified' => 0,
+            );
+
+            if (file_put_contents($this->cache[$namehash]->path, $content)) {
+                return $this->cache[$namehash]->path;
+            }
+            return false;
+
+        } else {
+            if ($this->cache[$namehash]->contenthash !== $contenthash) {
+                $this->cache[$namehash]->timemodified = time();
+
+                if (file_put_contents($this->cache[$namehash]->path, $content)) {
+                    return $this->cache[$namehash]->path;
+                }
+                return false;
+            } else {
+                $time = time() - $this->length;
+                if ($this->cache[$namehash]->timecreated < $time) {
+                    if (file_put_contents($this->cache[$namehash]->path, $content)) {
+                        return $this->cache[$namehash]->path;
+                    }
+                    return false;
+                }
+                return $this->cache[$namehash]->path;
+            }
         }
-        return false;
     }
 
     /**
@@ -103,11 +141,11 @@ class CribzCache {
     * @return true on success or false on failure
     */
     function remove($name) {
-        if (file_exists($this->cachedir.md5($name).'.cache')) {
-            unlink($this->cachedir.md5($name).'.cache');
-            return true;
+        $namehash = md5($name);
+        if (isset($this->cache[$namehash])) {
+            unset($this->cache[$namehash]);
         }
-        return false;
+        return true;
     }
 
     /**
@@ -119,10 +157,12 @@ class CribzCache {
     * @return true
     */
     function purge($all = false) {
-        $files = glob($this->cachedir.'.*\.cache');
+        $files = glob($this->cachedir.'*\.cache');
 
         if ($all) {
             foreach ($files as $file) {
+                preg_match('#([A-Za-z0-9]+)\.cache#', $file, $matches);
+                unset($this->cache[$matches[1]]);
                 unlink($file);
             }
             return true;
@@ -131,7 +171,9 @@ class CribzCache {
         $time = time() - $this->length;
 
         foreach ($files as $file) {
-            if (fileatime($file) < $time) {
+            preg_match('#([A-Za-z0-9]+)\.cache#', $file, $matches);
+            if ($this->cache[$matches[1]]->timecreated < $time) {
+                unset($this->cache[$macthes[1]]);
                 unlink($file);
             }
         }
@@ -147,8 +189,9 @@ class CribzCache {
     * @return path to cached file on success or false on failure
     */
     function is_cached($name) {
-        if (file_exists($this->cachedir.md5($name).'.cache')) {
-            return $this->cachedir.md5($name).'.cache';
+        $namehash = md5($name);
+        if (isset($this->cache[$namehash])) {
+            return $this->cache[$namehash]->path;
         }
         return false;
     }
