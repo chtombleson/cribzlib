@@ -37,6 +37,7 @@ class CribzLib {
         'CountryCodes' => array('misc/countries.php'),
         'Database' => array('database/database.php'),
         'DatabaseLog' => array('log/databaselog.php'),
+        'DataStore' => array('datastore/datastore.php'),
         'Email' => array('email/email.php'),
         'EventQueue' => array('eventqueue/eventqueue.php'),
         'Filesystem' => array('filesystem/filesystem.php'),
