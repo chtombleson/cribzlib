@@ -21,6 +21,7 @@ Classes Included:
 *   Command line script Utils
 *   Cookie Utils
 *   Database (PDO Based)
+*   Data Store
 *   Email
 *   Event Queue
 *   Exceptions
