@@ -35,6 +35,9 @@ class CribzMemcached {
     * Create a new instance of CribzMemcached
     */
     function __construct() {
+        if (!extension_loaded('memcached')) {
+            throw new CribzMemcachedException("Please install the memcached php extension.", 0);
+        }
         $this->memcached = new Memcached();
     }
 
@@ -140,4 +143,5 @@ class CribzMemcached {
         return $this->memcached->getServerList();
     }
 }
+class CribzMemcachedException extends CribzException {}
 ?>

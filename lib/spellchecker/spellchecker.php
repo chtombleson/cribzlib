@@ -21,7 +21,6 @@
 * @author       Christopher Tombleson
 * @copyright    Copyright 2012 onwards
 */
-require_once(dirname(__FILE__).'/../../cribzlib.php');
 class CribzSpellchecker {
     /**
     * Lang
@@ -44,6 +43,10 @@ class CribzSpellchecker {
     * @param int    $mode       Mode to be passed to pspell(Optional).
     */
     function __construct($lang, $mode = PSPELL_NORMAL) {
+        if (!extension_loaded('pspell')) {
+            throw new CribzSpellcheckerException("Please install the pspell php extension.", 0);
+        }
+
         $cribzlib = new CribzLib();
         $cribzlib->loadModule('LanguageCodes');
         $cribzlib->loadModule('CountryCodes');
@@ -167,4 +170,5 @@ class CribzSpellchecker {
         return false;
     }
 }
+class CribzSpellcheckerException extends CribzException {}
 ?>

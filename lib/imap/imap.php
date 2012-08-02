@@ -75,6 +75,10 @@ class CribzImap {
     * @param int    $option         Imap open options (optional)
     */
     function __construct($server, $username, $password, $port = null, $option = null) {
+        if (!extension_loaded('imap')) {
+            throw new CribzImapException("Please install the imap extension for php.", 0);
+        }
+
         $this->server = $server;
         $this->port = $port;
         $this->username = $username;
@@ -103,7 +107,7 @@ class CribzImap {
         }
 
         if (!$imap) {
-            return false;
+            throw new CribzImapException("Unable to open a connection to the imap server", 1);
         }
 
         $this->imap = $imap;
@@ -211,4 +215,5 @@ class CribzImap {
         return false;
     }
 }
+class CribzImapException extends CribzException {}
 ?>

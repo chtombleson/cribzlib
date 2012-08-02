@@ -32,6 +32,10 @@ class CribzTidy {
     * @return tidy object;
     */
     function clean_output($html, $config = array()) {
+        if (!extension_loaded('tidy')) {
+            throw new CribzTidyException("Please install the tidy extension for php.", 0);
+        }
+
         if (empty($config)) {
             $config = array(
                 'indent' => true,
@@ -46,4 +50,5 @@ class CribzTidy {
         return $tidy;
     }
 }
+class CribzTidyException extends CribzException {}
 ?>
