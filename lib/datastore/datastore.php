@@ -51,6 +51,13 @@ class CribzDatastore {
     private $hashindex = array();
 
     /**
+    * Type Index
+    *
+    * @var array
+    */
+    private $typeindex = array();
+
+    /**
     * ID Count
     *
     * @var int
@@ -156,16 +163,23 @@ class CribzDatastore {
         $this->store = array_merge($this->store, $stored_data);
 
         foreach ($this->store as $hash => $value) {
+            $type = strtolower($value->type);
+            if (!isset($this->typeindex[$type])) {
+                $this->typeindex[$type] = array();
+            }
+
             if (!$this->id_exists($value->id) && !$this->name_exists($value->name)){
                 $this->hashindex[] = $hash;
                 $this->nameindex[$value->name] = $hash;
                 $this->idindex[$value->id] = $hash;
+                $this->typeindex[$type][] = $hash;
             } else if ($this->id_exists($value->id)) {
                 $id = count($this->store) + 1;
                 $this->hashindex[] = $hash;
                 $this->nameindex[$value->name] = $hash;
                 $this->idindex[$id] = $hash;
                 $this->store[$hash]->id = $id;
+                $this->typeindex[$type][] = $hash;
             }
         }
 
@@ -210,7 +224,7 @@ class CribzDatastore {
         }
 
         $hash = md5($name);
-        $type = gettype($value);
+        $type = strtolower(gettype($value));
         $id = $this->idcount + 1;
 
         $data = (object) array(
@@ -223,9 +237,14 @@ class CribzDatastore {
             'timemodified' => 0,
         );
 
+        if (!isset($this->typeindex[$type])) {
+            $this->typeindex[$type] = array();
+        }
+
         $this->hashindex[] = $hash;
         $this->idindex[$id] = $hash;
         $this->nameindex[$name] = $hash;
+        $this->typeindex[$type][] = $hash;
         $this->store[$hash] = $data;
         $this->idcount = $id;
         return $id;
@@ -685,6 +704,75 @@ class CribzDatastore {
             throw new CribzDatastoreException("Cannot shrink the size of the data store.", 5);
         }
         $this->storesize = $newsize;
+    }
+
+    /**
+    * Get Names By Type
+    * Get an array of names based on the type. 
+    * eg string, object, array.
+    *
+    * @param string $type   PHP type.
+    * 
+    * @return array of names on success or null if nothing found.
+    */
+    function get_names_by_type($type) {
+        $hashes = $this->get_hashes_by_type($type);
+        $returnarr = array();
+        foreach ($hashes as $hash) {
+            $returnarr[] = $this->hash_to_name($hash);
+        }
+        return empty($returnarr) ? null : $returnarr;
+    }
+
+    /**
+    * Get IDs By Type
+    * Get an array of ids based on the type. 
+    * eg string, object, array.
+    *
+    * @param string $type   PHP type.
+    * 
+    * @return array of ids on success or null if nothing found.
+    */
+    function get_ids_by_type($type) {
+        $hashes = $this->get_hashes_by_type($type);
+        $returnarr = array();
+        foreach ($hashes as $hash) {
+            $returnarr[] = $this->hash_to_id($hash);
+        }
+        return empty($returnarr) ? null : $returnarr;
+    }
+
+    /**
+    * Get Hashes By Type
+    * Get an array of hashes based on the type. 
+    * eg string, object, array.
+    *
+    * @param string $type   PHP type.
+    * 
+    * @return array of hashes on success or null if nothing found.
+    */
+    function get_hashes_by_type($type) {
+        if (!$this->type_exists($type)) {
+            return null;
+        }
+
+        return $this->typeindex[$type];
+    }
+
+    /**
+    * Type Exists
+    * Check to see if a type exists in the type index.
+    *
+    * @param string $type   Type to check for.
+    *
+    * @return true if type exists or false if it does not exist.
+    */
+    function type_exists($type) {
+        if (!in_array($type, array_keys($this->typeindex))) {
+            return false;
+        }
+
+        return true;
     }
 }
 class CribzDatastoreException extends CribzException {}
