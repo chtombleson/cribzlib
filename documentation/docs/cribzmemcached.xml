@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzMemcached</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description>Create a new instance of CribzMemcached</description>
+		</function>
+		<function>
+			<realname>addServers</realname>
+			<name>Add Servers</name>
+			<description>Add multiple servers to the memcached server pool</description>
+			<params>
+				<param>@param array $servers     Array of server connection details</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>addServer</realname>
+			<name>Add Server</name>
+			<description>Add a server to the memcached server pool</description>
+			<params>
+				<param>@param string $server     Server name eg. memcache.example.com</param>
+				<param>@param int    $port       Port that the server is running on. Optional, Default is 11211</param>
+				<param>@param int    $weight     Weight of the server. Optional, Default is 0</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>add</realname>
+			<name>Add</name>
+			<description>Add a value to memcached.</description>
+			<params>
+				<param>@param string $key        Key to be stored in memcached.</param>
+				<param>@param mixed  $value      Value to be stored with the key.</param>
+				<param>@param int    $expires    How long is the data valid for.</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>append</realname>
+			<name>Append</name>
+			<description>Append data to a given key.</description>
+			<params>
+				<param>@param string $key        Key to append data to.</param>
+				<param>@param mixed  $value      Value to append to key.</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>delete</realname>
+			<name>Delete</name>
+			<description>Delete item from memcached.</description>
+			<params>
+				<param>@param string $key    Key to delete.</param>
+				<param>@param int    $time   The amount of time the server will wait to delete the item. Optional, Default is 0</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>get</realname>
+			<name>Get</name>
+			<description>Get item from memcached.</description>
+			<params>
+				<param>@param string $key        Key to get.</param>
+			</params>
+			<return>@return the item or false on failure.</return>
+		</function>
+		<function>
+			<realname>set</realname>
+			<name>Set</name>
+			<description>Store an item in memcached.</description>
+			<params>
+				<param>@param string $key        Key to store item under.</param>
+				<param>@param mixed  $value      Value to store.</param>
+				<param>@param int    $expires    How long the data is valid for. Optional, Default is 0</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>getServerList</realname>
+			<name>Get Server List</name>
+			<description>Get a list of all server in the memcached server pool.</description>
+			<return>@return array of servers in the pool.</return>
+		</function>
+	</functions>
+</class>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzLib</classname>
+	<functions>
+		<function>
+			<realname>loadModule</realname>
+			<name>Load Module</name>
+			<description>Load a module/class</description>
+			<params>
+				<param>@param string $name   Name of module</param>
+			</params>
+			<return>@return true on success or throws CribzException</return>
+		</function>
+		<function>
+			<realname>moduleExists</realname>
+			<name>Module Exists</name>
+			<description>Check to see if a module exists</description>
+			<params>
+				<param>@param string $name   Name of module</param>
+			</params>
+			<return>@return true if module exists or false if it does not exist.</return>
+		</function>
+		<function>
+			<realname>getModules</realname>
+			<name>Get Modules</name>
+			<description>Get a list of available modules</description>
+			<return>@return array of modules</return>
+		</function>
+		<function>
+			<realname>getVersion</realname>
+			<name>Get Version</name>
+			<description>Get version information</description>
+			<return>@return stdClass with version info</return>
+		</function>
+	</functions>
+</class>

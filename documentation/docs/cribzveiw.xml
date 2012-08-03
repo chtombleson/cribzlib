@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzVeiw</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create an new instance of CribzView.</description>
+			<params>
+				<param>@param string $templatedir    Path to directory with template for your view.</param>
+				<param>@param string $cachedir       Path to cache dir.</param>
+			</params>
+		</function>
+		<function>
+			<realname>render</realname>
+			<name>Render</name>
+			<description>Render the view.</description>
+			<params>
+				<param>@param string $template    Name of template file to load.</param>
+				<param>@param array  $data        Data to parse to template.</param>
+			</params>
+		</function>
+	</functions>
+</class>

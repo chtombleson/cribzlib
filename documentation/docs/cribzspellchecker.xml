@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzSpellchecker</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description></description>
+			<params>
+				<param>@param string $lang       String with lang code.</param>
+				<param>@param int    $mode       Mode to be passed to pspell(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>setMode</realname>
+			<name>Set Mode</name>
+			<description>Check to see if mode is valid.</description>
+			<params>
+				<param>@param int $mode      Mode to be passed to pspell.</param>
+			</params>
+			<return>@return true if mode is valid and set or false on error.</return>
+		</function>
+		<function>
+			<realname>setLang</realname>
+			<name>Set Lang</name>
+			<description>Check to see if lang is valid and then set it.</description>
+			<params>
+				<param>@param string $lang       String containing lang code.</param>
+			</params>
+			<return>@return true if valid and set or false on error.</return>
+		</function>
+		<function>
+			<realname>spellcheck_block</realname>
+			<name>Spellcheck Block</name>
+			<description>Check spelling in a block of text.</description>
+			<params>
+				<param>@param string $block          Block of text to check.</param>
+				<param>@param bool   $suggestions    Set to true if you want a list of word suggestion(Optional).</param>
+			</params>
+			<return>@return array of incorrectly spelled words.</return>
+		</function>
+		<function>
+			<realname>spellcheck_word</realname>
+			<name>Spellcheck Word</name>
+			<description>Check spelling of a word.</description>
+			<params>
+				<param>@param string $word           Word to check.</param>
+				<param>@param bool   $suggestions    Set to true if you want a list of word suggestion(Optional).</param>
+			</params>
+			<return>@return true if spelled correctly, an array of suggestions or false if not spelled correctly.</return>
+		</function>
+		<function>
+			<realname>check_array</realname>
+			<name>Check Array</name>
+			<description>Check and see if value is in an array.</description>
+			<params>
+				<param>@param mixed $value       Value to search for in array.</param>
+				<param>@param array $array       Array to search.</param>
+			</params>
+			<return>@return true if in array or false if not found.</return>
+		</function>
+	</functions>
+</class>

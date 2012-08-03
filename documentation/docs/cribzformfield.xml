@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzFormField</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description>Create new form field.</description>
+			<params>
+				<param>@param string $type       Input type (text, email, password, textarea, select, checkbox, hidden).</param>
+				<param>@param string $name       Element name.</param>
+				<param>@param bool   $required   Is element required.</param>
+				<param>@param string $label      Label for element(Optional).</param>
+				<param>@param int    $maxlength  Maxium length of input(Optional).</param>
+				<param>@param int    $minlength  Minium length of input(Optional).</param>
+				<param>@param string $class      Add class to element(Optional).</param>
+				<param>@param string $regex      Regular Expression used to validate input(Optional).</param>
+				<param>@param array  $options    Array of options for select inputs(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>build</realname>
+			<name>Build</name>
+			<description>Build the form field</description>
+		</function>
+		<function>
+			<realname>validate</realname>
+			<name>Validate</name>
+			<description></description>
+			<params>
+				<param>@param array $data    Data from submitted form.</param>
+			</params>
+		</function>
+		<function>
+			<realname>setValue</realname>
+			<name>Set Value</name>
+			<description></description>
+			<params>
+				<param>@param mixed $value   Value to set.</param>
+			</params>
+		</function>
+		<function>
+			<realname>build</realname>
+			<name>Build</name>
+			<description>Build Text input field.</description>
+		</function>
+		<function>
+			<realname>validate</realname>
+			<name>Validate</name>
+			<description>Validate input from text field.</description>
+			<params>
+				<param>@param array $data    Data from submitted form.</param>
+			</params>
+			<return>@return false on invalid, true on valid.</return>
+		</function>
+		<function>
+			<realname>setValue</realname>
+			<name>Set Value</name>
+			<description>Set Value of text field</description>
+			<params>
+				<param>@param mixed $value   Value to set.</param>
+			</params>
+		</function>
+		<function>
+			<realname>build</realname>
+			<name>Build</name>
+			<description>Build password input field.</description>
+		</function>
+		<function>
+			<realname>validate</realname>
+			<name>Validate</name>
+			<description>Validate input from password field.</description>
+			<params>
+				<param>@param array $data    Data from submitted form.</param>
+			</params>
+			<return>@return false on invalid, true on valid.</return>
+		</function>
+		<function>
+			<realname>setValue</realname>
+			<name>Set Value</name>
+			<description>Set Value of input field</description>
+			<params>
+				<param>@param mixed $value   Value to set.</param>
+			</params>
+		</function>
+		<function>
+			<realname>build</realname>
+			<name>Build</name>
+			<description>Build textarea input field.</description>
+		</function>
+		<function>
+			<realname>validate</realname>
+			<name>Validate</name>
+			<description>Validate input from textarea field.</description>
+			<params>
+				<param>@param array $data    Data from submitted form.</param>
+			</params>
+			<return>@return false on invalid, true on valid.</return>
+		</function>
+		<function>
+			<realname>setValue</realname>
+			<name>Set Value</name>
+			<description>Set Value of textarea.</description>
+			<params>
+				<param>@param mixed $value   Value to set.</param>
+			</params>
+		</function>
+		<function>
+			<realname>setSize</realname>
+			<name>Set Size</name>
+			<description>Set Size of textarea</description>
+			<params>
+				<param>@param int $rows      Number of rows.</param>
+				<param>@param int $cols      Number of columns.</param>
+			</params>
+		</function>
+		<function>
+			<realname>build</realname>
+			<name>Build</name>
+			<description>Build Select input field.</description>
+		</function>
+		<function>
+			<realname>validate</realname>
+			<name>Validate</name>
+			<description>Validate input from select field.</description>
+			<params>
+				<param>@param array $data    Data from submitted form.</param>
+			</params>
+			<return>@return false on invalid, true on valid.</return>
+		</function>
+		<function>
+			<realname>setValue</realname>
+			<name>Set Value</name>
+			<description>Set value of select field.</description>
+			<params>
+				<param>@param mixed $value   Value to set.</param>
+			</params>
+		</function>
+		<function>
+			<realname>build</realname>
+			<name>Build</name>
+			<description>Build checkbox input field.</description>
+		</function>
+		<function>
+			<realname>validate</realname>
+			<name>Validate</name>
+			<description>Validate input from checkbox field.</description>
+			<params>
+				<param>@param array $data    Data from submitted form.</param>
+			</params>
+			<return>@return false on invalid, true on valid.</return>
+		</function>
+		<function>
+			<realname>setValue</realname>
+			<name>Set Value</name>
+			<description>Set value of checkbox input.</description>
+			<params>
+				<param>@param mixed $value   Value to set.</param>
+			</params>
+		</function>
+		<function>
+			<realname>build</realname>
+			<name>Build</name>
+			<description>Build hidden input field.</description>
+		</function>
+		<function>
+			<realname>validate</realname>
+			<name>Validate</name>
+			<description>Validate input from hidden field.</description>
+			<params>
+				<param>@param array $data    Data from submitted form.</param>
+			</params>
+			<return>@return false on invalid, true on valid.</return>
+		</function>
+		<function>
+			<realname>setValue</realname>
+			<name>Set Value</name>
+			<description>Set Value of hidden input field.</description>
+			<params>
+				<param>@param mixed $value   Value to set.</param>
+			</params>
+		</function>
+	</functions>
+</class>

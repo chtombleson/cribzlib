@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzTidy</classname>
+	<functions>
+		<function>
+			<realname>clean_output</realname>
+			<name>Clean Output</name>
+			<description>Tidy and format html.</description>
+			<params>
+				<param>@param string $html       Html to tidy.</param>
+				<param>@param array  $config     Config array for tidy(Optional).</param>
+			</params>
+			<return>@return tidy object;</return>
+		</function>
+	</functions>
+</class>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzTemplate</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description></description>
+			<params>
+				<param>@param string $template       Path to template file to compile.</param>
+				<param>@param string $cache          Name for cache item.</param>
+				<param>@param string $cachepath      Path to cache directory.(Optional)</param>
+				<param>@param bool   $development    Development Mode.(Optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>output</realname>
+			<name>Output</name>
+			<description>Display compiled template.</description>
+			<params>
+				<param>@param array $data    Array of data to be passed to the compiler.</param>
+			</params>
+		</function>
+	</functions>
+</class>

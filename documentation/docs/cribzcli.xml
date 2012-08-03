@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzCli</classname>
+	<functions>
+		<function>
+			<realname>parse_options</realname>
+			<name>Parse Options</name>
+			<description>Parse the contents from $argv</description>
+			<params>
+				<param>@param array  $args    Contents of $argv</param>
+				<param>@param array  $types   Array with details about options and the type. array('help' => null, 'hello' => 'string)</param>
+				<param>@param string $switch  Switch used of options eg. -help</param>
+			</params>
+			<return>@return array of parse options</return>
+		</function>
+		<function>
+			<realname>input</realname>
+			<name>Input</name>
+			<description>Read one line from STDIN</description>
+			<return>@return string line from STDIN</return>
+		</function>
+		<function>
+			<realname>output</realname>
+			<name>Output</name>
+			<description>Print a message to the command line</description>
+			<params>
+				<param>@param string $message    Message to output</param>
+			</params>
+		</function>
+	</functions>
+</class>

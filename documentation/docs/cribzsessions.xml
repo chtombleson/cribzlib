@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzSessions</classname>
+	<functions>
+		<function>
+			<realname>set</realname>
+			<name>Set</name>
+			<description>Set session.</description>
+			<params>
+				<param>@param string $name   Name for session.</param>
+				<param>@param mixed  $value  Value of session.</param>
+			</params>
+			<return>@return true</return>
+		</function>
+		<function>
+			<realname>get</realname>
+			<name>Get</name>
+			<description>Get Session.</description>
+			<params>
+				<param>@param string $name   Name of session.</param>
+			</params>
+			<return>@return session data</return>
+		</function>
+		<function>
+			<realname>remove</realname>
+			<name>Remove</name>
+			<description>Remove a session.</description>
+			<params>
+				<param>@param string $name   Name of session to remove.</param>
+			</params>
+			<return>@return true</return>
+		</function>
+	</functions>
+</class>

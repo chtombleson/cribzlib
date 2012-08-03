@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzEventQueue</classname>
+	<functions>
+		<function>
+			<realname>addEvent</realname>
+			<name>Add Event</name>
+			<description>Add event to the event queue.</description>
+			<params>
+				<param>@param string $name       Name of Event</param>
+				<param>@param string $function   Function to call for event</param>
+				<param>@param array  $data       Array of data to be parsed to function (Optional)</param>
+			</params>
+			<return>@return true on success</return>
+		</function>
+		<function>
+			<realname>processEvents</realname>
+			<name>Process Events</name>
+			<description>Process all current events in the events queue</description>
+			<return>@return true on success or array of Errors of failure</return>
+		</function>
+	</functions>
+</class>

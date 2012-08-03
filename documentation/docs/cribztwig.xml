@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzTwig</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of Cribz Twig.</description>
+			<params>
+				<param>@param string $twigpath       Path to directory that contains twigs Autoloader.php</param>
+				<param>@param string $templatedir    Path to directory that contains the template files.</param>
+				<param>@param string $cachedir       Path to cache directory. (Optional)</param>
+				<param>@param bool   $debug          Put Twig into debug mode</param>
+			</params>
+		</function>
+		<function>
+			<realname>init</realname>
+			<name>Init</name>
+			<description>Initalize a twig environment.</description>
+		</function>
+		<function>
+			<realname>init_sandbox_ext</realname>
+			<name>Init Sandbox Ext</name>
+			<description>Initalize Twigs Sandbox Extension.</description>
+			<params>
+				<param>@param array $tags        Array of allowed tags</param>
+				<param>@param array $filters     Array of allowed filters</param>
+				<param>@param array $methods     Array of allowed methods</param>
+				<param>@param array $properties  Array of allowed properties</param>
+				<param>@param array $functions   Array of allowed functions</param>
+			</params>
+		</function>
+		<function>
+			<realname>init_escaper_ext</realname>
+			<name>Init Escaper Ext</name>
+			<description>Initalize Twigs Escaper Extension.</description>
+			<params>
+				<param>@param bool $global   Turn on global escaping. (Optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>init_optimizer_ext</realname>
+			<name>Init Optimizer Ext</name>
+			<description>Initalize Twigs Optimizer Extension.</description>
+			<params>
+				<param>@param int $optimize  Twigs Optimizer option. (Optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>render</realname>
+			<name>Render</name>
+			<description>Render a template.</description>
+			<params>
+				<param>@param string $template   Template file to render.</param>
+				<param>@param array  $data       Data to parse into the template. (Optional)</param>
+			</params>
+			<return>@return string of the compiled template.</return>
+		</function>
+		<function>
+			<realname>display</realname>
+			<name>Display</name>
+			<description>Render then directly output a template.</description>
+			<params>
+				<param>@param string $template   Template file to render and display.</param>
+				<param>@param array  $data       Data to parse into the template. (Optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>get_twig</realname>
+			<name>Get Twig</name>
+			<description>Return the Twig Object.</description>
+			<return>@return object Instance of Twig.</return>
+		</function>
+	</functions>
+</class>

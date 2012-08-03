@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzAtom</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of Cribz Atom</description>
+			<params>
+				<param>@param string $title      Feed Title</param>
+				<param>@param string $subtitle   Feed Subtitle</param>
+				<param>@param string $link       Feed url</param>
+				<param>@param string $domain     Domain name</param>
+				<param>@param array  $author     Array of author details name & email</param>
+				<param>@param string $lang       Language code</param>
+			</params>
+		</function>
+		<function>
+			<realname>buildAtom</realname>
+			<name>Build Atom</name>
+			<description>Create the xml structure for the atom feed.</description>
+			<params>
+				<param>@param array $entries     Array of stdClass for atom entries</param>
+			</params>
+			<return>@return string xml structure</return>
+		</function>
+		<function>
+			<realname>addEntry</realname>
+			<name>Add Entry</name>
+			<description>Create the xml structure for an entry</description>
+			<params>
+				<param>@param string $title      Entry title</param>
+				<param>@param string $link       Entry link</param>
+				<param>@param int    $time       Unix timestamp</param>
+				<param>@param string $author     Authors name</param>
+				<param>@param string $summary    Feed summary</param>
+			</params>
+			<return>@return string of xml structure</return>
+		</function>
+	</functions>
+</class>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzEmail</classname>
+	<functions>
+		<function>
+			<realname>send_mail</realname>
+			<name>Send Mail</name>
+			<description>Send a plian text email</description>
+			<params>
+				<param>@param mixed  $to         Array or string of email addresses to send to.</param>
+				<param>@param string $subject    Subject of message.</param>
+				<param>@param string $message    Message to send.</param>
+				<param>@param array  $headers    Additonal headers for email(Optiona).</param>
+			</params>
+			<return>@return false on error, true on success.</return>
+		</function>
+		<function>
+			<realname>send_html_mail</realname>
+			<name>Send Html Mail</name>
+			<description>Send a html email</description>
+			<params>
+				<param>@param mixed  $to         Array or string of email addresses to send to.</param>
+				<param>@param string $subject    Subject of message.</param>
+				<param>@param string $message    Message to send.</param>
+				<param>@param array  $headers    Additonal headers for email(Optiona).</param>
+			</params>
+			<return>@return false on error, true on success.</return>
+		</function>
+	</functions>
+</class>

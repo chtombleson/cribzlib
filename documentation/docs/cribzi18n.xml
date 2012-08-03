@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzI18n</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description></description>
+			<params>
+				<param>@param string $lang       Language to use.</param>
+				<param>@param string $langdir    Directory language file are in.</param>
+			</params>
+		</function>
+		<function>
+			<realname>get_string</realname>
+			<name>Get String</name>
+			<description>Retrive a string from the current language file.</description>
+			<params>
+				<param>@param string $name   Name of string you want to load.</param>
+			</params>
+			<return>@return the language string you wanted or the name you gave as a parameter when not found.</return>
+		</function>
+		<function>
+			<realname>load_lang</realname>
+			<name>Load Lang</name>
+			<description>Loads a language file and store in Lang Def class variable.</description>
+		</function>
+	</functions>
+</class>

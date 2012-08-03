@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzPage</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description>Create new page</description>
+			<params>
+				<param>@param array  $templates       Array of templates, name => path to template file.(Optional)</param>
+				<param>@param array  $data            Array of data for template, name => value.(Optional)</param>
+				<param>@param string $cache           Name to use when stored in cache.</param>
+				<param>@param object $memcache        CribzMemcache Object.(Optional)</param>
+				<param>@param string $cachepath       Path to cache directory.(Optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>addTemplate</realname>
+			<name>Add Template</name>
+			<description>Add a template to the page.</description>
+			<params>
+				<param>@param string $name       Name for template eg. header, footer.</param>
+				<param>@param string $tempalte   Path to template file.</param>
+			</params>
+			<return>@return true on added, false on error.</return>
+		</function>
+		<function>
+			<realname>addData</realname>
+			<name>Add Data</name>
+			<description>Add Data to be used to replace place holders in the template.</description>
+			<params>
+				<param>@param string $name       Name to the data relates to.</param>
+				<param>@param mixed  $data       Data to add.</param>
+			</params>
+			<return>@return true on added, false on error.</return>
+		</function>
+		<function>
+			<realname>render</realname>
+			<name>Render</name>
+			<description>Render the page.</description>
+			<return>@return false on error.</return>
+		</function>
+		<function>
+			<realname>instTemplates</realname>
+			<name>Inst Templates</name>
+			<description>Create new instance of Cribz Temlate class foreach template.</description>
+			<return>@return array of Cribz Template classes.</return>
+		</function>
+	</functions>
+</class>

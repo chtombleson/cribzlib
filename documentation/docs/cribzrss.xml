@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzRss</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of Cribz Rss</description>
+			<params>
+				<param>@param string $title          Feed title</param>
+				<param>@param string $link           Feed url</param>
+				<param>@param string $description    Feed description</param>
+				<param>@param string $domain         Domain</param>
+				<param>@param string $lang           Language (optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>buildRss</realname>
+			<name>Build Rss</name>
+			<description>Build the xml structure for the rss feed</description>
+			<params>
+				<param>@param array $items   Array of stdClass for rss items</param>
+			</params>
+			<return>@return string xml</return>
+		</function>
+		<function>
+			<realname>addItem</realname>
+			<name>Add Item</name>
+			<description>Create the xml structure for an item</description>
+			<params>
+				<param>@param string $title       Item title</param>
+				<param>@param string $description Item description</param>
+				<param>@param string $link        Item link</param>
+				<param>@param int    $time        Unix timestamp</param>
+			</params>
+			<return>@return string item xml</return>
+		</function>
+	</functions>
+</class>

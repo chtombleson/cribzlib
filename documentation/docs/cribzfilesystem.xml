@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzFilesystem</classname>
+	<functions>
+		<function>
+			<realname>copyFile</realname>
+			<name>Copy File</name>
+			<description>copy a file</description>
+			<params>
+				<param>@param string $file       Path to File to copy.</param>
+				<param>@param string $newfile    New file path.</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>removeFile</realname>
+			<name>Remove File</name>
+			<description>Remove a file</description>
+			<params>
+				<param>@param string $file   Path to file to remove.</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>createDir</realname>
+			<name>Create Dir</name>
+			<description>Create a directory.</description>
+			<params>
+				<param>@param string $dir        Path to new directory</param>
+				<param>@param int    $chmod      Mode for the new directory(Optional)</param>
+				<param>@param bool   $recursive  Create directories recursively(Optional)</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>removeDir</realname>
+			<name>Remove Dir</name>
+			<description>Remove a directory</description>
+			<params>
+				<param>@param string $dir    Directory to remove</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>searchDirByExt</realname>
+			<name>Search Dir By Ext</name>
+			<description>Search a directory for files with a certain extension.</description>
+			<params>
+				<param>@param string $dir        Directory to search</param>
+				<param>@param string $search     Extension to search for.</param>
+			</params>
+			<return>@return array of files on success or an empty array if nothing found.</return>
+		</function>
+		<function>
+			<realname>searchDirByFilename</realname>
+			<name>Search Dir By Filename</name>
+			<description>Search a directory for a certian file.</description>
+			<params>
+				<param>@param string $dir        Directory to search</param>
+				<param>@param string $filename   Filename to search for.</param>
+			</params>
+			<return>@return array with path to file or an empty array.</return>
+		</function>
+		<function>
+			<realname>changeMode</realname>
+			<name>Change Mode</name>
+			<description>Change the mode of a file or directory (chmod)</description>
+			<params>
+				<param>@param string $item   File or Directory to change mode on</param>
+				<param>@param int    $mode   Mode to set</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>changeOwner</realname>
+			<name>Change Owner</name>
+			<description>Change the owner of a file or directory (chown)</description>
+			<params>
+				<param>@param string $item   File or Directory to change owner on</param>
+				<param>@param int    $owner  New owner</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>changeGroup</realname>
+			<name>Change Group</name>
+			<description>Change the group of a file or directory (chgrp)</description>
+			<params>
+				<param>@param string $item   File or Directory to change group on</param>
+				<param>@param int    $group  New group</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+	</functions>
+</class>

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzCron</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description>Create a new instance of Cribz Cron</description>
+			<params>
+				<param>@param CribzDatabase  $database   Cribz Database Object.</param>
+				<param>@param string         $table      Name of table in the database.</param>
+			</params>
+		</function>
+		<function>
+			<realname>addJob</realname>
+			<name>Add Job</name>
+			<description>Add a job to the cron queue</description>
+			<params>
+				<param>@param string  $name      Name for cron job.</param>
+				<param>@param array   $function  Array with function name and any data to be passed to function.</param>
+			</params>
+			<return>@return bool true</return>
+		</function>
+		<function>
+			<realname>updateJob</realname>
+			<name>Update Job</name>
+			<description>Update a Job</description>
+			<params>
+				<param>@param string $name       Name of cron job to update.</param>
+				<param>@param array  $function   Array with function name and any data to be passed to function.</param>
+			</params>
+			<return>@return bool true</return>
+		</function>
+		<function>
+			<realname>removeJob</realname>
+			<name>Remove Job</name>
+			<description>Remove a job from the cron queue</description>
+			<params>
+				<param>@param string $name   Name of cron job to remove.</param>
+			</params>
+			<return>@return true on success or false on error</return>
+		</function>
+		<function>
+			<realname>runJob</realname>
+			<name>Run Job</name>
+			<description>Run a job</description>
+			<params>
+				<param>@param string $name   Name of cron job to run.</param>
+			</params>
+			<return>@return mixed return value from the cron job functions</return>
+		</function>
+		<function>
+			<realname>runAll</realname>
+			<name>Run All</name>
+			<description>Run all cron jobs</description>
+			<return>@return array of return values from functions or null on empty run</return>
+		</function>
+	</functions>
+</class>

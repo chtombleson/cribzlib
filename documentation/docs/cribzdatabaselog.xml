@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzDatabaseLog</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description>Create a new instance of CribzDatabaseLog</description>
+			<params>
+				<param>@param string         $logtable       Name of log table in database.</param>
+				<param>@param CribzDatbase   $database       CribzDatabase object.</param>
+				<param>@param string         $dateformat     String for date formatting (optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>write_log</realname>
+			<name>Write Log</name>
+			<description>Add a line to the log file.</description>
+			<params>
+				<param>@param string $log    Message to go into log file.</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+	</functions>
+</class>

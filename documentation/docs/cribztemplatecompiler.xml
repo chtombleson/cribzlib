@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzTemplateCompiler</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description></description>
+			<params>
+				<param>@param string $template   Path to template file to compile.</param>
+				<param>@param string $cache      Name for cache item.</param>
+				<param>@param string $cachepath  Path to cache directory.</param>
+			</params>
+		</function>
+		<function>
+			<realname>parse</realname>
+			<name>Parse</name>
+			<description>Parse the template file and replace the place holder and compile template.</description>
+			<params>
+				<param>@param array $data    Array of data that is used to replace place holders in the template.</param>
+				<param>@param bool  $include If true the the template is being included into another template.</param>
+			</params>
+			<return>@return string path to compiled template, or false if cache directory is writeable.</return>
+		</function>
+		<function>
+			<realname>replaceInclude</realname>
+			<name>Replace Include</name>
+			<description>Compiles included templates into a template.</description>
+			<params>
+				<param>@param string $tpl    Template file.</param>
+				<param>@param array  $data   Data to be use to replace place holders.</param>
+			</params>
+			<return>@return string template file.</return>
+		</function>
+		<function>
+			<realname>replaceforeach</realname>
+			<name>Replace Foreach</name>
+			<description>Evaluates the foreach place holders in the template file and</description>
+			<params>
+				<param>@param string $tpl    Template file.</param>
+				<param>@param array  $data   Data to be used to replace place holders.</param>
+			</params>
+			<return>@return string template file.</return>
+		</function>
+		<function>
+			<realname>replaceif</realname>
+			<name>Replace If</name>
+			<description>Evaulates if statment place holders in the template file and replace them with correct output.</description>
+			<params>
+				<param>@param string $tpl    Template file.</param>
+				<param>@param array  $data   Data to be used to replace place holders.</param>
+			</params>
+			<return>@return string template file.</return>
+		</function>
+		<function>
+			<realname>replace</realname>
+			<name>Replace</name>
+			<description>Replace variable places holders with the correct value.</description>
+			<params>
+				<param>@param string $tpl    Template file.</param>
+				<param>@param array  $data   Data to be used to replace place holders.</param>
+			</params>
+			<return>@return string template file.</return>
+		</function>
+		<function>
+			<realname>create_cache_dir</realname>
+			<name>Create Cache Dir</name>
+			<description>Creates directory of the compiled template files(cache)</description>
+			<params>
+				<param>@param string $cache  Path of directory to be created.</param>
+			</params>
+			<return>@return false on error, true on success.</return>
+		</function>
+	</functions>
+</class>

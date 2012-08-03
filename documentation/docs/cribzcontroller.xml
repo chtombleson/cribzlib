@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzController</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of Cribz Controller.</description>
+			<params>
+				<param>@param string $actionvar  Name of variable to look for in POST/GET data that contains the info for what controller to use.</param>
+			</params>
+		</function>
+		<function>
+			<realname>bind</realname>
+			<name>Bind</name>
+			<description>Bind an action to a function.</description>
+			<params>
+				<param>@param string $action     Action to trigger function.</param>
+				<param>@param mixed  $function   Function to call.</param>
+			</params>
+			<return>@return true on success or throws CribzControllerException on failure.</return>
+		</function>
+		<function>
+			<realname>run</realname>
+			<name>Run</name>
+			<description>Check if any controllers need to be ran.</description>
+		</function>
+	</functions>
+</class>

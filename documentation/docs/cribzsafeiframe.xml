@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzSafeIFrame</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of Cribz Safe IFrame.</description>
+			<params>
+				<param>@param array  $allowed_domians    An array of that contains iframe src base urls.</param>
+			</params>
+		</function>
+		<function>
+			<realname>safe</realname>
+			<name>Safe</name>
+			<description>Check to see if an iframe is coming from an allowed domain and is safe.</description>
+			<params>
+				<param>@param string $iframe     The html for the iframe.</param>
+			</params>
+			<return>@return true if safe or false if not safe.</return>
+		</function>
+		<function>
+			<realname>get_src</realname>
+			<name>Get Src</name>
+			<description>Get the src part of the iframe.</description>
+			<params>
+				<param>@param string $iframe     Html for the iframe.</param>
+			</params>
+			<return>@return the src url or an empty string.</return>
+		</function>
+		<function>
+			<realname>validate_src</realname>
+			<name>Validate Src</name>
+			<description>Check to see if the src is from an allowed domain.</description>
+			<params>
+				<param>@param string $src    The Src url.</param>
+			</params>
+			<return>@return true if valid or false if not valid.</return>
+		</function>
+	</functions>
+</class>

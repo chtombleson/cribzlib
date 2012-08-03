@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzCookies</classname>
+	<functions>
+		<function>
+			<realname>set</realname>
+			<name>Set</name>
+			<description>Set a cookie</description>
+			<params>
+				<param>@param string $name       Name of cookie.</param>
+				<param>@param string $value      Value of the cookie.</param>
+				<param>@param int    $expire     Time cookie is valid for(Optional).</param>
+				<param>@param string $path       Cookie Path(Optional).</param>
+				<param>@param string $domain     Domain for the cookie(Optional).</param>
+				<param>@param bool   $secure     Set Secure Cookies(Optional).</param>
+				<param>@param bool   $httponly   Set to send cookies only via http(Optional).</param>
+			</params>
+			<return>@return false on error, ture on success.</return>
+		</function>
+		<function>
+			<realname>get</realname>
+			<name>Get</name>
+			<description>Get value from cookie.</description>
+			<params>
+				<param>@param string $name   Name of cookie.</param>
+			</params>
+			<return>@return false on error, cookie value on success.</return>
+		</function>
+		<function>
+			<realname>remove</realname>
+			<name>Remove</name>
+			<description>Remove a cookie.</description>
+			<params>
+				<param>@param string $name   Name of cookie to remove.</param>
+			</params>
+			<return>@return true</return>
+		</function>
+	</functions>
+</class>

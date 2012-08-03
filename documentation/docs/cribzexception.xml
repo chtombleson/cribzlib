@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzException</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description></description>
+			<params>
+				<param>@param string     $message    Message for exception.</param>
+				<param>@param int        $code       Code number for exception.</param>
+				<param>@param exception  $previous   Previous exception if any.</param>
+			</params>
+		</function>
+		<function>
+			<realname>__toString</realname>
+			<name>To String</name>
+			<description></description>
+			<return>@return formatted string of exception.</return>
+		</function>
+		<function>
+			<realname>getHTML</realname>
+			<name>Get HTML</name>
+			<description></description>
+			<return>@return formatted html execption message.</return>
+		</function>
+	</functions>
+</class>

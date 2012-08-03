@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzLog</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description>Create a new instance of CribzLog</description>
+			<params>
+				<param>@param string $logfile        Path to log file</param>
+				<param>@param string $dateformat     String for date formatting (optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>init</realname>
+			<name>Init</name>
+			<description>Initalize the log file. Create it if it does not exist.</description>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>write_log</realname>
+			<name>Write Log</name>
+			<description>Add a line to the log file.</description>
+			<params>
+				<param>@param string $log    Message to go into log file.</param>
+			</params>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>create_log_file</realname>
+			<name>Create Log File</name>
+			<description>Create the log file.</description>
+			<return>@return true on success or false on failure</return>
+		</function>
+	</functions>
+</class>

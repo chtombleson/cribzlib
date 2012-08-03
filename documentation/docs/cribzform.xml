@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzForm</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description>Create new form.</description>
+			<params>
+				<param>@param string $action     Url for form action.</param>
+				<param>@param bool   $post       Use post request method(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>addElement</realname>
+			<name>Add Element</name>
+			<description>Add element to the form.</description>
+			<params>
+				<param>@param string $type       Input type (text, email, password, textarea, select, checkbox, hidden).</param>
+				<param>@param string $name       Element name.</param>
+				<param>@param bool   $required   Is element required.</param>
+				<param>@param string $label      Label for element(Optional).</param>
+				<param>@param int    $maxlength  Maxium length of input(Optional).</param>
+				<param>@param int    $minlength  Minium length of input(Optional).</param>
+				<param>@param string $class      Add class to element(Optional).</param>
+				<param>@param string $regex      Regular Expression used to validate input(Optional).</param>
+				<param>@param array  $options    Array of options for select inputs(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>addTextBox</realname>
+			<name>Add Text Box</name>
+			<description>Add text box element to the form.</description>
+			<params>
+				<param>@param string $name       Element name.</param>
+				<param>@param bool   $required   Is element required.</param>
+				<param>@param string $label      Label for element(Optional).</param>
+				<param>@param int    $maxlength  Maxium length of input(Optional).</param>
+				<param>@param int    $minlength  Minium length of input(Optional).</param>
+				<param>@param string $class      Add class to element(Optional).</param>
+				<param>@param string $regex      Regular Expression used to validate input(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>addEmail</realname>
+			<name>Add Email</name>
+			<description>Add email element to the form.</description>
+			<params>
+				<param>@param string $name       Element name.</param>
+				<param>@param bool   $required   Is element required.</param>
+				<param>@param string $label      Label for element(Optional).</param>
+				<param>@param int    $maxlength  Maxium length of input(Optional).</param>
+				<param>@param int    $minlength  Minium length of input(Optional).</param>
+				<param>@param string $class      Add class to element(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>addPassword</realname>
+			<name>Add Password</name>
+			<description>Add password element to the form.</description>
+			<params>
+				<param>@param string $name       Element name.</param>
+				<param>@param bool   $required   Is element required.</param>
+				<param>@param string $label      Label for element(Optional).</param>
+				<param>@param int    $maxlength  Maxium length of input(Optional).</param>
+				<param>@param int    $minlength  Minium length of input(Optional).</param>
+				<param>@param string $class      Add class to element(Optional).</param>
+				<param>@param string $regex      Regular Expression used to validate input(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>addTextArea</realname>
+			<name>Add Text Area</name>
+			<description>Add text area element to the form.</description>
+			<params>
+				<param>@param string $name       Element name.</param>
+				<param>@param bool   $required   Is element required.</param>
+				<param>@param string $label      Label for element(Optional).</param>
+				<param>@param int    $maxlength  Maxium length of input(Optional).</param>
+				<param>@param int    $minlength  Minium length of input(Optional).</param>
+				<param>@param string $class      Add class to element(Optional).</param>
+				<param>@param string $regex      Regular Expression used to validate input(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>addSelect</realname>
+			<name>Add Select</name>
+			<description>Add select element to the form.</description>
+			<params>
+				<param>@param string $type       Input type (text, email, password, textarea, select, checkbox, hidden).</param>
+				<param>@param string $name       Element name.</param>
+				<param>@param bool   $required   Is element required.</param>
+				<param>@param string $label      Label for element(Optional).</param>
+				<param>@param int    $maxlength  Maxium length of input(Optional).</param>
+				<param>@param int    $minlength  Minium length of input(Optional).</param>
+				<param>@param string $class      Add class to element(Optional).</param>
+				<param>@param string $regex      Regular Expression used to validate input(Optional).</param>
+				<param>@param array  $options    Array of options for select inputs(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>addCheckBox</realname>
+			<name>Add Check Box</name>
+			<description>Add check box element to the form.</description>
+			<params>
+				<param>@param string $name       Element name.</param>
+				<param>@param bool   $required   Is element required.</param>
+				<param>@param string $label      Label for element(Optional).</param>
+				<param>@param int    $maxlength  Maxium length of input(Optional).</param>
+				<param>@param int    $minlength  Minium length of input(Optional).</param>
+				<param>@param string $class      Add class to element(Optional).</param>
+				<param>@param string $regex      Regular Expression used to validate input(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>addHidden</realname>
+			<name>Add Hidden</name>
+			<description>Add hidden element to the form.</description>
+			<params>
+				<param>@param string $name       Element name.</param>
+				<param>@param bool   $required   Is element required.</param>
+				<param>@param string $label      Label for element(Optional).</param>
+				<param>@param int    $maxlength  Maxium length of input(Optional).</param>
+				<param>@param int    $minlength  Minium length of input(Optional).</param>
+				<param>@param string $class      Add class to element(Optional).</param>
+				<param>@param string $regex      Regular Expression used to validate input(Optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>setDefault</realname>
+			<name>Set Default</name>
+			<description>Set Default value of input.</description>
+			<params>
+				<param>@param string $name       Name of input to add default to.</param>
+				<param>@param mixed  $value      Value to set input to.</param>
+			</params>
+		</function>
+		<function>
+			<realname>addData</realname>
+			<name>Add Data</name>
+			<description>Add Data to form.</description>
+			<params>
+				<param>@param mixed $data    Array or Object of data to be added to form, format name => value.</param>
+			</params>
+		</function>
+		<function>
+			<realname>submitted</realname>
+			<name>Submitted</name>
+			<description>Has to form been submitted.</description>
+			<return>@return true if the form has been submitted or false.</return>
+		</function>
+		<function>
+			<realname>validate</realname>
+			<name>Validate</name>
+			<description>Validate form.</description>
+			<return>@return true on success, array on error.</return>
+		</function>
+		<function>
+			<realname>sanitize</realname>
+			<name>Sanitize</name>
+			<description>Sanitize input to prevent unwanted input.</description>
+			<params>
+				<param>@param string $data   Data to be sanitized</param>
+			</params>
+			<return>@return sanitized data.</return>
+		</function>
+		<function>
+			<realname>render</realname>
+			<name>Render</name>
+			<description>Render form</description>
+			<return>@return string html for the form.</return>
+		</function>
+		<function>
+			<realname>gen_token</realname>
+			<name>Gen Token</name>
+			<description>Generate a token to be used to validate form.</description>
+			<return>@return string token.</return>
+		</function>
+	</functions>
+</class>

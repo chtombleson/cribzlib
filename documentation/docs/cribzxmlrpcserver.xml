@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzXmlrpcServer</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new Xmlrpc server</description>
+		</function>
+		<function>
+			<realname>addMethod</realname>
+			<name>Add Method</name>
+			<description>Add a method to the server.</description>
+			<params>
+				<param>@param string $name       Name for method on XMLRPC Server.</param>
+				<param>@param mixed  $method     String with function name or array with class name and method.</param>
+			</params>
+			<return>@return true on success or false on error.</return>
+		</function>
+		<function>
+			<realname>callMethod</realname>
+			<name>Call Method</name>
+			<description>Call a method on the server.</description>
+			<params>
+				<param>@param string $xml        The xml data from the client.</param>
+				<param>@param array  $userdata   User data (Optional).</param>
+				<param>@param array  $options    Output Options (Optional).</param>
+			</params>
+			<return>@return the response from the method.</return>
+		</function>
+		<function>
+			<realname>close</realname>
+			<name>Close</name>
+			<description>Close the XMLRPC server.</description>
+			<return>@return true on success or false on error.</return>
+		</function>
+		<function>
+			<realname>getMethods</realname>
+			<name>Get Methods</name>
+			<description>Get an array of method available on the server.</description>
+			<return>@return array</return>
+		</function>
+	</functions>
+</class>

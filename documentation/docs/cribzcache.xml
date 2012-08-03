@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzCache</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description>Create a new instance of cribz cache.</description>
+			<params>
+				<param>@param string $cachedir   Path to cache directory.</param>
+				<param>@param int    $length     How long to cache for in seconds.</param>
+				<param>@param int    $maxsize    Max size of cache in kilobytes.</param>
+			</params>
+		</function>
+		<function>
+			<realname>init</realname>
+			<name>Init</name>
+			<description>Intailize the cache.</description>
+		</function>
+		<function>
+			<realname>add</realname>
+			<name>Add</name>
+			<description>Add item to cache</description>
+			<params>
+				<param>@param string $name       Name to give cache file.</param>
+				<param>@param string $content    Content to cache.</param>
+			</params>
+			<return>@return true on success or false on failure</return>
+		</function>
+		<function>
+			<realname>remove</realname>
+			<name>Remove</name>
+			<description>Remove an item from the cache.</description>
+			<params>
+				<param>@param string $name   Name of item to remove.</param>
+			</params>
+			<return>@return true on success or false on failure</return>
+		</function>
+		<function>
+			<realname>purge</realname>
+			<name>Purge</name>
+			<description>Clear the cache.</description>
+			<params>
+				<param>@param bool $all  Delete all cache items default is false (Optional).</param>
+			</params>
+			<return>@return true</return>
+		</function>
+		<function>
+			<realname>is_cached</realname>
+			<name>Is Cached</name>
+			<description>Check to see if something is cached.</description>
+			<params>
+				<param>@param string $name   Name of item to check.</param>
+			</params>
+			<return>@return path to cached file on success or false on failure</return>
+		</function>
+	</functions>
+</class>

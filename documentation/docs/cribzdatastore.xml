@@ -1,0 +1,321 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzDatastore</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Construct</name>
+			<description>Create a new instance of Cribz Datastore.</description>
+			<params>
+				<param>@param int   $size         The size of the data store, how many items can be stored.</param>
+				<param>@param bool  $persistent   If true the current datastore will be wriiten to file when class is destroyed.</param>
+				<param>@param strng $datafilepath Path to file to write data to.</param>
+				<param>@param bool  $load_data    Load data from data file.</param>
+			</params>
+		</function>
+		<function>
+			<realname>__destruct</realname>
+			<name>Destruct</name>
+			<description>Destory the class.</description>
+		</function>
+		<function>
+			<realname>load_data</realname>
+			<name>Load Data</name>
+			<description>Load data the has been written to a file.</description>
+			<params>
+				<param>@param string $path   Path to file to load.</param>
+				<param>@param bool   $resize If true resize the data store to allow for data to be loaded.</param>
+			</params>
+			<return>@return true on success or throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>save_data</realname>
+			<name>Save Data</name>
+			<description>Write data out to file.</description>
+			<params>
+				<param>@param string $path   Path to file to write to.</param>
+			</params>
+			<return>@return true on success or throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>add</realname>
+			<name>Add</name>
+			<description>Adds to the data store.</description>
+			<params>
+				<param>@param string $name   Name of item.</param>
+				<param>@param mixed  $value  Data to store.</param>
+			</params>
+			<return>@return int id of stored item or throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>update_by_name</realname>
+			<name>Update By Name</name>
+			<description>Update an item in the data store by name.</description>
+			<params>
+				<param>@param string $name   Name of item to update.</param>
+				<param>@param mixed  $value  Updated data.</param>
+			</params>
+			<return>@return true on success or throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>update_by_id</realname>
+			<name>Update By ID</name>
+			<description>Update an item in the data store by ID.</description>
+			<params>
+				<param>@param int    $id     ID of item to update.</param>
+				<param>@param mixed  $value  Updated data.</param>
+			</params>
+			<return>@return true on success or throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>update_by_hash</realname>
+			<name>Update By Hash</name>
+			<description>Update an item in the data store by hash.</description>
+			<params>
+				<param>@param string $hash   Hash of item to update.</param>
+				<param>@param mixed  $value  Updated data.</param>
+			</params>
+			<return>@return true on success or throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>delete_by_name</realname>
+			<name>Delete By Name</name>
+			<description>Delete an item by name.</description>
+			<params>
+				<param>@param string $name   Name of item to delete.</param>
+			</params>
+			<return>@return true on success or throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>delete_by_id</realname>
+			<name>Delete By ID</name>
+			<description>Delete an item by ID.</description>
+			<params>
+				<param>@param int $id ID of item to delete.</param>
+			</params>
+			<return>@return true on success or throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>delete_by_hash</realname>
+			<name>Delete By Hash</name>
+			<description>Delete an item by hash.</description>
+			<params>
+				<param>@param string $hash   Hash of item to delete.</param>
+			</params>
+			<return>@return true on success or throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>delete_by_names</realname>
+			<name>Delete By Names</name>
+			<description>Delete multiple items by name.</description>
+			<params>
+				<param>@param array $names   Array of names to delete.</param>
+			</params>
+		</function>
+		<function>
+			<realname>delete_by_ids</realname>
+			<name>Delete By IDs</name>
+			<description>Delete multiple items by id.</description>
+			<params>
+				<param>@param array $ids   Array of ids to delete.</param>
+			</params>
+		</function>
+		<function>
+			<realname>delete_by_hashes</realname>
+			<name>Delete By Hashes</name>
+			<description>Delete multiple items by hash.</description>
+			<params>
+				<param>@param array $hashes   Array of hashes to delete.</param>
+			</params>
+		</function>
+		<function>
+			<realname>get_by_name</realname>
+			<name>Get By Name</name>
+			<description>Get an item by name.</description>
+			<params>
+				<param>@param string $name    Name of item to get.</param>
+				<param>@param string $fields  Fields to get. (Optional)</param>
+			</params>
+			<return>@return stdclass with the data on success or null on failure, throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>get_by_id</realname>
+			<name>Get By ID</name>
+			<description>Get an item by ID.</description>
+			<params>
+				<param>@param string $id      ID of item to get.</param>
+				<param>@param string $fields  Fields to get. (Optional)</param>
+			</params>
+			<return>@return stdclass with the data on success or null on failure, throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>get_by_hash</realname>
+			<name>Get By Hash</name>
+			<description>Get an item by hash.</description>
+			<params>
+				<param>@param string $hash    Hash of item to get.</param>
+				<param>@param string $fields  Fields to get. (Optional)</param>
+			</params>
+			<return>@return stdclass with the data on success or null on failure, throws CribzDatastoreException.</return>
+		</function>
+		<function>
+			<realname>get_by_names</realname>
+			<name>Get By Names</name>
+			<description>Get multiple items by name.</description>
+			<params>
+				<param>@param array  $names   Array of names.</param>
+				<param>@param string $fields  Fields to get. (Optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>get_by_ids</realname>
+			<name>Get By IDs</name>
+			<description>Get multiple items by ID.</description>
+			<params>
+				<param>@param array  $ids     Array of ids.</param>
+				<param>@param string $fields  Fields to get. (Optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>get_by_hashes</realname>
+			<name>Get By Hashes</name>
+			<description>Get multiple items by hash.</description>
+			<params>
+				<param>@param array  $hashes  Array of hashes.</param>
+				<param>@param string $fields  Fields to get. (Optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>is_full</realname>
+			<name>Is Full</name>
+			<description>Checks to see if the data store is full.</description>
+			<return>@return true if the data store is full or false if there is still room.</return>
+		</function>
+		<function>
+			<realname>hash_exists</realname>
+			<name>Hash Exists</name>
+			<description>Checks to see if the hash exists.</description>
+			<params>
+				<param>@param string $hash   Hash to check.</param>
+			</params>
+			<return>@return true if hash exists or false if it does not exist.</return>
+		</function>
+		<function>
+			<realname>name_exists</realname>
+			<name>Name Exists</name>
+			<description>Checks to see if the name exists.</description>
+			<params>
+				<param>@param string $name   Name to check.</param>
+			</params>
+			<return>@return true if name exists or false if it does not exist.</return>
+		</function>
+		<function>
+			<realname>id_exists</realname>
+			<name>ID Exists</name>
+			<description>Checks to see if the id exists.</description>
+			<params>
+				<param>@param int $id    ID to check.</param>
+			</params>
+			<return>@return true if id exists or false if it does not exist.</return>
+		</function>
+		<function>
+			<realname>hash_to_name</realname>
+			<name>Hash To Name</name>
+			<description>Get the name of the item with specified hash.</description>
+			<params>
+				<param>@param string $hash   Hash of item you wat to get the name of.</param>
+			</params>
+			<return>@return string name of item on success or null if name not found.</return>
+		</function>
+		<function>
+			<realname>hash_to_id</realname>
+			<name>Hash To ID</name>
+			<description>Get the id of the item with specified hash.</description>
+			<params>
+				<param>@param string $hash   Hash of item you wat to get the id of.</param>
+			</params>
+			<return>@return int id of item on success or null if id not found.</return>
+		</function>
+		<function>
+			<realname>id_to_hash</realname>
+			<name>ID To Hash</name>
+			<description>Get the hash of the item with specified ID.</description>
+			<params>
+				<param>@param int $id    ID of item you want to get hash of.</param>
+			</params>
+			<return>@return string hash of item on success or null if ID not found.</return>
+		</function>
+		<function>
+			<realname>name_to_hash</realname>
+			<name>Name To Hash</name>
+			<description>Get the hash of the item with specified name.</description>
+			<params>
+				<param>@param string $name   Name of item you want to get hash of.</param>
+			</params>
+			<return>@return string hash of item on success or null if name not found.</return>
+		</function>
+		<function>
+			<realname>id_to_name</realname>
+			<name>ID To name</name>
+			<description>Get the name of the item with specified ID.</description>
+			<params>
+				<param>@param int $id    ID of item you want to get the name of.</param>
+			</params>
+			<return>@return string name of item on success or null if id does not exists.</return>
+		</function>
+		<function>
+			<realname>name_to_id</realname>
+			<name>Name To ID</name>
+			<description>Get ID of item with specified name.</description>
+			<params>
+				<param>@param string $name   Name of item you want to get ID of.</param>
+			</params>
+			<return>@return int id of item onn success or null if name not found.</return>
+		</function>
+		<function>
+			<realname>resize</realname>
+			<name>Resize</name>
+			<description>Resize the data store.</description>
+			<params>
+				<param>@param int $newsize   New size of data store.</param>
+			</params>
+			<return>@return throws CribzDatastoreException on error.</return>
+		</function>
+		<function>
+			<realname>get_names_by_type</realname>
+			<name>Get Names By Type</name>
+			<description>Get an array of names based on the type.</description>
+			<params>
+				<param>@param string $type   PHP type.</param>
+			</params>
+			<return>@return array of names on success or null if nothing found.</return>
+		</function>
+		<function>
+			<realname>get_ids_by_type</realname>
+			<name>Get IDs By Type</name>
+			<description>Get an array of ids based on the type.</description>
+			<params>
+				<param>@param string $type   PHP type.</param>
+			</params>
+			<return>@return array of ids on success or null if nothing found.</return>
+		</function>
+		<function>
+			<realname>get_hashes_by_type</realname>
+			<name>Get Hashes By Type</name>
+			<description>Get an array of hashes based on the type.</description>
+			<params>
+				<param>@param string $type   PHP type.</param>
+			</params>
+			<return>@return array of hashes on success or null if nothing found.</return>
+		</function>
+		<function>
+			<realname>type_exists</realname>
+			<name>Type Exists</name>
+			<description>Check to see if a type exists in the type index.</description>
+			<params>
+				<param>@param string $type   Type to check for.</param>
+			</params>
+			<return>@return true if type exists or false if it does not exist.</return>
+		</function>
+	</functions>
+</class>

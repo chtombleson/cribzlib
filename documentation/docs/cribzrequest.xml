@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzRequest</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Gets $_POST & $_GET and places it into class vars.</description>
+		</function>
+		<function>
+			<realname>optional_param</realname>
+			<name>Optional Param</name>
+			<description>Get a param and if it doesn't exist return the default.</description>
+			<params>
+				<param>@param string $name       Name of post/get variable.</param>
+				<param>@param string $type       Data type for input. String, int, float, double.</param>
+				<param>@param mixed  $default    Default value if param not set. (Optional)</param>
+			</params>
+			<return>@return mixed param value if set of default if set or null.</return>
+		</function>
+		<function>
+			<realname>required_param</realname>
+			<name>Required Param</name>
+			<description>Check if a POST/GET variable is set if not throw an exception.</description>
+			<params>
+				<param>@param string $name       Name of POST/GET variable.</param>
+				<param>@param string $type       Data type for input. String, int, float, double.</param>
+			</params>
+			<return>@return value of param or throws CribzRequestException</return>
+		</function>
+		<function>
+			<realname>check_type</realname>
+			<name>Check Type</name>
+			<description>Check for a valid type and type cast the data to the type.</description>
+			<params>
+				<param>@param string $type       Type to check.</param>
+				<param>@param mixed  $data       Data to type cast.</param>
+			</params>
+			<return>@return type cast data.</return>
+		</function>
+		<function>
+			<realname>get_param</realname>
+			<name>Get Param</name>
+			<description>Check to see if a GET param is set.</description>
+			<params>
+				<param>@param string $name       Name of GET param.</param>
+			</params>
+			<return>@return mixed the data from the GET param or false if not set.</return>
+		</function>
+		<function>
+			<realname>post_param</realname>
+			<name>Post Param</name>
+			<description>Check to see if a POST param is set.</description>
+			<params>
+				<param>@param string $name       Name of POST param.</param>
+			</params>
+			<return>@return mixed the data from the POST param or false if not set.</return>
+		</function>
+	</functions>
+</class>

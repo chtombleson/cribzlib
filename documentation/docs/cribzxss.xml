@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzXss</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of Cribz Xss.</description>
+			<params>
+				<param>@param array  $tags           Array of allowed tags (optional).</param>
+				<param>@param array  $attributes     Array of allowed attributes (optional).</param>
+			</params>
+		</function>
+		<function>
+			<realname>parse</realname>
+			<name>Parse</name>
+			<description>Apply allowed tags & attributes to html and returned cleaned output.</description>
+			<params>
+				<param>@param string $html   Html to parse.</param>
+			</params>
+			<return>@return string clean html.</return>
+		</function>
+		<function>
+			<realname>parse_tags</realname>
+			<name>Parse Tags</name>
+			<description>Checked for tags that aren't allowed and remove them and the contents inside of them.</description>
+			<params>
+				<param>@param string $html   Html to parse.</param>
+			</params>
+			<return>@return cleaned html.</return>
+		</function>
+		<function>
+			<realname>parse_attributes</realname>
+			<name>Parse Attributes</name>
+			<description>Remove attributes from tags that aren't allowed.</description>
+			<params>
+				<param>@param string $tagname        The tag name.</param>
+				<param>@param string $attributestr   The attribute for the tag.</param>
+			</params>
+			<return>@return cleaned attribute string.</return>
+		</function>
+	</functions>
+</class>

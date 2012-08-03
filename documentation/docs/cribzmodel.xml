@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzModel</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of CribzModel.</description>
+			<params>
+				<param>@param CribzDatabase $database    CribzDatabase Object.</param>
+			</params>
+		</function>
+		<function>
+			<realname>__set</realname>
+			<name>Set</name>
+			<description>Set class var.</description>
+			<params>
+				<param>@param string $name   Name of Var.</param>
+				<param>@param mixed  $value  Value of Var.</param>
+			</params>
+		</function>
+		<function>
+			<realname>__get</realname>
+			<name>Get</name>
+			<description>Get the value of a class var.</description>
+			<params>
+				<param>@param strin $name    Name of class Var.</param>
+			</params>
+			<return>@return value of class Var.</return>
+		</function>
+		<function>
+			<realname>load_data</realname>
+			<name>Load Data</name>
+			<description>Load record from database based on id.</description>
+			<params>
+				<param>@param int $id    Id of record to get.</param>
+			</params>
+		</function>
+		<function>
+			<realname>commit</realname>
+			<name>Commit</name>
+			<description>Commit a record to the database.</description>
+			<return>@return true on success or false on error.</return>
+		</function>
+		<function>
+			<realname>rollback</realname>
+			<name>Rollback</name>
+			<description>Rollback an action.</description>
+			<return>@return true on success or false on failure.</return>
+		</function>
+		<function>
+			<realname>set_data</realname>
+			<name>Set Data</name>
+			<description>Set the data and update database.</description>
+			<params>
+				<param>@param string $name   Name of class var.</param>
+				<param>@param mixed  $value  Value of class var.</param>
+			</params>
+		</function>
+		<function>
+			<realname>create_record</realname>
+			<name>Create Record</name>
+			<description>Create a new record in the database.</description>
+		</function>
+		<function>
+			<realname>tabledef</realname>
+			<name>Table Def</name>
+			<description>Create a new table if it doesn't exist.</description>
+		</function>
+	</functions>
+</class>

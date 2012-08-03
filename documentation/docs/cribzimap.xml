@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzImap</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description></description>
+			<params>
+				<param>@param string $server         Imap Server to connect to</param>
+				<param>@param string $username       Name of user to connect as</param>
+				<param>@param string $password       Password for given user</param>
+				<param>@param int    $port           Port to connect to (optional)</param>
+				<param>@param int    $option         Imap open options (optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>connect</realname>
+			<name>Connect</name>
+			<description>Open a Imap stream</description>
+			<return>@return true on success or false on failure</return>
+		</function>
+		<function>
+			<realname>close</realname>
+			<name>Close</name>
+			<description>Close an Imap stream</description>
+		</function>
+		<function>
+			<realname>list_mail_boxes</realname>
+			<name>List Mail Boxes</name>
+			<description>List the mail boxes on the current server.</description>
+			<return>@return list of mailboxes on success or empty array on failure</return>
+		</function>
+		<function>
+			<realname>search</realname>
+			<name>Search</name>
+			<description>Search messages</description>
+			<params>
+				<param>@param string $query  Imap search query string</param>
+			</params>
+			<return>@return array of message id's on success or false on error</return>
+		</function>
+		<function>
+			<realname>header_info</realname>
+			<name>Header Info</name>
+			<description>Get the header info for a given message id.</description>
+			<params>
+				<param>@param int $msgid     Message id</param>
+			</params>
+			<return>@return header object on success or false on failure</return>
+		</function>
+		<function>
+			<realname>get_body</realname>
+			<name>Get Body</name>
+			<description>Get the body of a message</description>
+			<params>
+				<param>@param int $mgsid     Message id</param>
+			</params>
+			<return>@return message on success or false on failure</return>
+		</function>
+		<function>
+			<realname>set_flag</realname>
+			<name>Set flag</name>
+			<description>Set a flag on a message</description>
+			<params>
+				<param>@param int    $msgid      Message to flag</param>
+				<param>@param string $flag       Flags to add to message</param>
+			</params>
+			<return>@return true on success or false on failure</return>
+		</function>
+	</functions>
+</class>

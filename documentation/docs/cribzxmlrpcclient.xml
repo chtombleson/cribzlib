@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzXmlrpcClient</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new Xmlrpc Client.</description>
+			<params>
+				<param>@param string $server     XMLRPC Server to send requests to.</param>
+			</params>
+		</function>
+		<function>
+			<realname>createRequest</realname>
+			<name>Create Request</name>
+			<description>Create the xml request.</description>
+			<params>
+				<param>@param string $method         Method on the XMLRPC Server to call.</param>
+				<param>@param array  $parameters     Array of parameters to be passed to the method (Optional).</param>
+			</params>
+			<return>@return string xml request.</return>
+		</function>
+		<function>
+			<realname>decode</realname>
+			<name>Decode</name>
+			<description>Decode the response from the server.</description>
+			<params>
+				<param>@param string $xml    Response xml from the server.</param>
+			</params>
+			<return>@return decoded values from server or false on error.</return>
+		</function>
+		<function>
+			<realname>xml_value</realname>
+			<name>XML Value</name>
+			<description>Encode or decode values for xmlrpc use.</description>
+			<params>
+				<param>@param mixed  $param   Array with type and value for encoding or SimpleXMLElement for decoding.</param>
+				<param>@param bool   $decode  Decode xml string, Default is false.</param>
+			</params>
+			<return>@return encoded or decoded value.</return>
+		</function>
+		<function>
+			<realname>faultxml</realname>
+			<name>Fault XML</name>
+			<description>Get the fault info.</description>
+			<params>
+				<param>@param SimpleXMLElement $xml</param>
+			</params>
+			<return>@return value of SimpleXMLElement or false if no value.</return>
+		</function>
+		<function>
+			<realname>execute</realname>
+			<name>Execute</name>
+			<description>Execute a call to the XMLRPC Server.</description>
+			<params>
+				<param>@param string $method         Name of method your calling.</param>
+				<param>@param array  $parameters     Parameters to pass to method (Optional).</param>
+			</params>
+			<return>@return decoded response.</return>
+		</function>
+		<function>
+			<realname>execute_curl</realname>
+			<name>Execute Curl</name>
+			<description>Execute XMLRPC request using curl.</description>
+			<params>
+				<param>@param string $xml    XML to be sent to XLRPC Server.</param>
+			</params>
+			<return>@return string encoded response.</return>
+		</function>
+		<function>
+			<realname>xml_encode_value</realname>
+			<name>XML Encode Value</name>
+			<description>Encoded values in the correct xml format.</description>
+			<params>
+				<param>@param array $param   Array containing the type and value.</param>
+			</params>
+			<return>@return string the xml representation of the value.</return>
+		</function>
+		<function>
+			<realname>xml_decode_value</realname>
+			<name>XML Decode Value</name>
+			<description>Decode the xml values into php values.</description>
+			<params>
+				<param>@param string $xml    The xml string to be parsed.</param>
+			</params>
+			<return>@return mixed the php value.</return>
+		</function>
+	</functions>
+</class>
