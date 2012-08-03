@@ -52,12 +52,25 @@ It will create a config file and setup the cribzlib code base.
 
 After you have run the script start building your application.
 
-Support
-------------
+Support & Documentation
+--------------------------
+You can read the inline code documentation via a script readdoc.php in documentation/readdoc.php
+
+readdoc.php is a commandline tool. Usage php readdoc.php CLASS NAME [FUNCTION NAME]
+
+For example: php readdoc.php CribzDatabase connect (Will give info about the database connect function).
+
+For example: php readdoc.php CribzDatabase (Will give info about all function in the CribzDatabase class).
+
+
+Wiki Docs
+--------------
 There is documentation on the wiki @ github.
 
 Documention for 1.0 Stable releases is @ [Cribz Network Wiki] (http://wiki.cribznetwork.com/index.php/Cribz_Lib/1.0/ "Cribz Network Wiki")
 
 Also documentation is also available @ [Cribz Network Wiki] (http://wiki.cribznetwork.com "Cribz Network Wiki")
 
-IRC: #cribznetwork on Freenode
+IRC
+-----------
+\#cribznetwork on Freenode
