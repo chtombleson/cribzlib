@@ -7,8 +7,8 @@
 			<name>Construct</name>
 			<description>Create new page</description>
 			<params>
-				<param>@param array  $templates       Array of templates, name => path to template file.(Optional)</param>
-				<param>@param array  $data            Array of data for template, name => value.(Optional)</param>
+				<param>@param array  $templates       Array of templates, name =&gt; path to template file.(Optional)</param>
+				<param>@param array  $data            Array of data for template, name =&gt; value.(Optional)</param>
 				<param>@param string $cache           Name to use when stored in cache.</param>
 				<param>@param object $memcache        CribzMemcache Object.(Optional)</param>
 				<param>@param string $cachepath       Path to cache directory.(Optional)</param>

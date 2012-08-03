@@ -14,7 +14,7 @@
 		<function>
 			<realname>parse</realname>
 			<name>Parse</name>
-			<description>Apply allowed tags & attributes to html and returned cleaned output.</description>
+			<description>Apply allowed tags &amp; attributes to html and returned cleaned output.</description>
 			<params>
 				<param>@param string $html   Html to parse.</param>
 			</params>

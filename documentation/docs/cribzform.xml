@@ -140,7 +140,7 @@
 			<name>Add Data</name>
 			<description>Add Data to form.</description>
 			<params>
-				<param>@param mixed $data    Array or Object of data to be added to form, format name => value.</param>
+				<param>@param mixed $data    Array or Object of data to be added to form, format name =&gt; value.</param>
 			</params>
 		</function>
 		<function>

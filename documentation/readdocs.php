@@ -32,67 +32,57 @@ function display_docs($class, $function=null) {
     $xml = load_doc($class);
 
     if (empty($function)) {
-        echo "Documentation for class: ".$xml->classname."\n\n";
+        echo "Documentation for class: ".html_entity_decode($xml->classname)."\n\n";
     } else {
         $name = func_name($xml, $function);
 
         if (empty($name)) {
-            echo "Documentation for class: ".$xml->classname."\n\n";
+            echo "Documentation for class: ".html_entity_decode($xml->classname)."\n\n";
             echo "Could not find function ".$function.".\n";
         } else {
-            echo "Documentation for class function: ".$xml->classname."::";
+            echo "Documentation for class function: ".html_entity_decode($xml->classname)."::";
             echo $name."\n\n";
         }
     }
 
     if (empty($function)) {
         foreach ($xml->functions->function as $docfunction) {
-            echo "Function: ".$docfunction->realname."\n";
+            echo "Function: ".html_entity_decode($docfunction->realname)."\n";
             echo "Description:\n";
-            echo "    ".$docfunction->name."\n";
-            echo "    ".$docfunction->description."\n";
+            echo "    ".html_entity_decode($docfunction->name)."\n";
+            echo "    ".html_entity_decode($docfunction->description)."\n";
 
-            if (!empty($docfunction->params)) {
+            if (!empty($docfunction->params->param)) {
                 echo "Params:\n";
-                if (is_array($docfunction->param)) {
-                    foreach ($docfunction->param as $param) {
-                        echo "    ".$param."\n";
-                    }
-                } else {
-                    $param = str_replace('@param', '', $docfunction->params->param);
-                    echo "    ".trim($param)."\n";
+                foreach ($docfunction->params->param as $param) {
+                    echo "    ".html_entity_decode($param)."\n";
                 }
             }
 
             if (!empty($docfunction->return)) {
                 $return = str_replace('@return', '', $docfunction->return);
-                echo "Return: ".trim($return)."\n";
+                echo "Return: ".trim(html_entity_decode($return))."\n";
             }
             echo "==================================================================\n";
         }
     } else {
         foreach ($xml->functions->function as $docfunction) {
             if ($name == $docfunction->realname) {
-                echo "Function: ".$docfunction->realname."\n";
+                echo "Function: ".html_entity_decode($docfunction->realname)."\n";
                 echo "Description:\n";
-                echo "    ".$docfunction->name."\n";
-                echo "    ".$docfunction->description."\n";
+                echo "    ".html_entity_decode($docfunction->name)."\n";
+                echo "    ".html_entity_decode($docfunction->description)."\n";
 
                 if (!empty($docfunction->params)) {
                     echo "Params:\n";
-                    if (is_array($docfunction->param)) {
-                        foreach ($docfunction->param as $param) {
-                            echo "    ".$param."\n";
-                        }
-                    } else {
-                        $param = str_replace('@param', '', $docfunction->params->param);
-                        echo "    ".trim($param)."\n";
+                    foreach ($docfunction->param as $param) {
+                        echo "    ".html_entity_decode($param)."\n";
                     }
                 }
 
                 if (!empty($docfunction->return)) {
                     $return = str_replace('@return', '', $docfunction->return);
-                    echo "Return: ".trim($return)."\n";
+                    echo "Return: ".trim(html_entity_decode($return))."\n";
                 }
                 echo "==================================================================\n";
             }

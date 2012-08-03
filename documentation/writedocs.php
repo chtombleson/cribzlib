@@ -22,27 +22,27 @@ function write_doc_file($class, $functions) {
 
     $xml  = "<?xml version=\"1.0\"?>\n";
     $xml .= "<class>\n";
-    $xml .= "\t<classname>".$class."</classname>\n";
+    $xml .= "\t<classname>".htmlentities($class)."</classname>\n";
 
     $class = strtolower($class);
 
     $xml .= "\t<functions>\n";
     foreach ($functions as $function) {
         $xml .= "\t\t<function>\n";
-        $xml .= "\t\t\t<realname>".$function->realname."</realname>\n";
-        $xml .= "\t\t\t<name>".$function->name."</name>\n";
-        $xml .= "\t\t\t<description>".$function->description."</description>\n";
+        $xml .= "\t\t\t<realname>".htmlentities($function->realname)."</realname>\n";
+        $xml .= "\t\t\t<name>".htmlentities($function->name)."</name>\n";
+        $xml .= "\t\t\t<description>".htmlentities($function->description)."</description>\n";
 
         if (!empty($function->params)) {
             $xml .= "\t\t\t<params>\n";
             foreach ($function->params as $param) {
-                $xml .= "\t\t\t\t<param>".$param."</param>\n";
+                $xml .= "\t\t\t\t<param>".htmlentities($param)."</param>\n";
             }
             $xml .= "\t\t\t</params>\n";
         }
 
         if (!empty($function->return)) {
-            $xml .= "\t\t\t<return>".$function->return."</return>\n";
+            $xml .= "\t\t\t<return>".htmlentities($function->return)."</return>\n";
         }
         $xml .= "\t\t</function>\n";
     }

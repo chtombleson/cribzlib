@@ -11,7 +11,7 @@
 				<param>@param string $subtitle   Feed Subtitle</param>
 				<param>@param string $link       Feed url</param>
 				<param>@param string $domain     Domain name</param>
-				<param>@param array  $author     Array of author details name & email</param>
+				<param>@param array  $author     Array of author details name &amp; email</param>
 				<param>@param string $lang       Language code</param>
 			</params>
 		</function>

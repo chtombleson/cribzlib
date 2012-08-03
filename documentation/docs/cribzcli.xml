@@ -8,7 +8,7 @@
 			<description>Parse the contents from $argv</description>
 			<params>
 				<param>@param array  $args    Contents of $argv</param>
-				<param>@param array  $types   Array with details about options and the type. array('help' => null, 'hello' => 'string)</param>
+				<param>@param array  $types   Array with details about options and the type. array('help' =&gt; null, 'hello' =&gt; 'string)</param>
 				<param>@param string $switch  Switch used of options eg. -help</param>
 			</params>
 			<return>@return array of parse options</return>

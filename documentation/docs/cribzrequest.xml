@@ -5,7 +5,7 @@
 		<function>
 			<realname>__construct</realname>
 			<name>Constructor</name>
-			<description>Gets $_POST & $_GET and places it into class vars.</description>
+			<description>Gets $_POST &amp; $_GET and places it into class vars.</description>
 		</function>
 		<function>
 			<realname>optional_param</realname>
