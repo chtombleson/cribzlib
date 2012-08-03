@@ -59,7 +59,7 @@ class CribzLog {
     */
     function init() {
         if (!file_exists($this->logfile)) {
-            if ($this->create_logfile()) {
+            if ($this->create_log_file()) {
                 return true;
             }
             return false;
@@ -95,7 +95,7 @@ class CribzLog {
     * @access private
     * @return true on success or false on failure
     */
-    private function create_logfile() {
+    private function create_log_file() {
         if (file_exists(dirname($this->logfile)) && is_writeable(dirname($this->logfile))) {
             if (file_put_contents($this->logfile, '#log file created: '.date($this->dateformat, time()).PHP_EOL)) {
                 return true;

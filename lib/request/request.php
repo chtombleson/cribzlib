@@ -79,7 +79,7 @@ class CribzRequest {
     }
 
     /**
-    * Require Param
+    * Required Param
     * Check if a POST/GET variable is set if not throw an exception.
     *
     * @param string $name       Name of POST/GET variable.

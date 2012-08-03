@@ -68,6 +68,8 @@ class CribzLib {
     * Load a module/class
     *
     * @param string $name   Name of module
+    *
+    * @return true on success or throws CribzException
     */
     function loadModule($name) {
         $modules = array_keys($this->modules);
@@ -86,6 +88,8 @@ class CribzLib {
     * Check to see if a module exists
     *
     * @param string $name   Name of module
+    *
+    * @return true if module exists or false if it does not exist.
     */
     function moduleExists($name) {
         $module = array_keys($this->modules);

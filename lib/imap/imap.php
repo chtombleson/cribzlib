@@ -129,7 +129,7 @@ class CribzImap {
     *
     * @return list of mailboxes on success or empty array on failure
     */
-    function list_mailboxes() {
+    function list_mail_boxes() {
         if (empty($port)) {
             $server = "{" . $this->server . "}";
         } else {

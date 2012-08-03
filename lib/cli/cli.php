@@ -70,7 +70,7 @@ class CribzCli {
     }
 
     /**
-    * Ouput
+    * Output
     * Print a message to the command line
     *
     * @param string $message    Message to output

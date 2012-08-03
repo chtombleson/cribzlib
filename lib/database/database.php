@@ -243,7 +243,7 @@ class CribzDatabase {
     * Get DB Error code
     * @return db error code array.
     */
-    function db_errorCode() {
+    function dbErrorCode() {
         return $this->database->errorCode();
     }
 
@@ -252,7 +252,7 @@ class CribzDatabase {
     * Get DB Error info
     * @return db error info array.
     */
-    function db_errorInfo() {
+    function dbErrorInfo() {
         return $this->database->errorInfo();
     }
 
@@ -311,7 +311,7 @@ class CribzDatabase {
     }
 
     /**
-    * Last Statment Error Code
+    * Last Statement Error Code
     * Get the error code for the last statement.
     * @return error code array for last statement.
     */
@@ -320,7 +320,7 @@ class CribzDatabase {
     }
 
     /**
-    * Last Statment Error Info
+    * Last Statement Error Info
     * Get the error info for the last statement.
     * @return error info array for last statement.
     */
