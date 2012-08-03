@@ -73,9 +73,9 @@ function display_docs($class, $function=null) {
                 echo "    ".html_entity_decode($docfunction->name)."\n";
                 echo "    ".html_entity_decode($docfunction->description)."\n";
 
-                if (!empty($docfunction->params)) {
+                if (!empty($docfunction->params->param)) {
                     echo "Params:\n";
-                    foreach ($docfunction->param as $param) {
+                    foreach ($docfunction->params->param as $param) {
                         echo "    ".html_entity_decode($param)."\n";
                     }
                 }
