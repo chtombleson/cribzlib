@@ -54,13 +54,13 @@ After you have run the script start building your application.
 
 Support & Documentation
 --------------------------
-You can read the inline code documentation via a script readdoc.php in documentation/readdoc.php
+You can read the inline code documentation via a script readdocs.php @ documentation/readdocs.php
 
-readdoc.php is a commandline tool. Usage php readdoc.php CLASS NAME [FUNCTION NAME]
+readdoc.php is a commandline tool. Usage php readdocs.php CLASS NAME [FUNCTION NAME]
 
-For example: php readdoc.php CribzDatabase connect (Will give info about the database connect function).
+For example: php readdocs.php CribzDatabase connect (Will give info about the database connect function).
 
-For example: php readdoc.php CribzDatabase (Will give info about all function in the CribzDatabase class).
+For example: php readdocs.php CribzDatabase (Will give info about all function in the CribzDatabase class).
 
 
 Wiki Docs
