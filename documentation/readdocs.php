@@ -16,7 +16,7 @@
 *    along with CribzLib.  If not, see <http://www.gnu.org/licenses/>.
 */
 function load_doc($class) {
-    $xml = simplexml_load_file(dirname(__FILE__).'/docs/'.$class.'.xml');
+    $xml = @simplexml_load_file(dirname(__FILE__).'/docs/'.$class.'.xml');
     return $xml;
 }
 
@@ -30,6 +30,11 @@ function func_name($xml, $function) {
 
 function display_docs($class, $function=null) {
     $xml = load_doc($class);
+
+    if (empty($xml)) {
+        echo "Unable to read the xml documentation file\n";
+        exit;
+    }
 
     if (empty($function)) {
         echo "Documentation for class: ".html_entity_decode($xml->classname)."\n\n";

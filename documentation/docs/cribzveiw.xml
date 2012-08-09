@@ -16,9 +16,20 @@
 			<name>Render</name>
 			<description>Render the view.</description>
 			<params>
-				<param>@param string $template    Name of template file to load.</param>
-				<param>@param array  $data        Data to parse to template.</param>
+				<param>@param string $template    Name of template to load.</param>
+				<param>@param array  $data        Data to parse to template.(Optional)</param>
 			</params>
+			<return>@return string on success or throws CribzTwig Exception on error.</return>
+		</function>
+		<function>
+			<realname>display</realname>
+			<name>Display</name>
+			<description>Display the view to the browser.</description>
+			<params>
+				<param>@param string $template    Name of template to load.</param>
+				<param>@param array  $data        Data to parse to template.(Optional)</param>
+			</params>
+			<return>@return throws CribzTwig Exception on error.</return>
 		</function>
 	</functions>
 </class>
