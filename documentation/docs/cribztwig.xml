@@ -7,16 +7,10 @@
 			<name>Constructor</name>
 			<description>Create a new instance of Cribz Twig.</description>
 			<params>
-				<param>@param string $twigpath       Path to directory that contains twigs Autoloader.php</param>
 				<param>@param string $templatedir    Path to directory that contains the template files.</param>
 				<param>@param string $cachedir       Path to cache directory. (Optional)</param>
 				<param>@param bool   $debug          Put Twig into debug mode</param>
 			</params>
-		</function>
-		<function>
-			<realname>init</realname>
-			<name>Init</name>
-			<description>Initalize a twig environment.</description>
 		</function>
 		<function>
 			<realname>init_sandbox_ext</realname>
@@ -64,12 +58,6 @@
 				<param>@param string $template   Template file to render and display.</param>
 				<param>@param array  $data       Data to parse into the template. (Optional)</param>
 			</params>
-		</function>
-		<function>
-			<realname>get_twig</realname>
-			<name>Get Twig</name>
-			<description>Return the Twig Object.</description>
-			<return>@return object Instance of Twig.</return>
 		</function>
 	</functions>
 </class>

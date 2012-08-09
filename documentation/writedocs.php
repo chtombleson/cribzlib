@@ -140,7 +140,7 @@ function parse_dir($path) {
             if (is_dir($path.'/'.$item)) {
                 parse_dir($path.'/'.$item);
             } else {
-                if (preg_match('#(\.php)#', $item)) {
+                if (preg_match('#(\.php)#', $item) && !preg_match('#(Twig)#', $path)) {
                     echo "Documenting file: ".$path."/".$item."\n";
                     parse_file($path.'/'.$item);
                 }
