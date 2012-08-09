@@ -21,66 +21,22 @@
 * @author       Christopher Tombleson
 * @copyright    Copyright 2012 onwards
 */
-class CribzTwig {
-    /**
-    * Twig
-    *
-    * @var Twig Object
-    */
-    private $twig;
+require_once(dirname(__FILE__).'/lib/twig/lib/Twig/Autoloader.php');
+Twig_Autoloader::register();
 
-    /**
-    * Twig Loader
-    *
-    * @var Twig Loader
-    */
-    private $twig_loader;
-
-    /**
-    * Twig Path
-    *
-    * @var string
-    */
-    private $twig_path;
-
-    /**
-    * Template Directory
-    *
-    * @var string
-    */
-    private $templatedir;
-
-    /**
-    * Cache Directory
-    *
-    * @var string
-    */
-    private $cachedir;
-
-    /**
-    * Debug
-    *
-    * @var bool
-    */
-    private $debug;
+class CribzTwig extends Twig_Environment {
 
     /**
     * Constructor
     * Create a new instance of Cribz Twig.
     *
-    * @param string $twigpath       Path to directory that contains twigs Autoloader.php
     * @param string $templatedir    Path to directory that contains the template files.
     * @param string $cachedir       Path to cache directory. (Optional)
     * @param bool   $debug          Put Twig into debug mode
     */
-    function __construct($twigpath, $templatedir, $cachedir='', $debug=false) {
-        $twigpath = rtrim($twigpath, '/').'/';
-        $templatedir = rtrim($templatedir, '/').'/';
-        $cachedir = rtrim($cachedir, '/').'/';
-
-        if (!file_exists($twigpath.'Autoloader.php')) {
-            throw new CribzTwigException("Could not find path to Twig's Autoloader.php,  please check the path.", 0);
-        }
+    function __construct($templatedir, $cachedir='', $debug=false) {
+        $templatedir = realpath($templatedir).'/';
+        $cachedir = realpath($cachedir).'/';
 
         if (!file_exists($templatedir)) {
             throw new CribzTwigException("Template directory does not exist, {$templatedir}.", 1);
@@ -90,32 +46,12 @@ class CribzTwig {
             throw new CribzTwigException("Cache directory does not exist, {$cachedir}.", 2);
         }
 
-        $this->twig_path = $twigpath;
-        $this->templatedir = $templatedir;
-        $this->cachedir = $cachedir;
-        $this->debug = $debug;
-    }
-
-    /**
-    * Init
-    * Initalize a twig environment.
-    */
-    function init() {
-        require_once($this->twig_path.'Autoloader.php');
-        Twig_Autoloader::register();
-
-        $this->twig_loader = new Twig_Loader_Filesystem($this->templatedir);
-
         $options = array();
-        if (!empty($this->cachedir)) {
-            $options['cache'] = $this->cachedir;
-        }
+        $options['cache'] = $cachedir;
+        $options['debug'] = $debug;
 
-        if ($this->debug) {
-            $options['debug'] = $this->debug;
-        }
-
-        $this->twig = new Twig_Environment($this->twig_loader, $options);
+        $loader = new Twig_Loader_Filesystem($templatedir);
+        parent::__construct($loader, $options);
     }
 
     /**
@@ -130,7 +66,7 @@ class CribzTwig {
     */
     function init_sandbox_ext($tags, $filters, $methods, $properties, $functions) {
         $policy = new Twig_Sandbox_SecurityPolicy($tags, $filters, $methods, $properties, $functions);
-        $this->twig->addExtension(new Twig_Extension_Sandbox($policy));
+        $this->addExtension(new Twig_Extension_Sandbox($policy));
     }
 
     /**
@@ -140,7 +76,7 @@ class CribzTwig {
     * @param bool $global   Turn on global escaping. (Optional)
     */
     function init_escaper_ext($global=true) {
-        $this->twig->addExtension(new Twig_Extension_Escaper($global));
+        $this->addExtension(new Twig_Extension_Escaper($global));
     }
 
     /**
@@ -151,9 +87,9 @@ class CribzTwig {
     */
     function init_optimizer_ext($optimize=null) {
         if (!empty($optimize)) {
-            $this->twig->addExtension(new Twig_Extension_Optimizer($optimize));
+            $this->addExtension(new Twig_Extension_Optimizer($optimize));
         } else {
-             $this->twig->addExtension(new Twig_Extension_Optimizer());
+             $this->addExtension(new Twig_Extension_Optimizer());
         }
     }
 
@@ -171,7 +107,7 @@ class CribzTwig {
             throw new CribzTwigException("Template does not exists or is not a file, {$this->templatedir}{$template}.", 3);
         }
 
-        return $this->twig->render($template, $data);
+        return $this->render($template, $data);
     }
 
     /**
@@ -186,17 +122,7 @@ class CribzTwig {
             throw new CribzTwigException("Template does not exists or is not a file, {$this->templatedir}{$template}.", 3);
         }
 
-        $this->twig->display($template, $data);
-    }
-
-    /**
-    * Get Twig
-    * Return the Twig Object.
-    *
-    * @return object Instance of Twig.
-    */
-    function get_twig() {
-        return $this->twig;
+        $this->display($template, $data);
     }
 }
 class CribzTwigException extends CribzException {}
