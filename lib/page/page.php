@@ -23,81 +23,31 @@
 */
 class CribzPage {
     /**
-    * Cribz Lib
+    * Twig
     *
-    * @var cribzlib
+    * @var CribzTwig
     */
-    private $cribzlib;
-
-    /**
-    * Cache
-    *
-    * @var string
-    */
-    private $cache;
-
-    /**
-    * Cahe Path
-    *
-    * @var string
-    */
-    private $cachepath;
-
-    /**
-    * Templates
-    *
-    * @var array
-    */
-    private $templates;
+    private $twig;
 
     /**
     * Data
     *
     * @var array
     */
-    private $data;
-
-    /**
-    * Memcache
-    *
-    * @var CribzMemcached Object
-    */
-    private $memcache;
+    private $data = array();
 
     /**
     * Construct
     * Create new page
     *
-    * @param array  $templates       Array of templates, name => path to template file.(Optional)
-    * @param array  $data            Array of data for template, name => value.(Optional)
-    * @param string $cache           Name to use when stored in cache.
-    * @param object $memcache        CribzMemcache Object.(Optional)
+    * @param string $templatedir     Path to directory where templates are stored.
     * @param string $cachepath       Path to cache directory.(Optional)
+    * @param bool   $debug           Turn on Twig debugging mode.(Optional)
     */
-    function __construct($templates = array(), $data = array(), $cache = '', $memcache = null, $cachepath = '/tmp/cribzcache/') {
-        $this->cribzlib = new CribzLib();
-        $this->memcache = $memcache;
-        $this->cache = $cache;
-        $this->cachepath = rtrim($cachepath, '/').'/';
-        $this->templates = $templates;
-        $this->data = $data;
-    }
-
-    /**
-    * Add Template
-    * Add a template to the page.
-    *
-    * @param string $name       Name for template eg. header, footer.
-    * @param string $tempalte   Path to template file.
-    *
-    * @return true on added, false on error.
-    */
-    function addTemplate($name, $template) {
-        if (file_exists($template) && !isset($this->templates[$name])) {
-            $this->templates[$name] = $template;
-            return true;
-        }
-        return false;
+    function __construct($templatedir, $cachepath = '', $debug = false) {
+        $cribzlib = new CribzLib();
+        $cribzlib->loadModule('Twig');
+        $this->twig = new CribzTwig($templatedir, $cachepath, $debug);
     }
 
     /**
@@ -106,46 +56,36 @@ class CribzPage {
     *
     * @param string $name       Name to the data relates to.
     * @param mixed  $data       Data to add.
-    *
-    * @return true on added, false on error.
     */
     function addData($name, $data) {
-        if (!isset($this->data[$name])) {
-            $this->data[$name] = $data;
-            return true;
-        }
-        return false;
+        $this->data[$name] = $data;
     }
 
     /**
     * Render
     * Render the page.
     *
-    * @return false on error.
+    * @param  string $template      Template to render.
+    * @param  array  $data          Additional data to be parsed to the template.(Optional)
+    *
+    * @return string of template on success or throws CribzTwig Exception on error.
     */
-    function render() {
-        $cribz_templates = $this->instTemplates();
-        if (!empty($cribz_templates)) {
-            foreach ($cribz_templates as $template) {
-                $template->output($this->data);
-            }
-        }
-        return false;
+    function render($template, $data=array()) {
+        return $this->twig->render($template, array_merge($this->data, $data));
     }
 
     /**
-    * Inst Templates
-    * Create new instance of Cribz Temlate class foreach template.
+    * Display
+    * Display a page to the broswer.
     *
-    * @return array of Cribz Template classes.
+    * @param  string $template      Template to render.
+    * @param  array  $data          Additional data to be parsed to the template.(Optional)
+    *
+    * @return throws CribzTwig Exception on error.
     */
-    private function instTemplates() {
-        $this->cribzlib->loadModule('Template');
-        $templates = array();
-        foreach ($this->templates as $name => $tpl) {
-            $templates[$name] = new CribzTemplate($tpl, $this->memcache, $this->cache, $this->cachepath);
-        }
-        return $templates;
+    function display($template, $data=array()) {
+        $this->twig->display($template, array_merge($this->data, $data));
     }
 }
+class CribzPageException extends CribzException {}
 ?>
