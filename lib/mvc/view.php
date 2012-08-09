@@ -22,26 +22,13 @@
 * @copyright    Copyright 2012 onwards
 */
 class CribzVeiw {
-    /**
-    * Tenplate Dir
-    *
-    * @var string
-    */
-    private $templatedir;
 
     /**
-    * Cache Dir
+    * Twig
     *
-    * @var string
+    * @var CribzTwig
     */
-    private $cachedir = '';
-
-    /**
-    * View Dev
-    *
-    * @var boolean
-    */
-    private $viewdev = false;
+    private $twig;
 
     /**
     * Constructor
@@ -50,37 +37,36 @@ class CribzVeiw {
     * @param string $templatedir    Path to directory with template for your view.
     * @param string $cachedir       Path to cache dir.
     */
-    function __construct($templatedir, $cachedir = '') {
-        if (file_exists($templatedir) && is_dir($templatedir)) {
-            $this->templatedir = rtrim($templatedir, '/').'/';
-            $this->cachedir = $cachedir;
-        } else {
-            throw new CribzViewException("Template Directory: {$templatedir}, does not exist or is not a directory", 1);
-        }
+    function __construct($templatedir, $cachedir = '', $debug=false) {
+        $cribzlib = new CribzLib();
+        $cribzlib->loadModule('Twig');
+        $this->twig = new CribzTwig($templatedir, $cachedir, $debug);
     }
 
     /**
     * Render
     * Render the view.
     *
-    * @param string $template    Name of template file to load.
-    * @param array  $data        Data to parse to template.
+    * @param string $template    Name of template to load.
+    * @param array  $data        Data to parse to template.(Optional)
+    * 
+    * @return string on success or throws CribzTwig Exception on error.
     */
-    function render($templatefile, $data = array()) {
-        $cribzlib = new CribzLib();
-        $cribzlib->loadModule('Template');
+    function render($template, $data = array()) {
+        return $this->twig->render($template, $data);
+    }
 
-        if (file_exists($this->templatedir.$template) && is_file($this->templatedir.$template)) {
-            if (!empty($this->cachedir)) {
-                $template = new CribzTemplate($this->templatedir.$template, $template, $this->cachedir, $this->viewdev);
-            } else {
-                $template = new CribzTemplate($this->templatedir.$template, $template, '/tmp/cribzcache/', $this->viewdev);
-            }
-
-            $template->output($data);
-        } else {
-            throw new CribzViewException("Template file does not exist or is not a file", 2);
-        }
+    /**
+    * Display
+    * Display the view to the browser.
+    *
+    * @param string $template    Name of template to load.
+    * @param array  $data        Data to parse to template.(Optional)
+    * 
+    * @return throws CribzTwig Exception on error.
+    */
+    function display($template, $data = array()) {
+        $this->twig->display($template, $data);
     }
 }
 class CribzViewException extends CribzException {}
