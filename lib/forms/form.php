@@ -337,43 +337,19 @@ class CribzForm {
     * Render
     * Render form
     *
+    * @param string $type   Form render type.
+    *
     * @return string html for the form.
     */
-    function render() {
-        $formtop  = "<form action=\"" . $this->action . "\"";
+    function render($type='list') {
+        $class = 'CribzFormRender'.ucfirst($type);
 
-        if ($this->post) {
-            $formtop .= " method=\"post\"";
-        } else {
-            $formtop .= " method=\"get\"";
+        if (!class_exists($class)) {
+            throw new CribzFormException("Render class {$class} does not exist.", 1);
         }
 
-        $formtop .= " class=\"form\">\n";
-
-        $formbody = "<ul>\n";
-        $formbody .= "\t<li>\n";
-        $formbody .= "\t\t<input type=\"hidden\" name=\"token\" value=\"" . $this->gen_token() . "\" />\n";
-        $formbody .= "\t</li>\n";
-
-        foreach ($this->elements as $element) {
-            $html = $element->build();
-            $formbody .= "\t<li>\n";
-            
-            if (isset($html['label'])) {
-                $formbody .= "\t\t<p><label>".$html['label']."</label></p>\n";
-            }
-
-            $formbody .= "\t\t".$html['field']."\n";
-            $formbody .= "\t</li>";
-        }
-
-        $formbody .= "\t<li>\n";
-        $formbody .= "\t\t<input type=\"submit\" name=\"submit\" value=\"Submit\" />\n";
-        $formbody .= "\t</li>\n";
-        $formbody .= "</ul>\n";
-        $formbtm = "</form>\n";
-
-        return $formtop.$formbody.$formbtm;
+        $render = new $class($this->elements, $this->action, $this->method, $this->gen_token());
+        return $render->render();
     }
 
     /**
@@ -383,14 +359,13 @@ class CribzForm {
     * @return string token.
     */
     function gen_token() {
-        $tokz = array(
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            '|', '{', '}', '[', ']', '?', '!', '@', '#', '%', '^', '*', '(',
-            ')', '~', '<', '>', '+', '=', '&', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+        $symbols = array(
+            '|', '{', '}', '[', ']', '?', '!',
+            '@', '#', '%', '^', '*', '(',
+            ')', '~', '<', '>', '+', '=',
         );
+
+        $tokz = array_merge(range('A', 'Z'), range('a', 'z'), range(0, 9), $symbols);
 
         $token = '';
 
