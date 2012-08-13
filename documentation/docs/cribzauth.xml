@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzAuth</classname>
+	<functions>
+		<function>
+			<realname>authenicate</realname>
+			<name>Authenicate</name>
+			<description>Authenicate a user.</description>
+			<params>
+				<param>@param string $username   Username</param>
+				<param>@param string $password   Password</param>
+			</params>
+		</function>
+	</functions>
+</class>

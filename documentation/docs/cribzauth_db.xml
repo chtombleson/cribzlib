@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzAuth_DB</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of CribzAuth_DB</description>
+			<params>
+				<param>@param CribzDatabase $database    CribzDatabase Object</param>
+				<param>@param string        $table       Name of table in the database to store user info</param>
+			</params>
+		</function>
+		<function>
+			<realname>create_user</realname>
+			<name>Create User</name>
+			<description>Create a new user</description>
+			<params>
+				<param>@param string $username   Username</param>
+				<param>@param string $email      Email Address</param>
+				<param>@param string $password   Password</param>
+				<param>@param string $salt       Salt to hash with password. (Optional)</param>
+			</params>
+			<return>@return true on success or throw CribzAuth_DBException</return>
+		</function>
+		<function>
+			<realname>update_user</realname>
+			<name>Update User</name>
+			<description>Update a users record</description>
+			<params>
+				<param>@param int    $id         The users id from the database</param>
+				<param>@param string $username   Username</param>
+				<param>@param string $email      Email Address</param>
+				<param>@param string $password   Password</param>
+			</params>
+			<return>@return true on success or throws CribzAuth_DBException</return>
+		</function>
+		<function>
+			<realname>authenicate</realname>
+			<name>Authenicate</name>
+			<description>Authenicate a user</description>
+			<params>
+				<param>@param string $username   Username</param>
+				<param>@param string $password   Password</param>
+			</params>
+			<return>@return true on success or throws CribzAuth_DBException</return>
+		</function>
+		<function>
+			<realname>validate_email</realname>
+			<name>Validate Email</name>
+			<description>Validate an email address</description>
+			<params>
+				<param>@param string $email  Email Address</param>
+			</params>
+			<return>@return true if valid or false if invalid</return>
+		</function>
+	</functions>
+</class>

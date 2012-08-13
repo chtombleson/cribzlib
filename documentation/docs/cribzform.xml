@@ -168,6 +168,9 @@
 			<realname>render</realname>
 			<name>Render</name>
 			<description>Render form</description>
+			<params>
+				<param>@param string $type   Form render type.</param>
+			</params>
 			<return>@return string html for the form.</return>
 		</function>
 		<function>
