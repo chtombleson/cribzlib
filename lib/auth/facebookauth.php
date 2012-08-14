@@ -11,7 +11,7 @@ class CribzAuth_Facebook {
 
     function authenicate() {
         $facebook = new Facebook(array(
-            'appid' => $this->appid,
+            'appId' => $this->appid,
             'secret' => $this->appsecret,
         ));
 
@@ -26,37 +26,12 @@ class CribzAuth_Facebook {
         }
 
         if (!empty($user)) {
-            return $user;
+            return array(
+                'user' => $user,
+                'logout' => $facebook->getLogoutUrl(),
+            );
         }
 
-        return false;
-    }
-
-    function getLoginUrl() {
-        $facebook = new Facebook(array(
-            'appid' => $this->appid,
-            'secret' => $this->appsecret,
-        ));
-
-        return $facebook->getLoginUrl();
-    }
-
-    function getLogoutUrl() {
-        $facebook = new Facebook(array(
-            'appid' => $this->appid,
-            'secret' => $this->appsecret,
-        ));
-
-        $userid = $facebook->getUser();
-
-        if ($userid) {
-            try {
-                $user = $facebook->api('/me');
-            } catch(FacebookApiException $e) {
-                $userid = 0;
-            }
-        }
-
-        return $facebook->getLogoutUrl();
+        return array('login' => $facebook->getLoginUrl());
     }
 }
