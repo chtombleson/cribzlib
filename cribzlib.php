@@ -31,7 +31,7 @@ class CribzLib {
     private $modules = array(
         'Ajax' => array('ajax/ajax.php'),
         'Atom' => array('feeds/atom.php'),
-        'Auth' => array('auth/auth.php', 'auth/dbauth.php'),
+        'Auth' => array('auth/auth.php', 'auth/dbauth.php', 'auth/facebookauth.php'),
         'Cache' => array('cache/cache.php'),
         'Cli' => array('cli/cli.php'),
         'Cookie' => array('cookie/cookies.php'),
