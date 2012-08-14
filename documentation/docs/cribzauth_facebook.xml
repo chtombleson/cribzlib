@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzAuth_Facebook</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of CribzAuth_Facebook</description>
+			<params>
+				<param>@param string $appid      Facebook App ID</param>
+				<param>@param string $appsecret  Facebook App Secret</param>
+			</params>
+		</function>
+		<function>
+			<realname>authenicate</realname>
+			<name>Authenicate</name>
+			<description>Authenicate a user using Facebook</description>
+			<return>@return array, user logged in array contains &quot;user &amp; logout&quot; elements or if not logged in array contains &quot;login&quot; element.</return>
+		</function>
+	</functions>
+</class>

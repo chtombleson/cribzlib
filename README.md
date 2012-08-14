@@ -11,6 +11,7 @@ Requirements
 *   Pspell PHP extension ([pspell php docs](http://php.net/manual/en/pspell.requirements.php "Pspell"))
 *   Imap PHP extension ([imap php docs](http://php.net/manual/en/book.imap.php "Imap"))
 *   Memcached extension ([memcached php docs](http://php.net/manual/en/book.memcached.php "Memcached"))
+*   Curl extension ([curl php docs](http://php.net/manual/en/book.curl.php "Curl"))
 
 PHP 5 Libary
 ------------
@@ -18,6 +19,7 @@ Classes Included:
 
 *   Ajax Utils
 *   Atom Feeds
+*   Authenication (Database, Facebook)
 *   Cache
 *   Command line script Utils
 *   Cookie Utils
