@@ -129,7 +129,7 @@ class CribzAtom {
     * @return string of xml structure
     */
     private function addEntry($title, $link, $time, $author, $summary) {
-        $xml = "\t<entry>\n"
+        $xml = "\t<entry>\n";
         $xml .= "\t\t<title>".$title."</title>\n";
         $xml .= "\t\t<link type=\"text/html\" href=\"".$link."\" />\n";
         $xml .= "\t\t<id>tag:".$this->domain.",".date('Y').":".$link."</id>\n";

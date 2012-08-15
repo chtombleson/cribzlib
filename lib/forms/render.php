@@ -37,7 +37,7 @@ class CribzFormRender {
     function render() {}
 }
 
-class CribzFormRender_List extends render {
+class CribzFormRender_List extends CribzFormRender {
     function render() {
         $html  = "<form action=\"{$this->action}\"";
         $html .= " method=\"".strtoupper($this->method)."\"";
@@ -63,7 +63,7 @@ class CribzFormRender_List extends render {
     }
 }
 
-class CribzFormRender_Table extends render {
+class CribzFormRender_Table extends CribzFormRender {
     function render() {
         $html  = "<form action=\"{$this->action}\"";
         $html .= " method=\"".strtoupper($this->method)."\"";
