@@ -52,6 +52,7 @@ class CribzLib {
         'MVC' => array('mvc/model.php', 'mvc/view.php', 'mvc/controller.php'),
         'Page' => array('page/page.php'),
         'Request' => array('request/request.php'),
+        'RestfulClient' => array('restful/client.php'),
         'Rss' => array('feeds/rss.php'),
         'SafeIFrame' => array('safeiframe/safeiframe.php'),
         'Session' => array('session/sessions.php'),

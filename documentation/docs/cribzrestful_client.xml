@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzRestful_Client</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of CribzRestful_Client</description>
+			<params>
+				<param>@param string $url        URL for rest api.</param>
+				<param>@param string $method     HTTP method (GET, POST, DELETE).</param>
+				<param>@param int    $port       Port to connect to. (Optional)</param>
+				<param>@param int    $timeout    Timeout on connection. (Optional)</param>
+				<param>@param array  $header     Extra headers to be sent in curl request. (Optional)</param>
+			</params>
+			<return>@return throws CribzRestful_ClientException if curl extension is not loaded.</return>
+		</function>
+		<function>
+			<realname>execute</realname>
+			<name>Execute</name>
+			<description>Call the Rest Api and return the response</description>
+			<params>
+				<param>@param array $params  Query Parameters.</param>
+			</params>
+			<return>@return string response on success or throws CribzRestful_ClientException on error.</return>
+		</function>
+		<function>
+			<realname>build_query_string</realname>
+			<name>Build Query String</name>
+			<description>Create a string to be used in a GET request</description>
+			<params>
+				<param>@param array $params Query Parameters.</param>
+			</params>
+			<return>@return string urlencoded query string.</return>
+		</function>
+	</functions>
+</class>

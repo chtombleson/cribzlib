@@ -36,6 +36,7 @@ Classes Included:
 *   MVC
 *   Page
 *   Requests
+*   Restful Client
 *   Rss Feeds
 *   Safe IFrames
 *   Session Utils
