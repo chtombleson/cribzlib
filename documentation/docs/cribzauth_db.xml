@@ -36,9 +36,9 @@
 			<return>@return true on success or throws CribzAuth_DBException</return>
 		</function>
 		<function>
-			<realname>authenicate</realname>
-			<name>Authenicate</name>
-			<description>Authenicate a user</description>
+			<realname>authenticate</realname>
+			<name>Authenticate</name>
+			<description>Authenticate a user</description>
 			<params>
 				<param>@param string $username   Username</param>
 				<param>@param string $password   Password</param>

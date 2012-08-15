@@ -12,9 +12,9 @@
 			</params>
 		</function>
 		<function>
-			<realname>authenicate</realname>
-			<name>Authenicate</name>
-			<description>Authenicate a user using Facebook</description>
+			<realname>authenticate</realname>
+			<name>Authenticate</name>
+			<description>Authenticate a user using Facebook</description>
 			<return>@return array, user logged in array contains &quot;user &amp; logout&quot; elements or if not logged in array contains &quot;login&quot; element.</return>
 		</function>
 	</functions>

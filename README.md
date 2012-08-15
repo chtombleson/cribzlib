@@ -19,7 +19,7 @@ Classes Included:
 
 *   Ajax Utils
 *   Atom Feeds
-*   Authenication (Database, Facebook, OpenID)
+*   Authentication (Database, Facebook, OpenID)
 *   Cache
 *   Command line script Utils
 *   Cookie Utils

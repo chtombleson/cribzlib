@@ -23,12 +23,12 @@
 */
 class CribzAuth {
     /**
-    * Authenicate
-    * Authenicate a user.
+    * Authenticate
+    * Authenticate a user.
     *
     * @param string $username   Username
     * @param string $password   Password
     */
-    public function authenicate($username, $password) {}
+    public function authenticate($username, $password) {}
 }
 ?>

@@ -91,12 +91,12 @@ class CribzAuth_OpenId {
     }
 
     /**
-    * Authenicate
-    * Authenicate the open id providers reply.
+    * Authenticate
+    * Authenticate the open id providers reply.
     *
     * @return false on error or object with user info.
     */
-    function authenicate() {
+    function authenticate() {
         $openid = new LightOpenID($this->domain);
         if ($openid->mode) {
             if ($openid->validate()) {

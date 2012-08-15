@@ -152,15 +152,15 @@ class CribzAuth_DB extends CribzAuth {
     }
 
     /**
-    * Authenicate
-    * Authenicate a user
+    * Authenticate
+    * Authenticate a user
     *
     * @param string $username   Username
     * @param string $password   Password
     *
     * @return true on success or throws CribzAuth_DBException
     */
-    function authenicate($username, $password) {
+    function authenticate($username, $password) {
         $model = new CribzAuth_DBModel($this->database, $this->table);
         $userid = $model->username_to_id($username);
         if (!$userid) {

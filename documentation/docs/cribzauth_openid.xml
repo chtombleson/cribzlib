@@ -22,9 +22,9 @@
 			</params>
 		</function>
 		<function>
-			<realname>authenicate</realname>
-			<name>Authenicate</name>
-			<description>Authenicate the open id providers reply.</description>
+			<realname>authenticate</realname>
+			<name>Authenticate</name>
+			<description>Authenticate the open id providers reply.</description>
 			<return>@return false on error or object with user info.</return>
 		</function>
 	</functions>

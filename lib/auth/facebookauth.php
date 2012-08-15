@@ -56,12 +56,12 @@ class CribzAuth_Facebook {
     }
 
     /**
-    * Authenicate
-    * Authenicate a user using Facebook
+    * Authenticate
+    * Authenticate a user using Facebook
     *
     * @return array, user logged in array contains "user & logout" elements or if not logged in array contains "login" element.
     */
-    function authenicate() {
+    function authenticate() {
         $facebook = new Facebook(array(
             'appId' => $this->appid,
             'secret' => $this->appsecret,
