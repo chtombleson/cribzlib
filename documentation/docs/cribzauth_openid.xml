@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzAuth_OpenId</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of CribzAuth_OpenId</description>
+			<params>
+				<param>@param string $providerurl        The open id url.</param>
+				<param>@param string $returnurl          Url to return to when login with provider is complete.</param>
+				<param>@param string $domain             Domain name of site. (Optional)</param>
+			</params>
+			<return>@return throws CribzAuth_OpenIdException if curl extension is not loaded.</return>
+		</function>
+		<function>
+			<realname>login</realname>
+			<name>Login</name>
+			<description>Do the inital authenication with the openid provider.</description>
+			<params>
+				<param>@param array $fields      Array that contains required and optional info to get from open id provider. (Optional)</param>
+			</params>
+		</function>
+		<function>
+			<realname>authenicate</realname>
+			<name>Authenicate</name>
+			<description>Authenicate the open id providers reply.</description>
+			<return>@return false on error or object with user info.</return>
+		</function>
+	</functions>
+</class>

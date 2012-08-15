@@ -140,7 +140,7 @@ function parse_dir($path) {
             if (is_dir($path.'/'.$item)) {
                 parse_dir($path.'/'.$item);
             } else {
-                if (preg_match('#(\.php)#', $item) && !preg_match('#(Twig)#', $path) && !preg_match('#(facebook-php-sdk)#', $path)) {
+                if (preg_match('#(\.php)#', $item) && !preg_match('#(twig\/lib\/)#', $path) && !preg_match('#(auth\/lib\/)#', $path)) {
                     echo "Documenting file: ".$path."/".$item."\n";
                     parse_file($path.'/'.$item);
                 }
