@@ -37,3 +37,12 @@
 2012-08-03  Version 1.1.1
     Added Cron Class
     Added Data Store class
+
+2012-08-15  Version 1.1.2
+    Added Rest Client Class
+    Added Open ID Auth Class
+    Added Facebook Auth Class
+    Added Database Auth Class
+    Added Form Rendering Class
+    Bundled Twig 1.9.1
+    Small Bug Fixes
