@@ -700,7 +700,7 @@ class CribzDatabase {
     */
 
     private function setDriver($driver) {
-        if ($driver != 'mysql' || $driver != 'sqlite' || $driver != 'pgsql') {
+        if ($driver != 'mysql' && $driver != 'sqlite' && $driver != 'pgsql') {
             throw new CribzDatabaseException("Unsupported database driver used. Please use a supported driver (mysql, pgsql, sqlite)", 0);
         }
         $this->driver = $driver;
