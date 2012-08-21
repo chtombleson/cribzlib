@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzDataTable</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new data table.</description>
+			<params>
+				<param>@param CribzDatabase $database    CribzDatabase Object</param>
+				<param>@param string        $table       Name of table in the database to create table of</param>
+				<param>@param array         $fields      Array of fields, headers to be in the table</param>
+			</params>
+		</function>
+		<function>
+			<realname>get_table</realname>
+			<name>Get Table</name>
+			<description>Create and return the data table.</description>
+			<params>
+				<param>@param array  $sortby     Sort by fields. field =&gt; ASC|DESC (Optional)</param>
+				<param>@param int    $limit      Limit results (Optional)</param>
+				<param>@param int    $offset     Offset results (Optional)</param>
+			</params>
+			<return>@return string html structure of the table</return>
+		</function>
+		<function>
+			<realname>get_data</realname>
+			<name>Get Data</name>
+			<description>Gets the data that is used to build the table.</description>
+			<params>
+				<param>@param array  $sortby     Sort by fields</param>
+				<param>@param int    $limit      Limit results</param>
+				<param>@param int    $offset     Offset results</param>
+			</params>
+			<return>@return object data from the database</return>
+		</function>
+		<function>
+			<realname>build_table</realname>
+			<name>Build Table</name>
+			<description>Build the html for the table.</description>
+			<params>
+				<param>@param object $data   Return value from get_data function</param>
+			</params>
+			<return>@return string html structure of the table</return>
+		</function>
+	</functions>
+</class>

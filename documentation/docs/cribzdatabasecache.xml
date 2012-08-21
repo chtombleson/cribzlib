@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<class>
+	<classname>CribzDatabaseCache</classname>
+	<functions>
+		<function>
+			<realname>__construct</realname>
+			<name>Constructor</name>
+			<description>Create a new instance of Cribz Database Cache</description>
+			<params>
+				<param>@param array $memcachedhosts      Array of memcached servers</param>
+			</params>
+		</function>
+		<function>
+			<realname>cache</realname>
+			<name>Cache</name>
+			<description>Cache a sql query and it's result.</description>
+			<params>
+				<param>@param string $sql        The Sql Query</param>
+				<param>@param mixed  $result     The result of the query</param>
+			</params>
+			<return>@return string hash of sql query to be used to reference the query</return>
+		</function>
+		<function>
+			<realname>delete</realname>
+			<name>Delete</name>
+			<description>Delete a query from the cache.</description>
+			<params>
+				<param>@param string $hash   Hash of the sql query</param>
+			</params>
+			<return>@return true on success or false on error</return>
+		</function>
+		<function>
+			<realname>get</realname>
+			<name>Get</name>
+			<description>The the results of a cached query.</description>
+			<params>
+				<param>@param string $hash   Hash of the query you want to get the result for.</param>
+			</params>
+			<return>@return mixed the result of the query or false on error</return>
+		</function>
+		<function>
+			<realname>is_cached</realname>
+			<name>Is Cached</name>
+			<description>Check to see if a hash is cached.</description>
+			<params>
+				<param>@param string $hash   Hash to check</param>
+			</params>
+			<return>@return true if hash exists or false if it does not exist</return>
+		</function>
+	</functions>
+</class>

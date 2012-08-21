@@ -37,6 +37,7 @@ class CribzLib {
         'Cookie' => array('cookie/cookies.php'),
         'CountryCodes' => array('misc/countries.php'),
         'Database' => array('database/database.php'),
+        'DatabaseCache' => array('databasecache/databasecache.php'),
         'DatabaseLog' => array('log/databaselog.php'),
         'DataStore' => array('datastore/datastore.php'),
         'DataTable' => array('datatable/datatable.php'),
