@@ -46,6 +46,7 @@ class CribzTwig extends Twig_Environment {
             throw new CribzTwigException("Cache directory does not exist, {$cachedir}.", 2);
         }
 
+        $this->templatedir = $templatedir;
         $options = array();
         $options['cache'] = $cachedir;
         $options['debug'] = $debug;
@@ -107,7 +108,7 @@ class CribzTwig extends Twig_Environment {
             throw new CribzTwigException("Template does not exists or is not a file, {$this->templatedir}{$template}.", 3);
         }
 
-        return $this->render($template, $data);
+        return parent::render($template, $data);
     }
 
     /**
@@ -122,7 +123,7 @@ class CribzTwig extends Twig_Environment {
             throw new CribzTwigException("Template does not exists or is not a file, {$this->templatedir}{$template}.", 3);
         }
 
-        $this->display($template, $data);
+        parent::display($template, $data);
     }
 }
 class CribzTwigException extends CribzException {}
