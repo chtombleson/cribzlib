@@ -96,7 +96,7 @@ class CribzLib {
     * @return true if module exists or false if it does not exist.
     */
     function moduleExists($name) {
-        $module = array_keys($this->modules);
+        $modules = array_keys($this->modules);
 
         if (in_array($name, $modules)) {
             return true;

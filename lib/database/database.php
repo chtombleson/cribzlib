@@ -230,12 +230,20 @@ class CribzDatabase {
     * Last Insert Id
     * Get the id for the last insert statement.
     *
-    * @param string $name   Name of id or sequence.(optional)
+    * @param string $table  Name of table in database.(optional, needed for postgres & mysql)
+    * @param string $field  Name of primary key field. (optional, needed for postgres & mysql)
     *
     * @return int of last id or false.
     */
-    function lastInsertId($name = null) {
-        return $this->database->lastInsertId($name);
+    function lastInsertId($table = null, $field = null) {
+        if ($this->driver == 'pgsql' || $this->driver == 'mysql') {
+            $sql = "SELECT {$field} FROM {$table} ORDER BY {$field} DESC LIMIT 1";
+            $this->execute_sql($sql);
+            $id = $this->fetch();
+            return (int) $id->$field;
+        } else {
+            return $this->database->lastInsertId($table);
+        }
     }
 
     /**
@@ -302,10 +310,16 @@ class CribzDatabase {
 
         $this->statements[] = $this->database->prepare($sql);
 
-        if ($this->statements[count($this->statements) - 1]->execute($params) === false) {
-            $errormsg = $this->lastStatementErrorInfo();
-            $this->errors['PDO_Statment_Execute_Error'][count($this->statements) - 1] = $errormsg[2];
-            return false;
+        if (!empty($this->statements[count($this->statements) - 1])) {
+            if ($this->statements[count($this->statements) - 1]->execute($params) === false) {
+                $errormsg = $this->lastStatementErrorInfo();
+                $this->errors['PDO_Statment_Execute_Error'][count($this->statements) - 1] = $errormsg[2];
+                return false;
+            }
+        } else {
+            if (isset($this->statements[count($this->statements) - 1])) {
+                unset($this->statements[count($this->statements) - 1]);
+            }
         }
         return true;
     }
@@ -599,8 +613,11 @@ class CribzDatabase {
         $commands = explode(';', $sql);
 
         foreach ($commands as $command) {
-            if (!$this->execute_sql($command)) {
-                return false;
+            $command = trim($command);
+            if (!empty($command)) {
+                if (!$this->execute_sql($command)) {
+                    return false;
+                }
             }
         }
 
