@@ -1,4 +1,3 @@
-use cribzlib_test;
 DROP TABLE IF EXISTS test;
 CREATE TABLE test (
     id int not null auto_increment,

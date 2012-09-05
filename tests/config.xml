@@ -1,0 +1,15 @@
+<phpunit>
+    <testsuites>
+        <testsuite name="CribzLib">
+            <file>criblib.test.php</file>
+        </testsuite>
+        <testsuite name="CribzCache">
+            <file>cribzcache.test.php</file>
+        </testsuite>
+        <testsuite name="CribzDatabase">
+            <file>cribzdatabase.sqlite.test.php</file>
+            <file>cribzdatabase.mysql.test.php</file>
+            <file>cribzdatabase.pgsql.test.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>
