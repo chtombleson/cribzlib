@@ -45,7 +45,6 @@ class CribzLib {
         'EventQueue' => array('eventqueue/eventqueue.php'),
         'Filesystem' => array('filesystem/filesystem.php'),
         'Form' => array('forms/formfields.php','forms/form.php', 'forms/render.php'),
-        'HtmlFilter' => array('htmlfilter/htmlfilter.php'),
         'I18N' => array('i18n/i18n.php'),
         'Imap' => array('imap/imap.php'),
         'LanguageCodes' => array('misc/langs.php'),

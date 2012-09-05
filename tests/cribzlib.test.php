@@ -13,15 +13,21 @@ class CribzLib_Test extends PHPUnit_Framework_TestCase {
         unset($this->cribzlib);
     }
 
-    public function test_loadModule() {
-        $module = 'Database';
-        $load = $this->cribzlib->loadModule($module);
-        $this->assertTrue($load, 'Unable to load the '.$module.' module.');
-    }
-
     public function test_getModules() {
         $modules = $this->cribzlib->getModules();
         $this->assertInternalType('array', $modules, 'getModule didn\'t return an array.');
+    }
+
+    /**
+    * @depends test_getModules
+    */
+    public function test_loadModule() {
+        $modules = $this->cribzlib->getModules();
+
+        foreach ($modules as $module) {
+            $load = $this->cribzlib->loadModule($module);
+            $this->assertTrue($load, 'Unable to load the '.$module.' module.');
+        }
     }
 
     public function test_getVersion() {
