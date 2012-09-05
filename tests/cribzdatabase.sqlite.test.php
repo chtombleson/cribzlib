@@ -86,5 +86,23 @@ class CribzDatabase_Sqlite_Test extends PHPUnit_Framework_TestCase {
         $this->assertNotEmpty($fetch, 'Fetch returned empty record.');
         $this->assertArrayHasKey('name', (array) $fetch, 'Record doesn\'t contain the name field.');
     }
+
+    /**
+    * @depends test_fetch
+    */
+    public function test_delete() {
+        $this->database->connect();
+        $delete = $this->database->delete('test', array('id' => 1));
+        $this->assertTrue($delete, 'Unable to delete record.');
+    }
+
+    /**
+    * @depends test_delete
+    */
+    public function test_table_exists() {
+        $this->database->connect();
+        $exists = $this->database->check_table_exists('test');
+        $this->assertTrue($exists, 'Test table doesn\'t exist when it should.');
+    }
 }
 ?>

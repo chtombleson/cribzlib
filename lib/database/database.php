@@ -513,7 +513,7 @@ class CribzDatabase {
             $sql .= $field . '=? AND ';
             $params[] = $value;
         }
-        $sql = trim($sql, ' AND ');
+        $sql = rtrim($sql, ' AND ');
 
         if (!$this->execute_sql($sql, $params)) {
             return false;
@@ -678,7 +678,7 @@ class CribzDatabase {
     private function mysql_check_table_exists($table) {
         $sql = "SELECT * FROM information_schema.tables WHERE table_schema = ? AND table_name = ?";
 
-        if ($this->execute($sql, array($this->name, $table))) {
+        if ($this->execute_sql($sql, array($this->name, $table))) {
             $result = $this->fetch();
 
             if (!empty($result)) {

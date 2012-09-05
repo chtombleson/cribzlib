@@ -1,14 +1,10 @@
 <?php
 require_once('PHPUnit/Autoload.php');
+require_once(dirname(__FILE__).'/config.php');
 require_once(dirname(dirname(__FILE__)).'/cribzlib.php');
 
 class CribzDatabase_Mysql_Test extends PHPUnit_Framework_TestCase {
     protected $database;
-    protected $dbhost = 'HOST';
-    protected $dbuser = 'USER';
-    protected $dbpass = 'PASS';
-    protected $dbname = 'NAME';
-    protected $dbport = null;
     protected $record = array(
         'name' => 'test',
         'value' => 'testing insert.',
@@ -16,9 +12,11 @@ class CribzDatabase_Mysql_Test extends PHPUnit_Framework_TestCase {
     );
 
     protected function setup() {
+        global $config;
+        $db = $config->mysql;
         $cribzlib = new CribzLib();
         $cribzlib->loadModule('Database');
-        $this->database = new CribzDatabase('mysql', $this->dbhost, $this->dbname, $this->dbuser, $this->dbpass, $this->dbport);
+        $this->database = new CribzDatabase($db['driver'], $db['host'], $db['name'], $db['user'], $db['pass'], $db['port']);
     }
 
     protected function tearDown() {
@@ -89,6 +87,24 @@ class CribzDatabase_Mysql_Test extends PHPUnit_Framework_TestCase {
         $fetch = $this->database->fetch();
         $this->assertNotEmpty($fetch, 'Fetch returned empty record.');
         $this->assertArrayHasKey('name', (array) $fetch, 'Record doesn\'t contain the name field.');
+    }
+
+    /**
+    * @depends test_fetch
+    */
+    public function test_delete() {
+        $this->database->connect();
+        $delete = $this->database->delete('test', array('id' => 1));
+        $this->assertTrue($delete, 'Unable to delete record.');
+    }
+
+    /**
+    * @depends test_delete
+    */
+    public function test_table_exists() {
+        $this->database->connect();
+        $exists = $this->database->check_table_exists('test');
+        $this->assertTrue($exists, 'Test table doesn\'t exist when it should.');
     }
 }
 ?>
