@@ -665,7 +665,7 @@ class CribzDatastore {
         $hash = $this->id_to_hash($id);
 
         if (!empty($hash)) {
-            $name = hash_to_name($hash);
+            $name = $this->hash_to_name($hash);
             return $name;
         }
 

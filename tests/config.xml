@@ -11,5 +11,8 @@
             <file>cribzdatabase.mysql.test.php</file>
             <file>cribzdatabase.pgsql.test.php</file>
         </testsuite>
+        <testsuite name="CribzDataStore">
+            <file>cribzdatastore.test.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>
