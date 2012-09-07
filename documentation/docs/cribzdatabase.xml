@@ -64,7 +64,8 @@
 			<name>Last Insert Id</name>
 			<description>Get the id for the last insert statement.</description>
 			<params>
-				<param>@param string $name   Name of id or sequence.(optional)</param>
+				<param>@param string $table  Name of table in database.(optional, needed for postgres &amp; mysql)</param>
+				<param>@param string $field  Name of primary key field. (optional, needed for postgres &amp; mysql)</param>
 			</params>
 			<return>@return int of last id or false.</return>
 		</function>
