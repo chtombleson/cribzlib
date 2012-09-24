@@ -22,6 +22,6 @@
 * @copyright    Copyright 2012 onwards
 */
 $version = new stdClass();
-$version->release = '1.1.2';
+$version->release = '1.1.3';
 $version->releasedate = '2012-08-15';
 ?>
