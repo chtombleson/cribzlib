@@ -86,7 +86,6 @@ class CribzTemplateCompiler {
             $cribzlib = new CribzLib();
             $cribzlib->loadModule('Cache');
             $cache = new CribzCache($this->cachepath);
-            $cache->init();
 
             if ($this->development) {
                 $cache->remove($this->cache);
