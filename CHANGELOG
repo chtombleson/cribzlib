@@ -1,0 +1,56 @@
+2012-04-12  Version 1.0
+    Inital Stable Release
+
+2012-04-20  Version 1.0.1
+    Removed Memcache Support from template engine.
+    Fixed XSS Problem in Form Class.
+    Added Support for creating Atom and Rss Feeds.
+
+2012-04-27  Version 1.0.2
+    Fixed multiple issues in XMLRPC Client class.
+    Added developmet mode to template engine.
+
+2012-06-03  Version 1.0.3
+    Added MVC classes.
+
+2012-06-09  Version 1.0.4
+    Added Twig wrapper class.
+
+2012-06-14  Version 1.0.5
+    Added Safe IFrames class.
+    Added Xss class.
+    Added order by, limit and offset to CribzDatabase::Select().
+    Added more characters to CribzForm::genToken() function for generating randon token.
+
+2012-06-27  Version 1.1.0
+    First Stable 1.1 Release.
+    Added Command Line Util Class.
+    Added EventQueue Class.
+    Added Version info, version.php.
+    Added getVersion(), getModules() & moduleExists() functions to CribzLib, cribzlib.php.
+    Modified CribzForm::gen_token().
+    Modified CribzDatabase::select() now takes arguments for order by, limit & offset.
+    Modified CribzDatabase::debug() now gives decent debug information in a formatted output.
+    Modified CribzDatabase::connect() now checks that the database driver is valid.
+    Removed CribzHTMLFilter, not used and can be replaced by CribzXSS or CribzSafeIFrame.
+
+2012-08-03  Version 1.1.1
+    Added Cron Class
+    Added Data Store class
+
+2012-08-15  Version 1.1.2
+    Added Rest Client Class
+    Added Open ID Auth Class
+    Added Facebook Auth Class
+    Added Database Auth Class
+    Added Form Rendering Class
+    Bundled Twig 1.9.1
+    Small Bug Fixes
+
+2012-09-25  Version 1.1.3
+    Added Unit Tests
+    Added Data Table Class
+    Fixed Bug in Cribz Twig Class
+    Modified CribzLib::moduleExists()
+    Modified CribzDatabase::lastInsertId()
+    Corrected spelling of authenticate in Auth Classes
