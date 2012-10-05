@@ -625,6 +625,15 @@ class CribzDatabase {
     }
 
     /**
+    * Get Driver
+    *
+    * @return string database driver that is being used.
+    */
+    function get_driver() {
+        return $this->driver;
+    }
+
+    /**
     * Check Table Exists
     * Check if a table exists in the database.
     *
@@ -717,7 +726,7 @@ class CribzDatabase {
     */
 
     private function setDriver($driver) {
-        if ($driver != 'mysql' && $driver != 'sqlite' && $driver != 'pgsql') {
+        if (!in_array($driver, array('mysql', 'pgsql', 'sqlite'))) {
             throw new CribzDatabaseException("Unsupported database driver used. Please use a supported driver (mysql, pgsql, sqlite)", 0);
         }
         $this->driver = $driver;

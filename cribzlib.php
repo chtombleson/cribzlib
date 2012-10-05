@@ -23,11 +23,16 @@
 */
 require_once(dirname(__FILE__) . '/lib/exception/exception.php');
 class CribzLib {
-    protected $versionRelease = '2.0';
-    protected $versionReleaseDate = '2012-10-03';
-    protected $modules = array(
+    protected static $versionRelease = '2.0';
+    protected static $versionReleaseDate = '2012-10-03';
+    protected static $modules = array(
         'Database'  => array('files' => array('database/database.php')),
         'Exception' => array('files' => array('exception/exception.php')),
+        'SqlGenerator' => array('files' => array('sqlgenerator/sqlgenerator.php')),
+        'DatabaseSchema' => array(
+            'files' => array('databaseschema/databaseschema.php', 'databaseschema/import.php'),
+            'dependencies' => array('SqlGenerator', 'Database')
+        ),
     );
 
     public static function loadModule($name) {
@@ -38,7 +43,7 @@ class CribzLib {
         $moduleDetails = self::getModuleDetails($name);
 
         if (!empty($moduleDetails['dependencies'])) {
-            foreach ($moduleDeatails['dependencies'] as $module) {
+            foreach ($moduleDetails['dependencies'] as $module) {
                 self::loadModule($module);
             }
         }
@@ -46,21 +51,29 @@ class CribzLib {
         if (!empty($moduleDetails['thirdparty'])) {
             foreach ($moduleDetails['thridparty'] as $thirdparty) {
                 $path = dirname(__FILE__) . '/lib/thirdparty/' . $thridparty;
-                if (!file_exists($path)) {
-                    throw new CribzLibException('File: ' . $path . ' does not exist.', 1);
-                }
+                if (file_exists($path)) {
+                    require_once($path);
+                } else {
+                    if (!file_exists($thridparty)) {
+                        throw new CribzLibException('File: ' . $path . ' does not exist.', 1);
+                    }
 
-                require_once($path);
+                    require_once($thirdparty);
+                }
             }
         }
 
         foreach ($moduleDetails['files'] as $file) {
             $path = dirname(__FILE__) . '/lib/' . $file;
-            if (!file_exists($path)) {
-                throw new CribzLibException('File: ' . $path . ' does not exist.', 1);
-            }
+            if (file_exists($path)) {
+                require_once($path);
+            } else {
+                if (!file_exists($file)) {
+                    throw new CribzLibException('File: ' . $path . ' does not exist.', 1);
+                }
 
-            require_once($path);
+                require_once($file);
+            }
         }
 
         return true;
@@ -80,7 +93,7 @@ class CribzLib {
     }
 
     public static function getModuleDetails($name) {
-        return !empty(self::$modules[$name]) ? self::$module[$name] : null;
+        return !empty(self::$modules[$name]) ? self::$modules[$name] : null;
     }
 
     public static function getModules() {
