@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<tables>
+    <table name="test">
+        <columns>
+            <column name="id" type="integer" autoincrement="true" />
+            <column name="name" type="varchar" size="255" null="false" />
+            <column name="created" type="integer" null="false" default="0" />
+            <column name="price" type="decimal" />
+            <column name="num" type="float" size="11" precision="10" />
+        </columns>
+        <keys>
+            <key type="primary" column="id" />
+            <key type="unique" column="name" />
+        </keys>
+        <records>
+            <record>
+                <id>1</id>
+                <name>Jim</name>
+                <created>1349331632</created>
+                <price>1.00</price>
+                <num>100.00000</num>
+            </record>
+        </records>
+    </table>
+    <table name="lol">
+        <columns>
+            <column name="id" type="integer" autoincrement="true" />
+            <column name="name" type="varchar" size="255" null="false" />
+            <column name="created" type="integer" null="false" default="0" />
+            <column name="price" type="decimal" />
+            <column name="num" type="float" size="11" precision="10" />
+        </columns>
+        <keys>
+            <key type="primary" column="id" />
+            <key type="unique" column="name" />
+        </keys>
+        <records>
+            <record>
+                <id>1</id>
+                <name>Jim</name>
+                <created>1349331632</created>
+                <price>1.00</price>
+                <num>100.00000</num>
+            </record>
+        </records>
+    </table>
+</tables>
