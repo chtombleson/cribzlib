@@ -26,7 +26,10 @@ class CribzLib {
     protected static $versionRelease = '2.0';
     protected static $versionReleaseDate = '2012-10-03';
     protected static $modules = array(
-        'Database'  => array('files' => array('database/database.php')),
+        'Database'  => array(
+            'files' => array('database/database.php'),
+            'dependencies' => array('SqlGenerator')
+        ),
         'Exception' => array('files' => array('exception/exception.php')),
         'SqlGenerator' => array('files' => array('sqlgenerator/sqlgenerator.php')),
         'DatabaseSchema' => array(

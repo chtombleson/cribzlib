@@ -144,7 +144,6 @@ class CribzDatabase {
     /**
     * Connect
     * Connect to the database
-    *
     * @return false on error.
     */
     function connect() {
@@ -177,7 +176,6 @@ class CribzDatabase {
     *
     * @param int $attribute PDO Attribute Option
     * @param mixed $value   Value to set attribute to
-    *
     * @return true on success or fail on failure.
     */
     function setAttribute($attribute, $value) {
@@ -189,7 +187,6 @@ class CribzDatabase {
     * Get the value of an attribute
     *
     * @param int $attribute PDO Attribute Option
-    *
     * @return value of attribute or false.
     */
     function getAttribute($attribute) {
@@ -199,7 +196,6 @@ class CribzDatabase {
     /**
     * Begin Transaction
     * Start a database transaction.
-    *
     * @return true on success or false on failure.
     */
     function beginTransaction() {
@@ -209,7 +205,6 @@ class CribzDatabase {
     /**
     * Commit
     * Commit a change to the database.
-    *
     * @return true on success or false on failure.
     */
     function commit() {
@@ -219,7 +214,6 @@ class CribzDatabase {
     /**
     * Roll Back
     * Roll back a database change.
-    *
     * @return true on success or false on failure.
     */
     function rollBack() {
@@ -232,18 +226,13 @@ class CribzDatabase {
     *
     * @param string $table  Name of table in database.(optional, needed for postgres & mysql)
     * @param string $field  Name of primary key field. (optional, needed for postgres & mysql)
-    *
     * @return int of last id or false.
     */
     function lastInsertId($table = null, $field = null) {
-        if ($this->driver == 'pgsql' || $this->driver == 'mysql') {
-            $sql = "SELECT {$field} FROM {$table} ORDER BY {$field} DESC LIMIT 1";
-            $this->execute_sql($sql);
-            $id = $this->fetch();
-            return (int) $id->$field;
-        } else {
-            return $this->database->lastInsertId($table);
-        }
+        $sql = "SELECT {$field} FROM {$table} ORDER BY {$field} DESC LIMIT 1";
+        $this->executeSql($sql);
+        $id = $this->fetch();
+        return (int) $id->$field;
     }
 
     /**
@@ -267,7 +256,6 @@ class CribzDatabase {
     /**
     * Debug
     * Get a list of all errors
-    *
     * @return list of errors
     */
     function debug() {
@@ -301,10 +289,9 @@ class CribzDatabase {
     *
     * @param string $sql    Query to be executed
     * @param array  $params Values to replace ? in query
-    *
     * @return false on error
     */
-    function execute_sql($sql, $params = array()) {
+    function executeSql($sql, $params = array()) {
         $this->queries[] = $sql;
         $this->query_params[] = $params;
 
@@ -345,61 +332,22 @@ class CribzDatabase {
     /**
     * Select
     *
-    * @param string $table  Table to query
-    * @param array  $where  Array of field => value for where clause (Optional)
-    * @param mixed  $fields Array or string of fields to select (Optional)
-    * @param array  $order  Array of field => order by for order clause (Optional)
-    * @param int    $limit  Limit for results (Optional)
-    * @param int    $offset Offset for records (Optional)
+    * @see CribzSqlGenerator::select()
+    * @see CribzDatabase::executeSql()
     *
+    * @param string $table  Table to query
+    * @param array  $where  Array of field => value for where clause [Optional]
+    * @param array  $param  Array of values that are to be inserted into the query [Optional]
+    * @param array  $fields Array of fields to select [Optional]
+    * @param array  $order  Array of field => order by for order clause [Optional]
+    * @param int    $limit  Limit for results [Optional]
+    * @param int    $offset Offset for records [Optional]
     * @return false on error
     */
-    function select($table, $where = array(), $fields = '*', $order = array(), $limit = null, $offset = null) {
-        $sql = 'SELECT ';
-        $params = array();
+    function select($table, $where = null, $params = array(), $fields = null, $order = null, $limit = null, $offset = null) {
+        $sql = CribzSqlGenerator::select($table, $where, $fields, $order, $limit, $offset);
 
-        if (is_array($fields)) {
-            foreach ($fields as $field) {
-                $sql .= $field . ', ';
-            }
-            $sql = trim($sql, ', ');
-
-        } else {
-            $sql .= $fields;
-        }
-
-        $sql .= ' FROM ' . $table;
-
-        if (!empty($where)) {
-            $sql .= ' WHERE ';
-            foreach ($where as $field => $value) {
-                $sql .= $field . '=? AND ';
-                $params[] = $value;
-            }
-            $sql = trim($sql, ' AND ');
-        }
-
-        if (!empty($order)) {
-            $sql .= ' ORDER BY ';
-            foreach ($order as $field => $value) {
-                if (strtoupper($value) == 'ASC' || strtoupper($value) == 'DESC') {
-                    $sql .= $field . ' ' . strtoupper($value) .', ';
-                }
-            }
-            $sql = trim($sql, ', ');
-        }
-
-        if (!empty($limit)) {
-            $limit = (int) $limit;
-            $sql .= empty($limit) ? '' : ' LIMIT ' . $limit;
-        }
-
-        if (!empty($offset)) {
-            $offset = (int) $offset;
-            $sql .= empty($offset) ? '' : ' OFFSET ' . $offset;
-        }
-
-        if (!$this->execute_sql($sql, $params)) {
+        if (!$this->executeSql($sql, $params)) {
             return false;
         }
 
@@ -411,7 +359,6 @@ class CribzDatabase {
     * Fetch the next record in the set
     *
     * @param int $fetch PDO Fetch Style, Default PDO::FETCH_OBJ
-    *
     * @return record
     */
     function fetch($fetch = PDO::FETCH_OBJ) {
@@ -423,7 +370,6 @@ class CribzDatabase {
     * Fetch All records in the set
     *
     * @param int $fetch PDO Fetch Style, Default PDO::FETCH_OBJ
-    *
     * @return array of records
     */
     function fetchAll($fetch = PDO::FETCH_OBJ) {
@@ -433,26 +379,22 @@ class CribzDatabase {
     /**
     * Insert
     *
+    * @see CribzSqlGenerator::insert()
+    * @see CribzDatabase::executeSql()
+    *
     * @param string $table  Table to insert record into
     * @param mixed  $record Array or stdClass of the record you want to insert, field => value
-    *
     * @return false on error
     */
     function insert($table, $record) {
-        $sql = 'INSERT INTO ' . $table .'(';
-        $values = 'VALUES (';
-        $params = array();
-
-        foreach ($record as $field => $value) {
-            $sql .= $field . ', ';
-            $values .= '?, ';
-            $params[] = $value;
+        if (is_array($record)) {
+            $record = (object) $record;
         }
-        $sql = trim($sql, ', ') . ')';
-        $values = trim($values, ', ') . ')';
-        $sql = $sql . $values;
 
-        if (!$this->execute_sql($sql, $params)) {
+        $sql = CribzSqlGenerator::insert($table, array_keys(get_object_vars($record)));
+        $params = array_values(get_object_vars($record));
+
+        if (!$this->executeSql($sql, $params)) {
             return false;
         }
 
@@ -462,35 +404,30 @@ class CribzDatabase {
     /**
     * Update
     *
+    * @see CribzSqlGenerator::update()
+    * @see CribzDatabase::executeSql()
+    *
     * @param string $table  Table to update
     * @param mixed  $record Array of stdClass of the record you want to update, field => value. Must contain id field with id of record
-    *
     * @return false on error
     */
     function update($table, $record) {
+        if (is_array($record)) {
+            $record = (object) $record;
+        }
+
         if (!isset($record->id)) {
             return false;
         }
 
-        if (is_array($record) && !isset($record['id'])) {
-            return false;
-        }
+        $id = $record->id;
+        unset($record->id);
 
-        $sql = 'UPDATE ' . $table . ' SET ';
-        $params = array();
+        $sql = CribzSqlGenerator::update($table, array_keys(get_object_vars($record)), array('id' => $id));
+        $params = array_values(get_object_vars($record));
+        $params[] = $id;
 
-        foreach ($record as $field => $value) {
-            if ($field != 'id') {
-                $sql .= $field . '=?, ';
-                $params[] = $value;
-            }
-        }
-
-        $sql = trim($sql, ', ');
-        $sql .= ' WHERE id=?';
-        $params[] = (is_array($record) && isset($record['id'])) ? $record['id'] : $record->id;
-
-        if (!$this->execute_sql($sql, $params)) {
+        if (!$this->executeSql($sql, $params)) {
             return false;
         }
 
@@ -500,22 +437,21 @@ class CribzDatabase {
     /**
     * Delete
     *
-    * @param string $table  Table to delete record from
-    * @param mixed  $where  Array of string for where clause. Array is field => value
+    * @see CribzSqlGenerator::select()
+    * @see CribzSqlGenerator::delete()
+    * @see CribzDatabase::executeSql()
     *
+    * @param string $table      Table to delete record from.
+    * @param array  $where      Array of where clauses. [Optional]
+    * @param array  $params     Array of values that are to be inserted into the query. [Optional]
+    * @param array  $in         Array of in clauses. [Optional]
+    * @param array  $like       Array of like clauses. [Optional]
     * @return false on error
     */
-    function delete($table, $where) {
-        $sql = 'DELETE FROM ' . $table . ' WHERE ';
-        $params = array();
+    function delete($table, $where = null, $params = array(), $in = null, $like = null) {
+        $sql = CribzSqlGenerator::delete($table, $where, $in, $like);
 
-        foreach ($where as $field => $value) {
-            $sql .= $field . '=? AND ';
-            $params[] = $value;
-        }
-        $sql = rtrim($sql, ' AND ');
-
-        if (!$this->execute_sql($sql, $params)) {
+        if (!$this->executeSql($sql, $params)) {
             return false;
         }
 
@@ -526,13 +462,12 @@ class CribzDatabase {
     * Truncate Table
     *
     * @param string $table  Table to truncate
-    *
     * @return false on error
     */
-    function truncate_table($table) {
+    function truncateTable($table) {
         $sql = 'TRUNCATE TABLE ' . $table;
 
-        if (!$this->execute_sql($sql)) {
+        if (!$this->executeSql($sql)) {
             return false;
         }
 
@@ -544,13 +479,12 @@ class CribzDatabase {
     *
     * @param string $table      Table to copy from
     * @param string $newtable   Table to copy to
-    *
     * @return false on error
     */
-    function copy_table($table, $newtable) {
+    function copyTable($table, $newtable) {
         $sql = 'SELECT * INTO ' . $newtable . ' FROM '.$table;
 
-        if (!$this->execute_sql($sql)) {
+        if (!$this->executeSql($sql)) {
             return false;
         }
 
@@ -561,13 +495,12 @@ class CribzDatabase {
     * Drop Table
     *
     * @param string $table  Table to drop from database
-    *
     * @return false on error
     */
-    function drop_table($table) {
+    function dropTable($table) {
         $sql = 'DROP TABLE ' . $table;
 
-        if (!$this->execute_sql($sql)) {
+        if (!$this->executeSql($sql)) {
             return false;
         }
 
@@ -577,20 +510,19 @@ class CribzDatabase {
     /**
     * Create Table
     *
-    * @param string $name       Name of new table
-    * @param array  $tabledef   Array of column name => column definition
+    * @see CribzSqlGenerator::createTable()
+    * @see CribzDatabase::executeSql()
     *
+    * @param  string $table      Name of table.
+    * @param  array  $fields     Array of field definitions eg. array('id' => array('type' => 'int', 'size' => 11, 'null' => false)).
+    * @param  string $pk         Name of primary key field.
+    * @param  array  $fk         Array of Foriegn Key definitons eg. array('user' => 'users.id'). [Optional]
     * @return false on error
     */
-    function create_table($name, $tabledef) {
-        $sql = 'CREATE TABLE ' . $name . ' (';
+    function createTable($table, $fields, $pk, $fk = null) {
+        $sql = CribzSqlGenerator::createTable($this->getDriver(), $table, $fields, $pk, $fk);
 
-        foreach ($tabledef as $field => $def) {
-            $sql .= $field . ' ' . $def.',';
-        }
-        $sql = trim($sql, ',') . ')';
-
-        if (!$this->execute_sql($sql)) {
+        if (!$this->executeSql($sql)) {
             return false;
         }
 
@@ -600,11 +532,10 @@ class CribzDatabase {
     /**
     * Restore Sql File
     *
-    * @param string $file   Path to sql file. Sql file should be readable.
-    *
+    * @param string $file   Path to sql file.
     * @return false on error
     */
-    function restore_sql_file($file) {
+    function restoreSqlFile($file) {
         if (!file_exists($file) || !is_readable($file)) {
             return false;
         }
@@ -615,7 +546,7 @@ class CribzDatabase {
         foreach ($commands as $command) {
             $command = trim($command);
             if (!empty($command)) {
-                if (!$this->execute_sql($command)) {
+                if (!$this->executeSql($command)) {
                     return false;
                 }
             }
@@ -629,7 +560,7 @@ class CribzDatabase {
     *
     * @return string database driver that is being used.
     */
-    function get_driver() {
+    function getDriver() {
         return $this->driver;
     }
 
@@ -640,18 +571,18 @@ class CribzDatabase {
     * @param string $table  Table name to check.
     * @return true if table exists, false if table doesn't exists and null on error.
     */
-    function check_table_exists($table) {
+    function checkTableExists($table) {
         switch ($this->driver) {
             case 'pgsql':
-                return $this->pgsql_check_table_exists($table);
+                return $this->pgsqlCheckTableExists($table);
                 break;
 
             case 'mysql':
-                return $this->mysql_check_table_exists($table);
+                return $this->mysqlCheckTableExists($table);
                 break;
 
             case 'sqlite':
-                return $this->sqlite_check_table_exists($table);
+                return $this->sqliteCheckTableExists($table);
                 break;
         }
     }
@@ -663,9 +594,9 @@ class CribzDatabase {
     * @param string $table  Table name to check.
     * @return true if table exists, false if table doesn't exists and null on error.
     */
-    private function pgsql_check_table_exists($table) {
+    private function pgsqlCheckTableExists($table) {
         $sql = "SELECT * FROM information_schema.tables WHERE table_name=?";
-        if ($this->execute_sql($sql, array($table))) {
+        if ($this->executeSql($sql, array($table))) {
             $result = $this->fetch();
 
             if (!empty($result)) {
@@ -684,10 +615,10 @@ class CribzDatabase {
     * @param string $table  Table name to check.
     * @return true if table exists, false if table doesn't exists and null on error.
     */
-    private function mysql_check_table_exists($table) {
+    private function mysqlCheckTableExists($table) {
         $sql = "SELECT * FROM information_schema.tables WHERE table_schema = ? AND table_name = ?";
 
-        if ($this->execute_sql($sql, array($this->name, $table))) {
+        if ($this->executeSql($sql, array($this->name, $table))) {
             $result = $this->fetch();
 
             if (!empty($result)) {
@@ -706,10 +637,10 @@ class CribzDatabase {
     * @param string $table  Table name to check.
     * @return true if table exists, false if table doesn't exists and null on error.
     */
-    private function sqlite_check_table_exists($table) {
+    private function sqliteCheckTableExists($table) {
         $sql = "SELECT name FROM sqlite_master WHERE type=? AND name=?";
 
-        if ($this->execute_sql($sql, array('table', $table))) {
+        if ($this->executeSql($sql, array('table', $table))) {
             $result = $this->fetch();
 
             if (!empty($result)) {

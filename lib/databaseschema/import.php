@@ -82,7 +82,7 @@ class CribzDatabaseImportSchema {
             $tables[] = $data;
         }
 
-        switch ($this->database->get_driver()) {
+        switch ($this->database->getDriver()) {
             case 'mysql':
                 $this->parseMysql($tables);
                 break;
@@ -148,13 +148,13 @@ class CribzDatabaseImportSchema {
 
         if (!empty($queries['tables'])) {
             foreach ($queries['tables'] as $sql) {
-                $this->database->execute_sql($sql);
+                $this->database->executeSql($sql);
             }
         }
 
         if (!empty($queries['records'])) {
             foreach ($queries['records'] as $record) {
-                $this->database->execute_sql($record['query'], $record['parameters']);
+                $this->database->executeSql($record['query'], $record['parameters']);
             }
         }
     }
@@ -198,7 +198,7 @@ class CribzDatabaseImportSchema {
             throw new CribzDatabaseImportSchemaException('No primary key defined for table, ' . $table->name, 3);
         }
 
-        return CribzSqlGenerator::createTable($this->database->get_driver(), $table->name, $fields, $pk, $fk);
+        return CribzSqlGenerator::createTable($this->database->getDriver(), $table->name, $fields, $pk, $fk);
     }
 
     private function getRecordQuery($table, $record) {
