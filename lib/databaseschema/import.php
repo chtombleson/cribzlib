@@ -1,11 +1,74 @@
 <?php
+/*
+* Copyright (c) 2012 onwards Christopher Tombleson <chris@cribznetwork.com>
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+* documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+* the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+* and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+* TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+* THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+* CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+* DEALINGS IN THE SOFTWARE.
+*/
+/**
+* @package      CribzLib
+* @subpackage   CribzDatabaseImportSchema
+* @author       Christopher Tombleson <chris@cribznetwork.com>
+* @copyright    Copyright 2012 onwards
+*/
 class CribzDatabaseImportSchema {
+    /**
+    * INTEGER
+    *
+    * @var const int
+    */
     const INTEGER = 1;
+
+    /**
+    * NUMERIC
+    *
+    * @var const int
+    */
     const NUMERIC = 2;
+
+    /**
+    * CHARACTER
+    *
+    * @var const int
+    */
     const CHARACTER = 3;
+
+    /**
+    * DATETIME
+    *
+    * @var const int
+    */
     const DATETIME = 4;
+
+    /**
+    * TEXT
+    *
+    * @var const int
+    */
     const TEXT = 5;
+
+    /**
+    * AUTOINCREMENT
+    *
+    * @var const int
+    */
     const AUTOINCREMENT = 6;
+
+    /**
+    * Types
+    *
+    * @var array
+    */
     protected $types = array(
         1 => array('integer', 'smallint', 'mediumint', 'bigint'),
         2 => array('float', 'double', 'decimal'),
@@ -14,9 +77,28 @@ class CribzDatabaseImportSchema {
         5 => array('text'),
         6 => array('pgsql' => 'serial', 'mysql' => 'AUTO_INCREMENT', 'sqlite' => 'AUTOINCREMENT'),
     );
+
+    /**
+    * Database
+    *
+    * @var CribzDatabase
+    */
     protected $database;
+
+    /**
+    * Schema File
+    *
+    * @var string
+    */
     protected $schemaFile;
 
+    /**
+    * Constructor
+    *
+    * @param CribzDatabase  $database       CribzDatabase Object.
+    * @param string         $schemaFile     Path to schema file to import.
+    * @return throws CribzDatabaseImportSchemaException on error
+    */
     function __construct(CribzDatabase $database, $schemaFile) {
         if (!file_exists($schemaFile)) {
             throw new CribzDatabaseImportSchemaException('Schema file: ' . $schemaFile . 'does not exist.', 0);
@@ -26,13 +108,23 @@ class CribzDatabaseImportSchema {
         $this->schemaFile = $schemaFile;
     }
 
+    /**
+    * Execute
+    * Run the import process
+    */
     function execute() {
         $schema = $this->parse();
         $queries = $this->buildQueries($schema);
         $this->executeQueries($queries);
     }
 
-    private function parse() {
+    /**
+    * Parse
+    * Parse the xml file and create the schema.
+    *
+    * @return array with table and record definitions
+    */
+    protected function parse() {
         $allowed = $this->getAllowedTypes();
         $xml = simplexml_load_file($this->schemaFile);
         $tables = array();
@@ -99,11 +191,23 @@ class CribzDatabaseImportSchema {
         return $tables;
     }
 
-    private function parseMysql(&$tables) {
+    /**
+    * Parse Mysql
+    * Do any database specfic transformations here
+    *
+    * @param reference array $tables    Tables array from parse function
+    */
+    protected function parseMysql(&$tables) {
 
     }
 
-    private function parsePgsql(&$tables) {
+    /**
+    * Parse Pgsql
+    * Do any database specfic transformations here
+    *
+    * @param reference array $tables    Tables array from parse function
+    */
+    protected function parsePgsql(&$tables) {
         foreach ($tables as &$table) {
             foreach ($table->columns as &$column) {
                 if ($column->autoincrement) {
@@ -125,11 +229,24 @@ class CribzDatabaseImportSchema {
         }
     }
 
-    private function parseSqlite(&$tables) {
+    /**
+    * Parse SQLite
+    * Do any database specfic transformations here
+    *
+    * @param reference array $tables    Tables array from parse function
+    */
+    protected function parseSqlite(&$tables) {
 
     }
 
-    private function buildQueries(array $schema) {
+    /**
+    * Build Queries
+    * Take the schema a generate sql queries
+    *
+    * @param array  $schema     Array returned from the parse function
+    * @return array of sql queries
+    */
+    protected function buildQueries(array $schema) {
         $queries = array('tables' => array(), 'records' => array());
 
         foreach ($schema as $table) {
@@ -143,7 +260,13 @@ class CribzDatabaseImportSchema {
         return $queries;
     }
 
-    private function executeQueries($queries) {
+    /**
+    * Execute Queries
+    * Run the queries to create tables and insert records
+    *
+    * @param array  $queries    Array returned from buildQueries function
+    */
+    protected function executeQueries($queries) {
         $this->database->connect();
 
         if (!empty($queries['tables'])) {
@@ -159,7 +282,14 @@ class CribzDatabaseImportSchema {
         }
     }
 
-    private function getTableQuery($table) {
+    /**
+    * Get Table Query
+    * Gets the create table query
+    *
+    * @param object $table  Object with table definition
+    * @return string create table sql query
+    */
+    protected function getTableQuery($table) {
         $fields = array();
         $pk = '';
         $fk = array();
@@ -201,7 +331,15 @@ class CribzDatabaseImportSchema {
         return CribzSqlGenerator::createTable($this->database->getDriver(), $table->name, $fields, $pk, $fk);
     }
 
-    private function getRecordQuery($table, $record) {
+    /**
+    * Get Record Query
+    * Get sql query for insert a record
+    *
+    * @param string $table  Name of table to insert record into
+    * @param object $record Object with record definition
+    * @return array with sql query and parameters
+    */
+    protected function getRecordQuery($table, $record) {
         $parameters = array();
         $fields = array();
         foreach ($record as $name => $value) {
@@ -213,6 +351,11 @@ class CribzDatabaseImportSchema {
         return array('query' => $query, 'parameters' => $parameters);
     }
 
+    /**
+    * Get Allowed Types
+    *
+    * @return array of allowed data types
+    */
     public function getAllowedTypes() {
         return array(
             'integer', 'smallint', 'mediumint', 'bigint',

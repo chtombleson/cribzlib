@@ -1,5 +1,5 @@
 <?php
-require_once('../../cribzlib.php');
+require_once(dirname(dirname(__FILE__)).'/cribzlib.php');
 
 CribzLib::loadModule('SqlGenerator');
 
@@ -57,3 +57,4 @@ echo CribzSqlGenerator::createTable('sqlite', 'test',
     array('userid' => 'users.id')
 );
 echo "\n\n";
+?>
