@@ -36,6 +36,10 @@ class CribzLib {
             'files' => array('databaseschema/databaseschema.php', 'databaseschema/import.php'),
             'dependencies' => array('SqlGenerator', 'Database')
         ),
+        'Template' => array(
+            'files' => array('template/template.php'),
+            'thirdparty' => array('twig/lib/Twig/Autoloader.php')
+        ),
     );
 
     public static function loadModule($name) {
@@ -52,12 +56,12 @@ class CribzLib {
         }
 
         if (!empty($moduleDetails['thirdparty'])) {
-            foreach ($moduleDetails['thridparty'] as $thirdparty) {
-                $path = dirname(__FILE__) . '/lib/thirdparty/' . $thridparty;
+            foreach ($moduleDetails['thirdparty'] as $thirdparty) {
+                $path = dirname(__FILE__) . '/lib/thirdparty/' . $thirdparty;
                 if (file_exists($path)) {
                     require_once($path);
                 } else {
-                    if (!file_exists($thridparty)) {
+                    if (!file_exists($thirdparty)) {
                         throw new CribzLibException('File: ' . $path . ' does not exist.', 1);
                     }
 
