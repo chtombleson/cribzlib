@@ -40,8 +40,9 @@ class CribzLib {
             'files' => array('template/template.php'),
             'thirdparty' => array('twig/lib/Twig/Autoloader.php')
         ),
-        'Session' => array('files' => 'session/session.php'),
-        'Cookie' => array('files' => 'cookie/cookie.php'),
+        'Session' => array('files' => array('session/session.php')),
+        'Cookie' => array('files' => array('cookie/cookie.php')),
+        'Registry' => array('files' => array('registry/registry.php')),
     );
 
     public static function loadModule($name) {
@@ -115,6 +116,26 @@ class CribzLib {
 
     public static function moduleExists($name) {
         return in_array($name, self::getModules());
+    }
+
+    public static function registryAdd($name, $value) {
+        self::loadModule('Registry');
+        CribzRegistry::add($name, $value);
+    }
+
+    public static function registryGet($name) {
+        self::loadModule('Registry');
+        return CribzRegistry::get($name);
+    }
+
+    public static function registryRemove($name) {
+        self::loadModule('Registry');
+        CribzRegistry::remove($name);
+    }
+
+    public static function registryList() {
+        self::loadModule('Registry');
+        return CribzRegistry::listAll();
     }
 }
 
