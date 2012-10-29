@@ -41,6 +41,7 @@ class CribzLib {
             'thirdparty' => array('twig/lib/Twig/Autoloader.php')
         ),
         'Session' => array('files' => 'session/session.php'),
+        'Cookie' => array('files' => 'cookie/cookie.php'),
     );
 
     public static function loadModule($name) {
