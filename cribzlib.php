@@ -43,6 +43,12 @@ class CribzLib {
         'Session' => array('files' => array('session/session.php')),
         'Cookie' => array('files' => array('cookie/cookie.php')),
         'Registry' => array('files' => array('registry/registry.php')),
+        'Cache' => array('files' => array(
+            'cache/cache.php', 
+            'cache/cache_interface.php',
+            'cache/filesystem.php',
+            'cache/memcached.php',
+        )),
     );
 
     public static function loadModule($name) {
