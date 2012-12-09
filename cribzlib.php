@@ -49,6 +49,7 @@ class CribzLib {
             'cache/filesystem.php',
             'cache/memcached.php',
         )),
+        'Crypt' => array('files' => array('crypt/crypt.php')),
     );
 
     public static function loadModule($name) {
